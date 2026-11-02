@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sahyog.invalid/schemas/scribe_v1.json",
+  "title": "Scribe draft v1",
+  "description": "Versioned SOAP draft. Every line cites transcript turn indices or is explicitly unsourced. A schema failure is a hard failure and nothing is persisted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subjective", "objective", "assessment", "plan", "medicines"],
+  "properties": {
+    "subjective": {
+      "type": "array",
+      "maxItems": 40,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "objective": {
+      "type": "array",
+      "maxItems": 40,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "assessment": {
+      "type": "array",
+      "maxItems": 40,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "plan": {
+      "type": "array",
+      "maxItems": 40,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "follow_up": {
+      "anyOf": [{ "$ref": "#/$defs/line" }, { "type": "null" }]
+    },
+    "medicines": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "source_turn_ids", "unsourced"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "dose": { "type": ["string", "null"], "maxLength": 100 },
+          "frequency": { "type": ["string", "null"], "maxLength": 100 },
+          "duration": { "type": ["string", "null"], "maxLength": 100 },
+          "instructions": { "type": ["string", "null"], "maxLength": 300 },
+          "source_turn_ids": { "$ref": "#/$defs/turns" },
+          "unsourced": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "turns": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "integer", "minimum": 0 }
+    },
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "source_turn_ids", "unsourced"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "source_turn_ids": { "$ref": "#/$defs/turns" },
+        "unsourced": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cases": [
+    {
+      "id": "librispeech-8455-210777-0068",
+      "language": "en",
+      "metric": "wer",
+      "score": 0.0
+    }
+  ],
+  "mean": 0.0,
+  "source_run": "docs/evidence/stt-wer-run-20261031T170246Z.json",
+  "status": "measured"
+}

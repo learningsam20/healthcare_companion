@@ -1,0 +1,28 @@
+# Local Alertmanager for G-25. Demo paging goes to Mailpit (not production on-call).
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: mailpit:1025
+  smtp_from: alertmanager@sahyog.local
+  smtp_require_tls: false
+
+route:
+  receiver: sahyog-local
+  group_by: [alertname]
+  group_wait: 15s
+  group_interval: 2m
+  repeat_interval: 4h
+
+receivers:
+  - name: sahyog-local
+    # Demo "paging": email lands in Mailpit UI (http://localhost:5718).
+    # Replace with Slack/PagerDuty for real on-call; do not claim MTTA from this sink.
+    email_configs:
+      - to: oncall@sahyog.local
+        send_resolved: true
+        headers:
+          Subject: "[Sahyog demo] {{ .GroupLabels.alertname }}"
+    webhook_configs:
+      - url: http://127.0.0.1:9093/api/v2/alerts
+        send_resolved: true
+
+inhibit_rules: []

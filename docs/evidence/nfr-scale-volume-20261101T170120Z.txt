@@ -1,0 +1,6 @@
+patients|9
+appointments|40
+documents|6
+document_chunks|4
+encounters|17
+transcripts|20

@@ -1,0 +1,28 @@
+{
+  "advisory": [],
+  "chat_traffic_class": {
+    "real": 9
+  },
+  "embedding_dim": 1024,
+  "failures": [],
+  "generated_at": "2026-10-25T06:54:28.626289+00:00",
+  "migration": "0004_synthetic_audit_reset",
+  "profile": "minimal",
+  "status": "passed",
+  "tables": {
+    "appointments": 9,
+    "audit_events": 114,
+    "chat_messages": 18,
+    "chat_sessions": 9,
+    "clinical_notes": 0,
+    "consents": 1,
+    "document_chunks": 4,
+    "documents": 4,
+    "encounters": 3,
+    "notification_deliveries": 0,
+    "notifications": 3,
+    "patients": 4,
+    "transcripts": 3,
+    "usage_records": 4
+  }
+}

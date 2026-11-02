@@ -1,0 +1,11 @@
+{
+  "generated_at": "20261031T133523Z",
+  "url": "http://127.0.0.1:5736/api/v2/alerts",
+  "ready_url": "http://127.0.0.1:5736/-/ready",
+  "ready_http_status": 200,
+  "http_status": 200,
+  "curl_rc": 0,
+  "body_excerpt": "",
+  "status": "ok",
+  "note": "Measured POST after /-/ready=200; Alertmanager on Compose host port 5736."
+}

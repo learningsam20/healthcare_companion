@@ -1,0 +1,130 @@
+{
+  "status": "scored",
+  "generated_at": "2026-11-02T00:42:09.656871+00:00",
+  "api_base_url": "http://localhost:5706",
+  "probes": [
+    {
+      "nfr": "NFR-PERF-05",
+      "target_p95_ms": 500.0,
+      "samples": 150,
+      "errors": 0,
+      "p50_ms": 7.4,
+      "p95_ms": 9.0,
+      "meets_target": true,
+      "endpoints": {
+        "/api/v1/appointments": {
+          "requests": 25,
+          "p50_ms": 8.3,
+          "p95_ms": 10.3,
+          "meets_target": true
+        },
+        "/api/v1/chat/sessions": {
+          "requests": 25,
+          "p50_ms": 6.8,
+          "p95_ms": 8.9,
+          "meets_target": true
+        },
+        "/api/v1/doctors": {
+          "requests": 25,
+          "p50_ms": 7.8,
+          "p95_ms": 8.6,
+          "meets_target": true
+        },
+        "/api/v1/meta": {
+          "requests": 25,
+          "p50_ms": 6.9,
+          "p95_ms": 7.6,
+          "meets_target": true
+        },
+        "/api/v1/notifications": {
+          "requests": 25,
+          "p50_ms": 6.5,
+          "p95_ms": 8.1,
+          "meets_target": true
+        },
+        "/api/v1/patients": {
+          "requests": 25,
+          "p50_ms": 8.2,
+          "p95_ms": 10.8,
+          "meets_target": true
+        }
+      }
+    },
+    {
+      "nfr": "NFR-PERF-05_records",
+      "target_p95_ms": 500.0,
+      "samples": 50,
+      "errors": 0,
+      "p50_ms": 7.8,
+      "p95_ms": 10.0,
+      "meets_target": true,
+      "endpoints": {
+        "/api/v1/records/documents": {
+          "requests": 25,
+          "p50_ms": 8.4,
+          "p95_ms": 10.0,
+          "meets_target": true
+        },
+        "/api/v1/records/medications": {
+          "requests": 25,
+          "p50_ms": 7.3,
+          "p95_ms": 9.2,
+          "meets_target": true
+        }
+      }
+    },
+    {
+      "nfr": "NFR-PERF-05_pharmacy",
+      "target_p95_ms": 500.0,
+      "samples": 75,
+      "errors": 0,
+      "p50_ms": 9.8,
+      "p95_ms": 17.5,
+      "meets_target": true,
+      "endpoints": {
+        "/api/v1/pharmacy/stock": {
+          "requests": 25,
+          "p50_ms": 9.8,
+          "p95_ms": 11.5,
+          "meets_target": true
+        },
+        "/api/v1/pharmacy/stock/status": {
+          "requests": 25,
+          "p50_ms": 9.0,
+          "p95_ms": 9.8,
+          "meets_target": true
+        },
+        "/api/v1/pharmacy/stock/typeahead": {
+          "requests": 25,
+          "p50_ms": 16.2,
+          "p95_ms": 18.6,
+          "meets_target": true
+        }
+      }
+    },
+    {
+      "nfr": "NFR-PERF-08",
+      "target_p95_ms": 500.0,
+      "samples": 50,
+      "errors": 0,
+      "p50_ms": 9.7,
+      "p95_ms": 17.8,
+      "meets_target": true,
+      "endpoints": {
+        "/api/v1/analytics/finops": {
+          "requests": 25,
+          "p50_ms": 7.6,
+          "p95_ms": 8.7,
+          "meets_target": true
+        },
+        "/api/v1/analytics/overview": {
+          "requests": 25,
+          "p50_ms": 16.2,
+          "p95_ms": 17.8,
+          "meets_target": true
+        }
+      }
+    }
+  ],
+  "volume_note": "PERF-05 requires documented SCALE-02 volumes; pharmacy search today is limited by stock_items / config/stock.csv size unless scaled separately."
+}

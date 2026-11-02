@@ -1,0 +1,92 @@
+{
+  "cases": [
+    {
+      "id": "ms-01",
+      "k": 5,
+      "language": "en-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.0,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    },
+    {
+      "id": "ms-02",
+      "k": 5,
+      "language": "hi-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.0,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    },
+    {
+      "id": "ms-03",
+      "k": 5,
+      "language": "en-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.5,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    },
+    {
+      "id": "ms-04",
+      "k": 5,
+      "language": "mr-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.0,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    },
+    {
+      "id": "ms-05",
+      "k": 5,
+      "language": "en-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.5,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    },
+    {
+      "id": "ms-06",
+      "k": 5,
+      "language": "hi-IN",
+      "mode": "live_terms",
+      "recall_at_k": 0.0,
+      "relevant": 2,
+      "retrieved": 1,
+      "retrieved_chunk_ids": [
+        "c6688cb0-bd14-4428-8102-aa709a1d0515"
+      ]
+    }
+  ],
+  "dataset": "mixed_script_recall",
+  "k": 5,
+  "limitations": [
+    "Offline scores use fixture retrieved_chunk_ids (synthetic IDs).",
+    "Live mode scores term overlap in retrieved chunk text, not fixture IDs.",
+    "Not a production retrieval SLA claim."
+  ],
+  "live": {
+    "errors": [],
+    "executed": true,
+    "partial": false,
+    "patient_id": "20000000-0000-4000-8000-000000000001",
+    "requested": true,
+    "scoring": "relevant_terms in retrieved text"
+  },
+  "mean_recall_at_k": 0.1667
+}

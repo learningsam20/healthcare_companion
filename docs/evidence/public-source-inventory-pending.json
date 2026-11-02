@@ -1,0 +1,80 @@
+{
+  "g2": "G2 requires all five public sources inventoried with exact counts and licences.",
+  "generated_at": "2026-10-31T09:57:04Z",
+  "missing": [
+    "appointments",
+    "notes",
+    "symptoms",
+    "medicines",
+    "patients"
+  ],
+  "rule": "Actual public files only; seed/sample is separate (FR-DATA-12).",
+  "sources": [
+    {
+      "csv": null,
+      "id": "appointments",
+      "kaggle": "joniarroba/noshowappointments",
+      "licence": "CC BY-NC-SA 4.0",
+      "name": "Medical Appointment No Shows",
+      "pack_rows_context": 110527,
+      "path": null,
+      "present": false,
+      "row_count": null,
+      "sha256": null,
+      "status": "missing"
+    },
+    {
+      "csv": null,
+      "id": "notes",
+      "kaggle": "tboyle10/medicaltranscriptions",
+      "licence": "check_and_record",
+      "name": "Medical Transcriptions",
+      "pack_rows_context": 5000,
+      "path": null,
+      "present": false,
+      "row_count": null,
+      "sha256": null,
+      "status": "missing"
+    },
+    {
+      "csv": null,
+      "id": "symptoms",
+      "kaggle": "itachi9604/disease-symptom-description-dataset",
+      "licence": "check_and_record",
+      "name": "Disease Symptom Prediction",
+      "pack_rows_context": 4900,
+      "path": null,
+      "present": false,
+      "row_count": null,
+      "sha256": null,
+      "status": "missing"
+    },
+    {
+      "csv": null,
+      "id": "medicines",
+      "kaggle": "shudhanshusingh/az-medicine-dataset-of-india",
+      "licence": "check_and_record",
+      "name": "A-Z Medicine Dataset of India",
+      "pack_rows_context": 250000,
+      "path": null,
+      "present": false,
+      "row_count": null,
+      "sha256": null,
+      "status": "missing"
+    },
+    {
+      "csv": null,
+      "id": "patients",
+      "kaggle": "prasad22/healthcare-dataset",
+      "licence": "check_and_record",
+      "name": "Healthcare Dataset (Kaggle; dataset itself labelled synthetic)",
+      "pack_rows_context": 55000,
+      "path": null,
+      "present": false,
+      "row_count": null,
+      "sha256": null,
+      "status": "missing"
+    }
+  ],
+  "status": "incomplete"
+}

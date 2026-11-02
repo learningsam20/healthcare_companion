@@ -1,0 +1,39 @@
+{
+  "dataset": "pii_hinglish_phi",
+  "schema_version": 1,
+  "synthetic": true,
+  "contains_phi": false,
+  "description": "Synthetic Hinglish/Marathi/PHI-shaped strings for composite PII fixture tests (G-28).",
+  "cases": [
+    {
+      "id": "pii-01",
+      "language": "en-IN",
+      "text": "Please call me at +91 9876543210 or email patient.demo@example.com",
+      "expect_types": ["phone_in", "email"]
+    },
+    {
+      "id": "pii-02",
+      "language": "hi-IN",
+      "text": "मेरा आधार 2345 6789 0123 है और PAN ABCDE1234F है।",
+      "expect_types": ["aadhaar", "pan"]
+    },
+    {
+      "id": "pii-03",
+      "language": "mr-IN",
+      "text": "रुग्ण MRN:MRN123456 चा फोन 9123456789 आहे.",
+      "expect_types": ["mrn", "phone_in"]
+    },
+    {
+      "id": "pii-04",
+      "language": "en-IN",
+      "text": "Hinglish note: patient Ramesh from Baner DOB 12/03/1988 ABHA 91-0000-0000-0000",
+      "expect_types": []
+    },
+    {
+      "id": "pii-05",
+      "language": "en-IN",
+      "text": "No identifiers here — only a fever and cough complaint.",
+      "expect_types": []
+    }
+  ]
+}

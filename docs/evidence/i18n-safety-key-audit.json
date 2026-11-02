@@ -1,0 +1,48 @@
+{
+  "clinical_review": {
+    "approver_name": null,
+    "approver_role": null,
+    "attestation": null,
+    "catalogue": "hi/mr safety and patient-facing clinical UI copy (red-flag guidance, emergency body, scribe red-flag labels)",
+    "locales": [
+      "hi-IN",
+      "mr-IN"
+    ],
+    "note": "Sign-off file present but incomplete (need review_status=approved, approver.name, signed_at).",
+    "review_status": "unreviewed",
+    "scope_notes": "Replace this file with a signed copy (see i18n-clinical-signoff.example.json). Until review_status=approved with approver.name and signed_at, reports must show unreviewed.",
+    "signed_at": null,
+    "signoff_path": "docs/evidence/i18n-clinical-signoff.json",
+    "visible_in_reports": true
+  },
+  "gaps": [
+    "G-01",
+    "G-02"
+  ],
+  "generated_at": "2026-10-31T14:48:21Z",
+  "locales_scanned": [
+    "en",
+    "hi",
+    "mr"
+  ],
+  "missing_linguistic_qa": true,
+  "note": "Key inventory only; native-speaker / clinical review of hi/mr safety copy is still required.",
+  "red_flag_ids": [
+    "RF-ANAPHYLAXIS",
+    "RF-BLEEDING",
+    "RF-BREATHLESS",
+    "RF-CHEST-PAIN",
+    "RF-HEAD-INJURY",
+    "RF-HIGH-FEVER-INFANT",
+    "RF-PREGNANCY-BLEEDING",
+    "RF-STROKE",
+    "RF-SUICIDE"
+  ],
+  "review_status": "unreviewed",
+  "safety_keys_found": [
+    "chat.redFlagBody",
+    "chat.redFlagTitle",
+    "scribe.redFlags"
+  ],
+  "status": "ready"
+}

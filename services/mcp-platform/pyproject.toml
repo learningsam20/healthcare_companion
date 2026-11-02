@@ -1,0 +1,20 @@
+[project]
+name = "sahyog-mcp-platform"
+version = "0.1.0"
+description = "MCP platform tools: consent, notifications, audit"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.32,<1",
+  "sahyog-common",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sahyog_mcp_platform"]
+
+[tool.uv.sources]
+sahyog-common = { workspace = true }

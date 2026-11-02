@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# The namespace is pinned so a render cannot accidentally target another tenant.
+# Change it here (and in scripts/k8s-deploy.sh) if a dedicated namespace is required.
+namespace: sahyog
+
+resources:
+  - namespace.yaml
+  - serviceaccounts.yaml
+  - configmap.yaml
+  - postgres.yaml
+  - redis.yaml
+  - s3proxy.yaml
+  - keycloak.yaml
+  - litellm.yaml
+  - mcp.yaml
+  - api.yaml
+  - worker.yaml
+  - scheduler.yaml
+  - web.yaml
+  - mailpit.yaml
+  - migration-job.yaml
+  - autoscaling.yaml
+  - networkpolicies.yaml
+
+configMapGenerator:
+  - name: postgres-init
+    files:
+      - config/postgres-init.sh
+  - name: s3-init
+    files:
+      - config/s3-init.sh
+  - name: litellm-config
+    files:
+      - config/litellm.yaml
+
+generatorOptions:
+  disableNameSuffixHash: false
+  labels:
+    app.kubernetes.io/part-of: sahyog

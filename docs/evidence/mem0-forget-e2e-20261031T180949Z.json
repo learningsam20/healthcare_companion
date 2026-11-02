@@ -1,0 +1,39 @@
+{
+  "closes_gap": false,
+  "gap": "G-24",
+  "generated_at": "2026-10-31T18:09:54.687723+00:00",
+  "mem0": {
+    "env_mem0_url": true,
+    "http_status": 200,
+    "probed": "http://127.0.0.1:5730",
+    "reachable": true
+  },
+  "note": "API put/list/purge exercised. Gap stays Mitigated until live Mem0 store sync and Settings provenance UI are operator-confirmed.",
+  "status": "passed",
+  "steps": [
+    {
+      "detail": {
+        "id": "33ff3922-cea9-4965-8ce8-55becb6bd6e6",
+        "key": "preferred_clinic"
+      },
+      "name": "put_preference",
+      "ok": true
+    },
+    {
+      "detail": {
+        "count": 1
+      },
+      "name": "preference_present_after_put",
+      "ok": true
+    },
+    {
+      "name": "purge_all",
+      "ok": true
+    },
+    {
+      "name": "preference_absent_after_purge",
+      "ok": true
+    }
+  ],
+  "username": "patient.priya"
+}

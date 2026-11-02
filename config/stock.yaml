@@ -1,0 +1,13 @@
+# Stock source of truth is the pharmacy API / stock_items table.
+# CSV files land in drop_dir; the worker batch job imports them into the DB.
+version: 1
+adapter: api
+api_url: http://api:8000/api/v1/pharmacy/stock/lookup
+api_key_env: STOCK_API_KEY
+# Bootstrap / seed reference file (also copied into drop_dir on seed).
+csv_path: config/stock.csv
+drop_dir: data/stock/incoming
+drop_processed_dir: data/stock/processed
+drop_failed_dir: data/stock/failed
+stale_after_minutes: 60
+source_label: Demo pharmacy stock

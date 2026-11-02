@@ -1,0 +1,7 @@
+# Thin layer on the successful CPU-torch build: LangGraph Postgres checkpointer
+# needs psycopg binary bindings (slim image has no libpq).
+FROM sahyog-api:local-good
+USER root
+RUN uv pip install --python /opt/venv/bin/python "psycopg-binary==3.3.6" \
+    && chown -R sahyog:sahyog /opt/venv
+USER sahyog

@@ -1,0 +1,86 @@
+{
+    "generated_at": "2026-10-25T09:14:47.887064+00:00",
+    "reconciliation": {
+        "id": "ad270450-fc07-4a59-9b86-d8e0701ca4f8",
+        "detail": {
+            "note": "Spend rows are copied read-only from LiteLLM. Usage rows are never edited. Recent calls inside the lag window may not be reconciled yet.",
+            "by_alias": {
+                "local_main": {
+                    "app_usd": 0.0,
+                    "app_calls": 8,
+                    "gateway_usd": 0.0,
+                    "gateway_calls": 13
+                },
+                "local_small": {
+                    "app_usd": 0.0,
+                    "app_calls": 11,
+                    "gateway_usd": 0.0,
+                    "gateway_calls": 11
+                },
+                "local_embedding": {
+                    "app_usd": 0.0,
+                    "app_calls": 0,
+                    "gateway_usd": 0.0,
+                    "gateway_calls": 8
+                }
+            },
+            "fx_usd_inr": 88,
+            "lag_minutes": 5,
+            "fetched_rows": 32,
+            "import_error": null,
+            "imported_rows": 32,
+            "price_version": 1,
+            "match_rate_pct": 37.5,
+            "price_basis_date": "2026-10-25",
+            "gateway_configured": true,
+            "finops_model_version": "2026-10-25.1",
+            "unmatched_app_request_ids": [
+                "usage:e0af2b98-170e-4480-bb89-9459fc2e4a95",
+                "usage:616cea77-ec5b-4e18-b82f-1e4d801201e1",
+                "usage:420fdb43-045a-4780-90b0-be4f75f2259f",
+                "usage:7c4d5e0f-fa84-4b52-a830-c62fc0d18bc1",
+                "usage:f9c27d3d-7488-46c6-8de7-e9f38d5841a5",
+                "usage:8e406a9b-741f-4fa1-8021-799168dbf0c7",
+                "usage:1569d805-853b-4d3f-bd7b-d97c85c8d264"
+            ],
+            "unmatched_gateway_request_ids": [
+                "b6871a38-1df3-4970-91b1-bb5e494ade9a",
+                "0e00e7bf-fc89-4857-80a2-594e9ed46809",
+                "chatcmpl-aeeb65a9-620f-439f-b8dc-a23a57e0fd0c",
+                "462eb4c1-ee6b-49d0-b9d1-12839051c0a2",
+                "1da7cc77-78a1-45be-b6f7-26a01aee4f2d",
+                "6858e63b-f472-4960-a0fd-763526370e9f",
+                "1370da04-b74d-4a75-9e28-939329c0a5d8",
+                "5a9c394c-d961-4f7d-8478-106482f20518",
+                "d667b2de-793e-4e0d-931b-613aba8d6f00",
+                "chatcmpl-07d24130-8ba5-46c5-8bf8-43ef7d984f3c",
+                "chatcmpl-42cb48c2-9c95-4d24-9ea2-5b4cda8e6c04",
+                "37778a6d-9532-463f-a3b2-1a4b7b2edd03",
+                "chatcmpl-bc279f29-f886-4456-8ee6-e2fc8c9ecdc5",
+                "chatcmpl-7fbccd5c-3702-4371-b798-dea4f87eae86",
+                "07243d47-e56d-4b74-96d2-1be1f1a7317f",
+                "chatcmpl-7e410453-b774-4c11-93c2-86d550f88bb9",
+                "chatcmpl-47014b06-8f6a-4728-a386-f51b32cf8942",
+                "chatcmpl-3e504ed0-87a2-4b84-b782-97c494883e0c",
+                "chatcmpl-ff180c00-f04d-4964-bc32-e0e4168fc009",
+                "chatcmpl-af3ce708-c49c-4829-80e0-f0155245d5a4"
+            ]
+        },
+        "status": "partial",
+        "app_calls": 19,
+        "created_at": "2026-10-25T08:10:19.031656+00:00",
+        "window_end": "2026-10-25T08:05:19.032908+00:00",
+        "app_cost_usd": 0,
+        "variance_pct": 0,
+        "variance_usd": 0,
+        "window_start": "2026-10-24T08:05:19.032908+00:00",
+        "gateway_calls": 32,
+        "matched_calls": 12,
+        "tolerance_pct": 2,
+        "gateway_cost_usd": 0,
+        "unmatched_app_calls": 7,
+        "unmatched_gateway_calls": 20
+    },
+    "usage_record_rows": 21,
+    "gateway_spend_log_rows": 32
+}

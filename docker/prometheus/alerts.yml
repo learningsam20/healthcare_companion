@@ -1,0 +1,92 @@
+groups:
+  - name: sahyog-api
+    rules:
+      - alert: SahyogApiDown
+        expr: up{job="otel-collector"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Sahyog observability scrape target is down"
+          runbook_url: "docs/runbooks/observability.md"
+
+      - alert: SahyogLiteLlmHighErrorRate
+        expr: |
+          sum(rate(litellm_llm_api_failed_requests_metric_total[5m]))
+            /
+          clamp_min(sum(rate(litellm_llm_api_requests_metric_total[5m])), 1)
+            > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "LiteLLM error rate >10% over 5m"
+          runbook_url: "docs/runbooks/model-gateway.md"
+
+      - alert: SahyogMcpBrokerUnhealthy
+        expr: up{job="mcp-broker"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "MCP broker health scrape failed"
+          runbook_url: "docs/runbooks/mcp.md"
+
+  - name: sahyog-pii-egress
+    rules:
+      - alert: SahyogExternalEgressWithoutCompositePii
+        # Informational recording rule placeholder — enforcement is in LlmGateway.
+        # Keep this annotation so Alertmanager routing documents the control.
+        expr: vector(0)
+        labels:
+          severity: info
+        annotations:
+          summary: "Egress must pass composite PII gate (LlmGateway fail-closed)"
+          runbook_url: "docs/runbooks/pii-egress.md"
+
+  - name: sahyog-jobs
+    rules:
+      # G-30: surface missing/stale ARQ job heartbeats when the API exports them.
+      # Expr stays fail-safe (no fire) until sahyog_job_last_success_timestamp is scraped.
+      - alert: SahyogJobStale
+        expr: |
+          (time() - sahyog_job_last_success_timestamp) > 86400
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scheduled job {{ $labels.job_name }} has not succeeded in 24h"
+          runbook_url: "docs/runbooks/backup-and-stock.md"
+      - alert: SahyogJobFailures
+        expr: |
+          increase(sahyog_job_failures_total[1h]) > 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scheduled job {{ $labels.job_name }} recorded failures in the last hour"
+          runbook_url: "docs/runbooks/backup-and-stock.md"
+
+  - name: sahyog-finops
+    rules:
+      # G-31: fire when the latest reconciliation row is status=variance.
+      - alert: SahyogFinopsVariance
+        expr: sahyog_finops_variance_over_tolerance == 1
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "FinOps spend reconciliation variance exceeds tolerance"
+          runbook_url: "docs/runbooks/budget-cost-anomaly.md"
+
+  - name: sahyog-handoffs
+    rules:
+      # Wave F / G-48: emergency desk SLA (call within 2 minutes).
+      - alert: SahyogHandoffOverdue
+        expr: sahyog_handoffs_open{overdue="true"} > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Open staff handoff past SLA (call-within-2-minutes)"
+          runbook_url: "docs/runbooks/escalations-handoff.md"

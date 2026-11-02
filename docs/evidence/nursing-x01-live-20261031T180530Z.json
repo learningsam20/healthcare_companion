@@ -1,0 +1,30 @@
+{
+  "api_base_url": "http://localhost:5706",
+  "clinical_quality_scored": false,
+  "drafts": [
+    {
+      "case_id": "nx01-01",
+      "error": "TimeoutError: timed out",
+      "language": "en-IN",
+      "question": "Summarise overnight vitals from the record only."
+    },
+    {
+      "case_id": "nx01-02",
+      "error": "OpsError: cannot reach http://localhost:5706/api/v1/nursing/summary: [Errno 61] Connection refused",
+      "language": "en-IN",
+      "question": "List medications administered this shift with sources."
+    }
+  ],
+  "errors": 2,
+  "generated": 0,
+  "generated_at": "2026-10-31T18:06:58.044505+00:00",
+  "kind": "nursing_x01_live_drafts",
+  "limitations": [
+    "Drafts only; no clinical quality score exists until a named clinician grades them.",
+    "Demo patient data is synthetic; this is not a real-patient clinical evaluation."
+  ],
+  "live": true,
+  "patient_id": "20000000-0000-4000-8000-000000000001",
+  "requested_as": "doctor.rao",
+  "total_cases": 2
+}

@@ -1,0 +1,339 @@
+# Approved, non-clinical notification copy. No patient names, clinical detail,
+# or access tokens. Operational attachments (ICS / ticket briefs) are built
+# separately and must also stay free of PHI.
+# subject_detail is appended to subject as " — {detail}" when non-empty.
+version: 1
+templates:
+  booking_confirmed:
+    en:
+      subject: "Appointment confirmed"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        Your appointment is confirmed.
+
+        Doctor: {doctor_name}
+        When: {starts_at}
+        Clinic: {clinic_code}
+        Duration: {duration_minutes} minutes
+
+        A calendar invite (.ics) is attached when email delivery is enabled.
+        Sign in to Sahyog → Appointments if you need to reschedule or cancel.
+        This message contains no clinical notes.
+    hi:
+      subject: "अपॉइंटमेंट पक्का हुआ"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        आपका अपॉइंटमेंट पक्का हो गया है।
+
+        डॉक्टर: {doctor_name}
+        समय: {starts_at}
+        क्लिनिक: {clinic_code}
+        अवधि: {duration_minutes} मिनट
+
+        ईमेल पर कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
+        बदलने या रद्द करने के लिए Sahyog → अपॉइंटमेंट खोलें।
+    mr:
+      subject: "अपॉइंटमेंट निश्चित झाली"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        तुमची अपॉइंटमेंट निश्चित झाली आहे.
+
+        डॉक्टर: {doctor_name}
+        वेळ: {starts_at}
+        क्लिनिक: {clinic_code}
+        कालावधी: {duration_minutes} मिनिटे
+
+        ईमेलवर कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
+        बदल किंवा रद्द करण्यासाठी Sahyog → अपॉइंटमेंट उघडा.
+  booking_confirm_reply:
+    en:
+      subject: "Please confirm your appointment"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        We need a confirmation for your upcoming appointment (higher no-show risk band).
+
+        Doctor: {doctor_name}
+        When: {starts_at}
+        Clinic: {clinic_code}
+
+        Reply YES in Sahyog → Appointments, or confirm in the app.
+        If you cannot attend, cancel so the waitlist can be offered the slot.
+    hi:
+      subject: "कृपया अपॉइंटमेंट कन्फर्म करें"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        कृपया अपने अपॉइंटमेंट की पुष्टि करें।
+
+        डॉक्टर: {doctor_name}
+        समय: {starts_at}
+        क्लिनिक: {clinic_code}
+
+        Sahyog → अपॉइंटमेंट में पुष्टि करें, या रद्द करें ताकि waitlist को स्लॉट मिल सके।
+    mr:
+      subject: "कृपया अपॉइंटमेंटची खात्री करा"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        कृपया तुमच्या अपॉइंटमेंटची खात्री करा.
+
+        डॉक्टर: {doctor_name}
+        वेळ: {starts_at}
+        क्लिनिक: {clinic_code}
+
+        Sahyog → अपॉइंटमेंट मध्ये कन्फर्म करा, किंवा रद्द करा जेणेकरून waitlist ला स्लॉट मिळेल.
+  appointment_reminder:
+    en:
+      subject: "Appointment reminder"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        Reminder: you have an upcoming appointment.
+
+        Doctor: {doctor_name}
+        When: {starts_at}
+        Clinic: {clinic_code}
+        Duration: {duration_minutes} minutes
+
+        A calendar invite (.ics) is attached when email delivery is enabled.
+        Arrive a few minutes early. Sign in to Sahyog for directions or changes.
+    hi:
+      subject: "अपॉइंटमेंट याद दिलाना"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        याद दिलाना: आपका अपॉइंटमेंट आने वाला है।
+
+        डॉक्टर: {doctor_name}
+        समय: {starts_at}
+        क्लिनिक: {clinic_code}
+        अवधि: {duration_minutes} मिनट
+
+        ईमेल पर कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
+    mr:
+      subject: "अपॉइंटमेंटची आठवण"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        आठवण: तुमची अपॉइंटमेंट लवकरच आहे.
+
+        डॉक्टर: {doctor_name}
+        वेळ: {starts_at}
+        क्लिनिक: {clinic_code}
+        कालावधी: {duration_minutes} मिनिटे
+
+        ईमेलवर कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
+  appointment_cancelled:
+    en:
+      subject: "Appointment cancelled"
+      subject_detail: "{doctor_name} · {starts_at}"
+      body: |
+        Your appointment has been cancelled.
+
+        Doctor: {doctor_name}
+        Was scheduled for: {starts_at}
+        Clinic: {clinic_code}
+
+        A cancellation calendar update (.ics) is attached when email delivery is enabled.
+        Book a new slot from Sahyog → Appointments if you still need care.
+    hi:
+      subject: "अपॉइंटमेंट रद्द"
+      subject_detail: "{doctor_name} · {starts_at}"
+      body: |
+        आपका अपॉइंटमेंट रद्द कर दिया गया है।
+
+        डॉक्टर: {doctor_name}
+        निर्धारित था: {starts_at}
+        क्लिनिक: {clinic_code}
+
+        ईमेल पर रद्दीकरण कैलेंडर अपडेट (.ics) संलग्न हो सकता है।
+    mr:
+      subject: "अपॉइंटमेंट रद्द"
+      subject_detail: "{doctor_name} · {starts_at}"
+      body: |
+        तुमची अपॉइंटमेंट रद्द झाली आहे.
+
+        डॉक्टर: {doctor_name}
+        नियोजित होती: {starts_at}
+        क्लिनिक: {clinic_code}
+
+        ईमेलवर रद्द कॅलेंडर अपडेट (.ics) जोडले जाऊ शकते.
+  appointment_rescheduled:
+    en:
+      subject: "Appointment rescheduled"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        Your appointment has been moved.
+
+        Doctor: {doctor_name}
+        New time: {starts_at}
+        Clinic: {clinic_code}
+        Duration: {duration_minutes} minutes
+
+        An updated calendar invite (.ics) is attached when email delivery is enabled.
+        Sign in to Sahyog → Appointments to confirm the new slot.
+    hi:
+      subject: "अपॉइंटमेंट बदला गया"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        आपका अपॉइंटमेंट बदल दिया गया है।
+
+        डॉक्टर: {doctor_name}
+        नया समय: {starts_at}
+        क्लिनिक: {clinic_code}
+        अवधि: {duration_minutes} मिनट
+
+        ईमेल पर अद्यतन कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
+    mr:
+      subject: "अपॉइंटमेंट पुन्हा नियोजित"
+      subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
+      body: |
+        तुमची अपॉइंटमेंट बदलली आहे.
+
+        डॉक्टर: {doctor_name}
+        नवीन वेळ: {starts_at}
+        क्लिनिक: {clinic_code}
+        कालावधी: {duration_minutes} मिनिटे
+
+        ईमेलवर अद्ययावत कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
+  document_ready:
+    en:
+      subject: "A document is ready"
+      subject_detail: "{document_kind}"
+      body: |
+        A document has been added to your Sahyog account.
+
+        Kind: {document_kind}
+
+        Sign in → Records to review it securely.
+        This email does not include the document contents or clinical text.
+    hi:
+      subject: "एक दस्तावेज़ तैयार है"
+      subject_detail: "{document_kind}"
+      body: |
+        आपके Sahyog खाते में एक दस्तावेज़ जोड़ा गया है।
+
+        प्रकार: {document_kind}
+
+        सुरक्षित रूप से देखने के लिए साइन इन → रिकॉर्ड्स खोलें।
+        इस ईमेल में दस्तावेज़ की सामग्री नहीं है।
+    mr:
+      subject: "एक दस्तऐवज तयार आहे"
+      subject_detail: "{document_kind}"
+      body: |
+        तुमच्या Sahyog खात्यात एक दस्तऐवज जोडला आहे.
+
+        प्रकार: {document_kind}
+
+        सुरक्षितपणे पाहण्यासाठी साइन इन → रेकॉर्ड्स उघडा.
+        या ईमेलमध्ये दस्तऐवजाची सामग्री नाही.
+  staff_handoff:
+    en:
+      subject: "Staff handoff"
+      subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
+      body: |
+        An emergency / staff handoff needs acknowledgement.
+
+        Priority: {priority}
+        Clinic: {clinic_code}
+        Ticket: {handoff_id}
+        SLA due: {sla_due_at}
+        Queue: {queue}
+        Rules: {rule_ids}
+        Resource: {resource_type} / {resource_id_short}
+
+        Action: Open Escalations → Assign to me within the SLA, then call the desk path.
+        A ticket brief is attached (no patient name or clinical free text).
+        Open: {action_url}
+    hi:
+      subject: "स्टाफ हैंडऑफ"
+      subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
+      body: |
+        आपातकालीन / स्टाफ हैंडऑफ को स्वीकृति चाहिए।
+
+        प्राथमिकता: {priority}
+        क्लिनिक: {clinic_code}
+        टिकट: {handoff_id}
+        SLA समय: {sla_due_at}
+        कतार: {queue}
+        नियम: {rule_ids}
+        संसाधन: {resource_type} / {resource_id_short}
+
+        कार्रवाई: Escalations खोलें → SLA में Assign to me, फिर डेस्क पथ कॉल करें।
+        टिकट संक्षेप संलग्न है (बिना मरीज़ नाम / नैदानिक पाठ)।
+        लिंक: {action_url}
+    mr:
+      subject: "स्टाफ हँडऑफ"
+      subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
+      body: |
+        आपत्कालीन / स्टाफ हँडऑफला स्वीकृती हवी आहे.
+
+        प्राधान्य: {priority}
+        क्लिनिक: {clinic_code}
+        तिकीट: {handoff_id}
+        SLA वेळ: {sla_due_at}
+        रांग: {queue}
+        नियम: {rule_ids}
+        संसाधन: {resource_type} / {resource_id_short}
+
+        कृती: Escalations उघडा → SLA मध्ये Assign to me, नंतर डेस्क पथ कॉल करा.
+        तिकीट सारांश जोडले आहे (रुग्ण नाव / क्लिनिकल मजकूर नाही).
+        लिंक: {action_url}
+  delivery_failure:
+    en:
+      subject: "Notification delivery failed"
+      subject_detail: "{channel}"
+      body: |
+        A outbound notification could not be delivered after the configured retries.
+
+        Channel: {channel}
+
+        Check adapter credentials, quiet-hours queue, and recipient verification.
+        Open Admin → Notification deliveries for the batch detail.
+    hi:
+      subject: "सूचना वितरण विफल"
+      subject_detail: "{channel}"
+      body: |
+        कॉन्फ़िगर किए गए पुनः प्रयासों के बाद आउटबाउंड सूचना वितरित नहीं हो सकी।
+
+        चैनल: {channel}
+
+        एडाप्टर क्रेडेंशियल, शांत-घंटे कतार और प्राप्तकर्ता सत्यापन जाँचें।
+    mr:
+      subject: "सूचना वितरण अयशस्वी"
+      subject_detail: "{channel}"
+      body: |
+        कॉन्फिगर केलेल्या पुनःप्रयत्नांनंतर आउटबाउंड सूचना वितरित होऊ शकली नाही.
+
+        चॅनेल: {channel}
+
+        अॅडॉप्टर क्रेडेन्शियल्स, शांत-तास रांग आणि प्राप्तकर्ता पडताळणी तपासा.
+  ops_alert:
+    en:
+      subject: "Operations alert"
+      subject_detail: "{alert_summary}"
+      body: |
+        Sahyog operations alert
+
+        {alert}
+
+        Follow the linked runbook / Escalations console.
+        An alert brief is attached when email delivery is enabled.
+        Open: {action_url}
+    hi:
+      subject: "संचालन चेतावनी"
+      subject_detail: "{alert_summary}"
+      body: |
+        Sahyog संचालन चेतावनी
+
+        {alert}
+
+        संबंधित रनबुक / Escalations कंसोल देखें।
+        ईमेल पर संक्षेप संलग्न हो सकता है।
+        लिंक: {action_url}
+    mr:
+      subject: "संचालन सूचना"
+      subject_detail: "{alert_summary}"
+      body: |
+        Sahyog संचालन सूचना
+
+        {alert}
+
+        संबंधित रनबुक / Escalations कन्सोल पाहा.
+        ईमेलवर सारांश जोडले जाऊ शकते.
+        लिंक: {action_url}

@@ -1,0 +1,11 @@
+sku,drug_name,form,strength,quantity,clinic_code,updated_at,source
+SKU-0001,Amoxicillin,capsule,500 mg,120,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0002,Paracetamol,tablet,650 mg,300,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0003,Metformin,tablet,500 mg,80,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0004,Salbutamol,inhaler,100 mcg,15,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0005,ORS sachet,powder,,200,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0006,Amoxicillin,capsule,500 mg,60,KOTHRUD,2026-10-31T02:00:00Z,demo-stock
+SKU-0007,Paracetamol,tablet,650 mg,180,KOTHRUD,2026-10-31T02:00:00Z,demo-stock
+SKU-0008,Metformin,tablet,500 mg,40,KOTHRUD,2026-10-31T02:00:00Z,demo-stock
+SKU-0009,Ibuprofen,tablet,400 mg,90,BANER,2026-10-31T02:00:00Z,demo-stock
+SKU-0010,Cetirizine,tablet,10 mg,150,BANER,2026-10-31T02:00:00Z,demo-stock

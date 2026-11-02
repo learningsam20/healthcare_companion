@@ -1,0 +1,115 @@
+# Channel behaviour only. Tokens, passwords and SMTP credentials come from env/vault.
+# In-app notifications are the source of truth; other channels are best-effort copies
+# and never carry clinical detail, patient names or access tokens.
+# Email may attach operational artefacts only (ICS invites, staff ticket/ops briefs).
+version: 1
+channels:
+  in_app:
+    enabled: true
+    source_of_truth: true
+  email:
+    enabled: true
+    adapter: smtp
+    provider_label: SMTP
+    from_env: EMAIL_FROM
+    reply_to_env: EMAIL_REPLY_TO
+    allow_attachments: true
+    allowed_attachment_kinds: [ics, ticket_brief, ops_brief]
+    template_family: neutral
+  sms:
+    enabled: false
+    adapter: http
+    provider_label: SMS provider
+    sender_env: SMS_SENDER_ID
+    max_segments: 2
+    allow_clinical_detail: false
+  slack_staff:
+    enabled: true
+    adapter: bot
+    workspace_env: SLACK_STAFF_WORKSPACE_ID
+    channel_allowlist_env: SLACK_ALLOWED_CHANNELS
+    bot_token_env: SLACK_STAFF_BOT_TOKEN
+    require_verified_user_map: true
+    allow_channel_mention: false
+    audience: staff
+  slack_patient:
+    enabled: true
+    adapter: bot
+    workspace_env: SLACK_PATIENT_WORKSPACE_ID
+    channel_allowlist_env: SLACK_PATIENT_ALLOWED_CHANNELS
+    bot_token_env: SLACK_PATIENT_BOT_TOKEN
+    require_verified_user_map: true
+    require_explicit_opt_in: true
+    allow_channel_mention: false
+    audience: patient
+quiet_hours:
+  enabled: true
+  start: "21:00"
+  end: "08:00"
+  timezone: Asia/Kolkata
+  applies_to: [sms, slack_patient, email]
+  emergency_exception: true
+retry:
+  max_attempts: 3
+  backoff_seconds: [30, 120, 600]
+  dead_letter: true
+templates:
+  - id: booking_confirmed
+    version: 1
+    channels: [in_app, email, sms, slack_patient]
+    clinical_detail: false
+    subject_key: notifications.booking_confirmed.subject
+    body_key: notifications.booking_confirmed.body
+  - id: booking_confirm_reply
+    version: 1
+    channels: [in_app, email, sms, slack_patient]
+    clinical_detail: false
+    subject_key: notifications.booking_confirm_reply.subject
+    body_key: notifications.booking_confirm_reply.body
+  - id: appointment_reminder
+    version: 1
+    channels: [in_app, email, sms, slack_patient]
+    clinical_detail: false
+    subject_key: notifications.appointment_reminder.subject
+    body_key: notifications.appointment_reminder.body
+  - id: appointment_cancelled
+    version: 1
+    channels: [in_app, email, sms]
+    clinical_detail: false
+    subject_key: notifications.appointment_cancelled.subject
+    body_key: notifications.appointment_cancelled.body
+  - id: appointment_rescheduled
+    version: 1
+    channels: [in_app, email, sms, slack_patient]
+    clinical_detail: false
+    subject_key: notifications.appointment_rescheduled.subject
+    body_key: notifications.appointment_rescheduled.body
+  - id: document_ready
+    version: 1
+    channels: [in_app, email]
+    clinical_detail: false
+    subject_key: notifications.document_ready.subject
+    body_key: notifications.document_ready.body
+  - id: staff_handoff
+    version: 1
+    channels: [in_app, email, slack_staff]
+    clinical_detail: false
+    subject_key: notifications.staff_handoff.subject
+    body_key: notifications.staff_handoff.body
+  - id: delivery_failure
+    version: 1
+    channels: [in_app, email, slack_staff]
+    clinical_detail: false
+    subject_key: notifications.delivery_failure.subject
+    body_key: notifications.delivery_failure.body
+  - id: ops_alert
+    version: 1
+    channels: [in_app, email, slack_staff]
+    clinical_detail: false
+    subject_key: notifications.ops_alert.subject
+    body_key: notifications.ops_alert.body
+settings:
+  send_external_default: false
+  require_approved_template: true
+  require_verified_recipient: true
+  store_rendered_body: false

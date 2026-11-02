@@ -1,0 +1,17 @@
+{
+  "synthetic": false,
+  "source": "scripts/stt_wer_live.sh",
+  "mcp_status": "ok",
+  "engine": "faster-whisper",
+  "adapter": "local",
+  "audio_url": "http://wer-audio-fixture/4507-16021-0012.wav",
+  "cases": [
+    {
+      "id": "librispeech-4507-16021-0012",
+      "reference": "why should one halt on the way",
+      "hypothesis": "Why should one halt on the way?",
+      "modality": "stt",
+      "language": "en"
+    }
+  ]
+}

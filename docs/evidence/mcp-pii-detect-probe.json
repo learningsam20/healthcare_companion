@@ -1,0 +1,33 @@
+{
+  "tool": "detect",
+  "service": "mcp-pii",
+  "trace_id": "g28-composite-prove",
+  "image": "sahyog-api:local",
+  "torch": "2.5.1",
+  "cuda": false,
+  "elapsed_seconds": 7.79,
+  "http_status": 200,
+  "probed_at": "2026-10-31T13:33:19Z",
+  "result": {
+    "engine": "composite",
+    "not_clinical_grade": false,
+    "count": 3,
+    "entities": [
+      {
+        "type": "person",
+        "start": 8,
+        "end": 20
+      },
+      {
+        "type": "email_address",
+        "start": 30,
+        "end": 44
+      },
+      {
+        "type": "phone_number",
+        "start": 51,
+        "end": 66
+      }
+    ]
+  }
+}

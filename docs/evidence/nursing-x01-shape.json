@@ -1,0 +1,111 @@
+{
+  "cases": [
+    {
+      "errors": [],
+      "id": "nx01-01",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-02",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-03",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-04",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-05",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-06",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-07",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-08",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-09",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-10",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-11",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-12",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-13",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-14",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-15",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-16",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-17",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-18",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-19",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "id": "nx01-20",
+      "ok": true
+    }
+  ],
+  "dataset": "nursing_x01",
+  "failures": [],
+  "limitations": [
+    "Intent/citation shape checks only; clinical quality not scored.",
+    "Live model drafts are not exercised by this harness."
+  ],
+  "status": "passed"
+}

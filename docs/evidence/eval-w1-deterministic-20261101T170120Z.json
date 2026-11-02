@@ -1,0 +1,312 @@
+{
+  "alias": "external_judge",
+  "created_at": "2026-11-01T17:01:21.608917+00:00",
+  "error": null,
+  "framework": "deterministic",
+  "run_id": "9232fc93-66ca-4baf-8339-c1c6b453b64a",
+  "runs": [
+    {
+      "case_count": 30,
+      "cases": [
+        {
+          "actual_rules": [
+            "RF-CHEST-PAIN"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-001",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-CHEST-PAIN"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-002",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-CHEST-PAIN"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-003",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-CHEST-PAIN"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-004",
+          "language": "mr-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-STROKE"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-005",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-STROKE"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-006",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-BREATHLESS"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-007",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-BREATHLESS"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-008",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-BLEEDING"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-009",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-BLEEDING"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-010",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-SUICIDE"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-011",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-SUICIDE"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-012",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-ANAPHYLAXIS"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-013",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-PREGNANCY-BLEEDING"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-014",
+          "language": "hi-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-HIGH-FEVER-INFANT"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-015",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-HIGH-FEVER-INFANT"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-016",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-HEAD-INJURY"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-017",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-HEAD-INJURY"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-018",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [
+            "RF-HEAD-INJURY"
+          ],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-rf-019",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-001",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-002",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-003",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-004",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-005",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-006",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-007",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-008",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-009",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-010",
+          "language": "en-IN",
+          "passed": true
+        },
+        {
+          "actual_rules": [],
+          "check": "red_flag",
+          "failures": [],
+          "id": "w1-neg-011",
+          "language": "en-IN",
+          "passed": true
+        }
+      ],
+      "dataset_hash": "110574f685c2414d6173a9beacfbec3a7716a3b8022678110f041c0d0b1a5e1e",
+      "error": null,
+      "failed_cases": 0,
+      "framework": "deterministic",
+      "framework_version": "1",
+      "metrics": {
+        "case_pass_rate": 1.0,
+        "red_flag_false_positive_rate": 0.0,
+        "red_flag_recall": 1.0
+      },
+      "passed_cases": 30,
+      "status": "passed",
+      "suite": "w1",
+      "thresholds": {
+        "case_pass_rate": 1.0,
+        "red_flag_false_positive_rate": 0.0,
+        "red_flag_recall": 1.0
+      }
+    }
+  ],
+  "status": "passed",
+  "stub": false
+}

@@ -1,0 +1,10 @@
+{
+  "generated_at": "20261031T170000Z",
+  "url": "http://127.0.0.1:5736/api/v2/alerts",
+  "http_status": 200,
+  "curl_rc": 0,
+  "body_excerpt": "",
+  "error": "",
+  "status": "passed",
+  "note": "Actual Alertmanager response; not a signed on-call drill."
+}

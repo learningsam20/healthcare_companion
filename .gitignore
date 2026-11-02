@@ -1,0 +1,134 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.import_linter_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Node
+node_modules/
+dist/
+.vite/
+coverage/
+playwright-report/
+blob-report/
+test-results/
+
+# Playwright auth / session dumps (cookies, tokens)
+**/e2e/.auth/
+**/.auth/
+storageState*.json
+**/playwright/.cache/
+
+# Environment and secrets — never commit
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.crt
+!**/certs/*.example.crt
+credentials.json
+**/credentials.json
+**/service-account*.json
+**/google-services.json
+secrets.yaml
+secrets.yml
+**/secrets.local.*
+*.secret
+*.secrets
+.vault-token
+.vault-token.*
+kubeconfig
+kubeconfig.*
+.kube/
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Local data and artefacts
+.data/
+data/models/
+data/stock/
+data/raw/
+data/wheels/
+minio-data/
+postgres-data/
+redis-data/
+backups/
+evals/reports/
+load/
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Logs and OS scratch
+*.log
+nohup.out
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.swp
+*~
+*.tmp
+*.temp
+*.orig
+*.bak
+*.rej
+.tmp/
+.temp/
+.cache/
+sh-thd-*/
+
+# IDE / editor / agent — never commit
+.idea/
+.vscode/
+.cursor/
+*.iml
+*.code-workspace
+.fleet/
+.eclipse/
+*.sublime-project
+*.sublime-workspace
+
+# Interim plans, memos, scratch checks — never commit
+memo/
+**/WIP*
+**/wip/
+**/*interim*
+**/*.draft.md
+**/*.draft.*
+**/*.plan.md
+**/plans/
+**/scratch/
+**/scratchpad/
+**/TODO.local*
+**/CHECK.local*
+**/*-scratch*
+**/*_scratch*
+# Scoring gate: AI-COLLABORATION.md must remain in the repository (never ignore it).
+
+# Demo recording — final MP4 only
+docs/evidence/demo-recording/*
+!docs/evidence/demo-recording/sahyog-demo-6min.mp4
+
+# Generated contracts (regenerated in CI)
+packages/contracts/generated/
+
+# Rendered Kubernetes manifests
+deploy/k8s/rendered/

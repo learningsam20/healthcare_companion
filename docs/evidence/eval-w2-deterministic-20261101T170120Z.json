@@ -1,0 +1,307 @@
+{
+  "alias": "external_judge",
+  "created_at": "2026-11-01T17:01:21.608838+00:00",
+  "error": null,
+  "framework": "deterministic",
+  "run_id": "f06a71a4-2862-4d0a-bf57-e1288b582f84",
+  "runs": [
+    {
+      "case_count": 30,
+      "cases": [
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-001",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "forbidden"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-002",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "missing"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-003",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-004",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "missing"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-005",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-006",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-007",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-008",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-009",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "stale"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-010",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-011",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-012",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-013",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "missing"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-014",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "forbidden"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-015",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-016",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved",
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-017",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved",
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-018",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "forbidden",
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-019",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "stale"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-020",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "forbidden"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-021",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-022",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "forbidden"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-023",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-024",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-025",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-026",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "stale",
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-027",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved",
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-028",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "resolved"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-029",
+          "passed": true
+        },
+        {
+          "actual_statuses": [
+            "missing"
+          ],
+          "check": "provenance",
+          "failures": [],
+          "id": "w2-prov-030",
+          "passed": true
+        }
+      ],
+      "dataset_hash": "749f579ef81d63c8eb60febf1ba6bfa67d4e8048e358ab665c311017d96729f6",
+      "error": null,
+      "failed_cases": 0,
+      "framework": "deterministic",
+      "framework_version": "1",
+      "metrics": {
+        "case_pass_rate": 1.0,
+        "provenance_integrity": 1.0
+      },
+      "passed_cases": 30,
+      "status": "passed",
+      "suite": "w2",
+      "thresholds": {
+        "case_pass_rate": 1.0,
+        "provenance_integrity": 1.0
+      }
+    }
+  ],
+  "status": "passed",
+  "stub": false
+}

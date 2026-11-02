@@ -1,0 +1,25 @@
+{
+  "description": "Non-PHI audio fixtures for the G-05 STT/WER pipeline. Public phrases only; no patient, clinician or clinical content.",
+  "synthetic": true,
+  "wer_evidence": false,
+  "wer_evidence_note": "These files exercise the STT contract and give scripts/stt_wer_live.sh something real to score. A single machine-spoken English pangram is NOT evidence of clinical STT quality (no Hindi/Marathi/Hinglish, no accents, no clinical vocabulary, no human speakers). G-05 closure still needs human-recorded or public-corpus audio with human references.",
+  "files": [
+    {
+      "audio": "pangram_en_tts.wav",
+      "reference": "pangram_en_tts.reference.txt",
+      "sha256": "0497e70d431e9d827c10bbaff120c9cbabf0834a747107f83cb161dc1f759880",
+      "format": "RIFF/WAVE PCM s16le, 16000 Hz, mono",
+      "duration_seconds": 2.67,
+      "language": "en-US",
+      "phi": false,
+      "provenance": {
+        "kind": "synthetic_tts",
+        "text_source": "Traditional English pangram (public domain phrase)",
+        "generator": "macOS `say -v Samantha` (Apple system voice) then `afconvert -f WAVE -d LEI16@16000 -c 1`",
+        "generated_on": "2026-10-31",
+        "generated_by": "local operator",
+        "licence_note": "Generated locally from a public-domain phrase; voice output used for internal test fixtures only, not for redistribution as a speech dataset."
+      }
+    }
+  ]
+}

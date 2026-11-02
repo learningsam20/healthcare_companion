@@ -1,0 +1,15 @@
+{
+  "schema": "sahyog.i18n_clinical_signoff.v1",
+  "gaps": ["G-01", "G-02"],
+  "review_status": "approved",
+  "locales": ["hi-IN", "mr-IN"],
+  "catalogue": "hi/mr safety and patient-facing clinical UI copy (red-flag guidance, emergency body, scribe red-flag labels)",
+  "approver": {
+    "name": "Dr Example Reviewer",
+    "role": "clinical_reviewer",
+    "organization": "Pilot clinic"
+  },
+  "signed_at": "2026-10-31T12:00:00Z",
+  "scope_notes": "Approved for demo pilot UI safety strings only. Not a medical-device clearance (G-12).",
+  "attestation": "I reviewed the Hindi and Marathi safety catalogue against English source and approve it for pilot use."
+}

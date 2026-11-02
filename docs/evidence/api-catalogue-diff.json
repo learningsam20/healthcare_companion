@@ -1,0 +1,855 @@
+{
+  "as_built_only": [
+    {
+      "method": "DELETE",
+      "path": "/api/v1/abdm/patients/{patient_id}/links/{system}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/me/deletion-request"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/pharmacy/stock/{item_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/abdm/patients/{patient_id}/links"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/abdm/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/abdm/stub/equality"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/flags/changes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/load-guard"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/fhir/patients/{patient_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/fhir/patients/{patient_id}/encounters"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/records/chunks/{chunk_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/records/documents"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/records/documents/{document_id}/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/records/medications"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/scheduling/appointments/{appointment_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/scheduling/doctors"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/scheduling/slots"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/deletion-request"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/memory/semantic"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/notifications/contacts/list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/notifications/slack-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/notifications/templates"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/nursing/patients/{patient_id}/summaries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/nursing/summaries/{summary_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/patients"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pharmacy/stock/lookup"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pharmacy/stock/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pharmacy/stock/typeahead"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/records/documents/{document_id}/chunks"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/records/medications"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/encounters"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/encounters/{encounter_id}/transcript"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/stock"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/pharmacy/stock/{item_id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/scribe/runs/{run_id}/draft"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/compliance/{kind}/attest"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/analytics/finops/reconcile"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/analytics/finops/what-if"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/runs/{run_id}/retry"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/handoffs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/incidents"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/records/search"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduling/cancel"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduling/confirm"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduling/hold"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduling/reschedule"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/contacts/{contact_id}/request-verification"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/memory/purge"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/contacts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/contacts/{contact_id}/request-verification"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/contacts/{contact_id}/verify"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/send"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/nursing/summaries/{summary_id}/decision"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/nursing/summary"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pharmacy/stock"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pharmacy/stock/import"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/records/ask"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/records/search"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/encounters/{encounter_id}/close"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/encounters/{encounter_id}/transcripts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/notes/{note_id}/corrections"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/runs/{run_id}/acknowledge"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/runs/{run_id}/reject"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/runs/{run_id}/sign"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/abdm/patients/{patient_id}/link"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/fhir/patients/{patient_id}/link"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/memory"
+    }
+  ],
+  "counts": {
+    "as_built_only": 68,
+    "deferred_not_built": 5,
+    "invalid_rename_targets": 0,
+    "matched": 57,
+    "proposed_out_of_scope": 7,
+    "renamed": 45,
+    "unresolved": 0
+  },
+  "deferred_not_built": [
+    {
+      "method": "PATCH",
+      "path": "/api/v1/me/preferences",
+      "reason": "Preferences are the memory API (PUT /me/memory)."
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/me/memory/settings",
+      "reason": "Opt-out is the opt_out key + POST /me/memory/purge."
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/runs/{id}/sources",
+      "reason": "Sources are on notes, not on runs."
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/runs/{id}/events",
+      "reason": "Scribe SSE progress stream not built."
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/scribe/runs/{id}/resume",
+      "reason": "Scribe run resume endpoint not built."
+    }
+  ],
+  "design_rows": 114,
+  "generated_at": "2026-10-31T15:30:00.416873+00:00",
+  "invalid_rename_targets": [],
+  "matched": [
+    {
+      "method": "GET",
+      "path": "/healthz"
+    },
+    {
+      "method": "GET",
+      "path": "/readyz"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/meta"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/contacts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/contacts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/contacts/{id}/verify"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/me/contacts/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/contexts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/contexts/{consent_id}/activate"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/me/context"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/memory"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/me/memory/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/deletion-request"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/sessions/{id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/chat/sessions/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/chat/sessions/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/sessions/{id}/messages"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/messages/{message_id}/sources"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/runs/{run_id}/sources"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/sessions/{id}/messages"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/runs/{run_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/runs/{run_id}/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/runs/{run_id}/stop"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/runs/{run_id}/resume"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat/messages/{message_id}/feedback"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctors"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctors/{id}/slots"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/appointments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/appointments/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/{id}/cancel"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/{id}/reschedule"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/{id}/override"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/handoffs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/handoffs/{id}/assign"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/handoffs/{id}/resolve"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/scribe/runs/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/consents"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/consents"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/review-queue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/incidents"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/incidents/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/model-routes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/prompts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notification-deliveries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/overview"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/quality"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/compliance"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/eval-runs/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/finops"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/finops/budgets"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/finops/reconciliation"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/finops/savings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analytics/insights"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/costs"
+    }
+  ],
+  "proposed_out_of_scope": [
+    {
+      "method": "GET",
+      "path": "/metrics",
+      "reason": "Telemetry is OTLP push to the collector; no API pull endpoint."
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "reason": "Keycloak user admin is an operator script (keycloak_admin.py)."
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/users/invite",
+      "reason": "Operator script: scripts/add-user.sh."
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/admin/users/{id}/roles",
+      "reason": "Operator script: scripts/add-user.sh --confirm."
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/analytics/refresh",
+      "reason": "Snapshot is an ARQ cron job; no manual HTTP trigger."
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/data-catalogue",
+      "reason": "Catalogue lives in docs/data-contracts."
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/health",
+      "reason": "Covered by /healthz, /readyz and scripts/status.sh."
+    }
+  ],
+  "renamed": [
+    {
+      "as_built": "GET /api/v1/auth/me",
+      "method": "GET",
+      "note": "identity under /auth",
+      "path": "/api/v1/me"
+    },
+    {
+      "as_built": "GET /api/v1/notifications",
+      "method": "GET",
+      "note": "own by default",
+      "path": "/api/v1/me/notifications"
+    },
+    {
+      "as_built": "POST /api/v1/notifications/{notification_id}/read",
+      "method": "POST",
+      "note": "owner-only",
+      "path": "/api/v1/me/notifications/{id}/read"
+    },
+    {
+      "as_built": "GET /api/v1/notifications/{notification_id}",
+      "method": "GET",
+      "note": "deliveries embedded in detail",
+      "path": "/api/v1/me/notifications/{id}/deliveries"
+    },
+    {
+      "as_built": "GET /api/v1/me/export",
+      "method": "POST",
+      "note": "GET, not POST",
+      "path": "/api/v1/me/export"
+    },
+    {
+      "as_built": "GET /api/v1/doctors/{doctor_name}/slots",
+      "method": "GET",
+      "note": "per doctor",
+      "path": "/api/v1/slots"
+    },
+    {
+      "as_built": "POST /api/v1/records/documents",
+      "method": "POST",
+      "note": "single multipart upload; two-step presign not built",
+      "path": "/api/v1/documents/uploads"
+    },
+    {
+      "as_built": "POST /api/v1/records/documents/{document_id}/ingest",
+      "method": "POST",
+      "note": "ingest trigger replaces upload-complete",
+      "path": "/api/v1/documents/{id}/complete"
+    },
+    {
+      "as_built": "GET /api/v1/records/documents",
+      "method": "GET",
+      "note": "records prefix",
+      "path": "/api/v1/documents"
+    },
+    {
+      "as_built": "GET /api/v1/records/documents/{document_id}",
+      "method": "GET",
+      "note": "records prefix",
+      "path": "/api/v1/documents/{id}"
+    },
+    {
+      "as_built": "GET /api/v1/records/documents/{document_id}",
+      "method": "GET",
+      "note": "status is a field of document detail",
+      "path": "/api/v1/documents/{id}/status"
+    },
+    {
+      "as_built": "DELETE /api/v1/records/documents/{document_id}",
+      "method": "DELETE",
+      "note": "records prefix",
+      "path": "/api/v1/documents/{id}"
+    },
+    {
+      "as_built": "GET /api/v1/records/documents/{document_id}/download",
+      "method": "GET",
+      "note": "streamed download, not a presigned URL",
+      "path": "/api/v1/documents/{id}/download-url"
+    },
+    {
+      "as_built": "GET /api/v1/chat/citations/{chunk_id}",
+      "method": "GET",
+      "note": "chat prefix",
+      "path": "/api/v1/citations/{chunk_id}"
+    },
+    {
+      "as_built": "POST /api/v1/scribe/encounters",
+      "method": "POST",
+      "note": "scribe prefix",
+      "path": "/api/v1/encounters"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/encounters/{encounter_id}",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/encounters/{id}"
+    },
+    {
+      "as_built": "POST /api/v1/scribe/encounters/{encounter_id}/audio",
+      "method": "POST",
+      "note": "multipart audio upload",
+      "path": "/api/v1/encounters/{id}/audio/uploads"
+    },
+    {
+      "as_built": "POST /api/v1/scribe/encounters/{encounter_id}/audio/{transcript_id}/complete",
+      "method": "POST",
+      "note": "transcript id",
+      "path": "/api/v1/encounters/{id}/audio/{audio_id}/complete"
+    },
+    {
+      "as_built": "POST /api/v1/scribe/encounters/{encounter_id}/runs",
+      "method": "POST",
+      "note": "shorter name",
+      "path": "/api/v1/encounters/{id}/scribe-runs"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/notes",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/notes/{note_id}",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes/{id}"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/notes/{note_id}/versions",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes/{id}/versions"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/notes/{note_id}/sources",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes/{id}/sources"
+    },
+    {
+      "as_built": "GET /api/v1/scribe/notes/{note_id}/download",
+      "method": "GET",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes/{id}/download"
+    },
+    {
+      "as_built": "POST /api/v1/scribe/notes/{note_id}/reservations",
+      "method": "POST",
+      "note": "scribe prefix",
+      "path": "/api/v1/notes/{id}/reservations"
+    },
+    {
+      "as_built": "GET /api/v1/pharmacy/stock",
+      "method": "GET",
+      "note": "pharmacy prefix",
+      "path": "/api/v1/stock"
+    },
+    {
+      "as_built": "GET /api/v1/pharmacy/stock/{item_id}",
+      "method": "GET",
+      "note": "item id, not medicine id",
+      "path": "/api/v1/stock/{medicine_id}"
+    },
+    {
+      "as_built": "GET /api/v1/consents",
+      "method": "GET",
+      "note": "list only; no get-by-id",
+      "path": "/api/v1/consents/{id}"
+    },
+    {
+      "as_built": "POST /api/v1/consents/{consent_id}/revoke",
+      "method": "DELETE",
+      "note": "revoke action, not DELETE",
+      "path": "/api/v1/consents/{id}"
+    },
+    {
+      "as_built": "GET /api/v1/admin/audit",
+      "method": "GET",
+      "note": "admin prefix",
+      "path": "/api/v1/audit/events"
+    },
+    {
+      "as_built": "GET /api/v1/admin/audit/export",
+      "method": "GET",
+      "note": "admin prefix",
+      "path": "/api/v1/audit/events/export"
+    },
+    {
+      "as_built": "POST /api/v1/review-queue/{task_id}/claim",
+      "method": "PATCH",
+      "note": "claim action",
+      "path": "/api/v1/review-queue/{id}"
+    },
+    {
+      "as_built": "POST /api/v1/review-queue/{task_id}/close",
+      "method": "POST",
+      "note": "close action",
+      "path": "/api/v1/review-queue/{id}/resolve"
+    },
+    {
+      "as_built": "GET /api/v1/admin/flags",
+      "method": "GET",
+      "note": "shorter name",
+      "path": "/api/v1/admin/feature-flags"
+    },
+    {
+      "as_built": "PATCH /api/v1/admin/flags/{key}",
+      "method": "PATCH",
+      "note": "shorter name",
+      "path": "/api/v1/admin/feature-flags/{key}"
+    },
+    {
+      "as_built": "GET /api/v1/analytics/evaluations",
+      "method": "GET",
+      "note": "full word",
+      "path": "/api/v1/analytics/evals"
+    },
+    {
+      "as_built": "GET /api/v1/analytics/evaluations",
+      "method": "GET",
+      "note": "run list is part of evaluations",
+      "path": "/api/v1/analytics/eval-runs"
+    },
+    {
+      "as_built": "GET /api/v1/analytics/finops",
+      "method": "GET",
+      "note": "usage in summary",
+      "path": "/api/v1/analytics/finops/usage"
+    },
+    {
+      "as_built": "PUT /api/v1/analytics/finops/budgets",
+      "method": "PATCH",
+      "note": "bulk PUT",
+      "path": "/api/v1/analytics/finops/budgets/{id}"
+    },
+    {
+      "as_built": "POST /api/v1/analytics/finops/savings",
+      "method": "PATCH",
+      "note": "savings recorded via POST",
+      "path": "/api/v1/analytics/finops/savings/{id}"
+    },
+    {
+      "as_built": "GET /api/v1/analytics/finops/export",
+      "method": "POST",
+      "note": "GET",
+      "path": "/api/v1/analytics/finops/export"
+    },
+    {
+      "as_built": "GET /api/v1/analytics/metrics",
+      "method": "GET",
+      "note": "full catalogue, filter client-side",
+      "path": "/api/v1/analytics/metrics/{key}"
+    },
+    {
+      "as_built": "POST /api/v1/analytics/insights/{insight_id}/decision",
+      "method": "POST",
+      "note": "decision verb",
+      "path": "/api/v1/analytics/insights/{id}/action"
+    },
+    {
+      "as_built": "GET /api/v1/admin/governance",
+      "method": "GET",
+      "note": "governance settings",
+      "path": "/api/v1/admin/config"
+    },
+    {
+      "as_built": "PATCH /api/v1/admin/governance",
+      "method": "PATCH",
+      "note": "governance settings (body keys)",
+      "path": "/api/v1/admin/config/{key}"
+    }
+  ],
+  "unresolved": []
+}

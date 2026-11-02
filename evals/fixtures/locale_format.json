@@ -1,0 +1,10 @@
+{
+  "dataset": "locale_format_g20",
+  "cases": [
+    {"id": "lf-01", "locale": "en-IN", "kind": "currency", "value": 1500.5, "expect_contains": ["₹", "1,500"]},
+    {"id": "lf-02", "locale": "hi-IN", "kind": "currency", "value": 1500.5, "expect_contains": ["₹"]},
+    {"id": "lf-03", "locale": "mr-IN", "kind": "currency", "value": 1500.5, "expect_contains": ["₹"]},
+    {"id": "lf-04", "locale": "en-IN", "kind": "date", "iso": "2026-10-31", "expect_contains": ["2026"]},
+    {"id": "lf-05", "locale": "hi-IN", "kind": "number", "value": 1234567.89, "expect_contains": ["1,234,567"]}
+  ]
+}

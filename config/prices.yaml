@@ -1,0 +1,45 @@
+# Price catalogue with effective dates. Replace with vendor quotes before procurement.
+# USD is the accounting currency; INR display uses the configured FX rate.
+version: 1
+effective_from: 2026-10-25
+currency: USD
+fx_usd_inr: 88
+models:
+  local_main:
+    input_per_million_usd: 0
+    output_per_million_usd: 0
+    note: Local GPU electricity and amortisation are tracked separately.
+  local_small:
+    input_per_million_usd: 0
+    output_per_million_usd: 0
+    note: Local.
+  external_reasoning:
+    input_per_million_usd: 0.15
+    output_per_million_usd: 0.60
+    note: Planning price; replace with the provider invoice.
+  external_judge:
+    input_per_million_usd: 0.15
+    output_per_million_usd: 0.60
+    note: Judge calls run on de-identified fixtures only.
+  local_embedding:
+    input_per_million_usd: 0
+    note: Local bge-m3.
+stt:
+  local_per_audio_hour_usd: 0
+  cloud_per_audio_hour_usd: 0.36
+  cloud_enabled: false
+notifications:
+  sms_per_segment_usd: 0.0045
+  sms_segments_average: 1.5
+  email_per_message_usd: 0.0004
+  slack_seat_monthly_usd: 0
+  slack_note: Client workspace; seat cost is outside this build.
+infrastructure:
+  electricity_per_kwh_inr: 9
+  pue: 1.5
+  colo_monthly_inr: 0
+  support_percent_of_capex_per_year: 10
+budgets:
+  monthly_infra_usd: 50
+  monthly_models_usd: 250
+  monthly_notifications_usd: 25

@@ -1,0 +1,9 @@
+{
+  "kind": "clinical_validation",
+  "status": "not_attested",
+  "claim": "not_a_validated_medical_device",
+  "note": "Product attestation gate is implemented (Admin → Governance → Compliance). Uploading a report and ticking the checkbox records named-approver attestation only; it is not CDSCO/FDA/MDR clearance.",
+  "updated_at": "2026-10-31T00:00:00Z",
+  "gap": "G-12",
+  "gap_status": "Mitigated"
+}

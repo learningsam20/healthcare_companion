@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - langfuse.yaml
+  - otel.yaml
+  - prometheus.yaml
+  - grafana.yaml
+  - clamav.yaml
+  - egress.yaml
+  - networkpolicies.yaml
+
+configMapGenerator:
+  - name: otel-config
+    files:
+      - config/otel-config.yaml
+  - name: prometheus-config
+    files:
+      - config/prometheus.yml
+  - name: grafana-datasources
+    files:
+      - config/grafana-datasource.yaml
+  - name: squid-config
+    files:
+      - config/squid.conf
+
+generatorOptions:
+  disableNameSuffixHash: false
+  labels:
+    app.kubernetes.io/part-of: sahyog

@@ -1,0 +1,484 @@
+{
+  "actual_requests_per_hour": 509.6,
+  "auth": "keycloak_password_grant",
+  "burst": 1,
+  "capacity_acceptance_note": "P/S host profiles and non-passing runs cannot establish M/L capacity.",
+  "capacity_accepted": false,
+  "cohort": {
+    "identities": 10,
+    "subjects": 11,
+    "users": [
+      "loadtest.patient01",
+      "loadtest.patient02",
+      "loadtest.patient03",
+      "loadtest.patient04",
+      "loadtest.patient05",
+      "loadtest.frontdesk01",
+      "loadtest.frontdesk02",
+      "loadtest.frontdesk03",
+      "loadtest.frontdesk04",
+      "loadtest.frontdesk05"
+    ]
+  },
+  "duration_seconds": 600.0,
+  "endpoint_latency_ms": {
+    "/api/v1/appointments": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 25.5,
+      "p95_ms": 55.6,
+      "p99_ms": 55.6,
+      "requests": 14,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/chat/sessions": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 26.7,
+      "p95_ms": 72.4,
+      "p99_ms": 72.4,
+      "requests": 10,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/doctors": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 27.2,
+      "p95_ms": 60.9,
+      "p99_ms": 60.9,
+      "requests": 6,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/doctors/Dr.%20Ananya%20Rao/slots": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 21.2,
+      "p95_ms": 49.7,
+      "p99_ms": 49.7,
+      "requests": 8,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/me/memory": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 24.5,
+      "p95_ms": 64.2,
+      "p99_ms": 64.2,
+      "requests": 7,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/meta": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 21.4,
+      "p95_ms": 26.4,
+      "p99_ms": 26.4,
+      "requests": 10,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/notifications": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 21.7,
+      "p95_ms": 49.9,
+      "p99_ms": 49.9,
+      "requests": 13,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/patients": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 28.6,
+      "p95_ms": 65.0,
+      "p99_ms": 65.0,
+      "requests": 6,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/records/documents": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 27.9,
+      "p95_ms": 29.4,
+      "p99_ms": 29.4,
+      "requests": 6,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/records/medications": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 17.5,
+      "p95_ms": 56.4,
+      "p99_ms": 56.4,
+      "requests": 5,
+      "target_p95_ms": 500.0
+    }
+  },
+  "endpoints": {
+    "/api/v1/appointments": 14,
+    "/api/v1/chat/sessions": 10,
+    "/api/v1/doctors": 6,
+    "/api/v1/doctors/Dr.%20Ananya%20Rao/slots": 8,
+    "/api/v1/me/memory": 7,
+    "/api/v1/meta": 10,
+    "/api/v1/notifications": 13,
+    "/api/v1/patients": 6,
+    "/api/v1/records/documents": 6,
+    "/api/v1/records/medications": 5
+  },
+  "error_rate_pct": 0.0,
+  "finished_at": "2026-11-02T00:52:14.544542+00:00",
+  "guard": {
+    "abort_on_real_slo": false,
+    "aborts": [],
+    "allow_real_users": false,
+    "approval_ref_present": false,
+    "baseline_synthetic_cost_usd": 0.0,
+    "budget_usd": 5.0,
+    "prometheus_available": false,
+    "samples": [
+      {
+        "at": "2026-11-02T00:42:29.114879+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:42:44.133802+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:42:59.157338+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:43:14.174792+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:43:29.201052+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:43:44.226872+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:43:59.250978+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:44:14.275035+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:44:29.301026+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:44:44.325862+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:44:59.352154+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:45:14.379273+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:45:29.406780+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:45:44.427440+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:45:59.455387+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:46:14.508877+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:46:29.528681+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:46:44.546961+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:46:59.563905+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:47:14.580038+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:47:29.599411+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:47:44.626545+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:47:59.649678+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:48:14.673089+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:48:29.698953+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:48:44.728279+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:48:59.749631+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:49:14.770099+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:49:29.797081+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:49:44.822330+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:49:59.849163+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:50:14.910294+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:50:29.930699+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:50:44.943723+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:50:59.965694+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:51:14.979110+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:51:30.005662+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:51:45.019785+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:52:00.047109+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      }
+    ]
+  },
+  "host_profile": "P",
+  "include_llm": false,
+  "issued": 85,
+  "latency_ms": {
+    "p50": 25.1,
+    "p95": 57.9,
+    "p99": 72.4
+  },
+  "mode": "client_side_public_api",
+  "nfr_slices": {
+    "NFR-PERF-01_02_03_07_workflows": {
+      "description": "Triage / record-ask / scribe-draft / TTFT",
+      "measured_in_this_run": false,
+      "note": "Requires --include-llm plus graph-specific probes; CRUD GETs do not satisfy NFR-PERF-01/02/03/07. See docs/evidence/test_report.md."
+    },
+    "NFR-PERF-05_grid": {
+      "description": "Form/list grid and catalogue GETs",
+      "meets_target": true,
+      "p95_ms": 57.9,
+      "requests": 85,
+      "target_p95_ms": 500.0
+    },
+    "NFR-SCALE-01_peak": {
+      "actual_req_per_hour": 509.6,
+      "description": "Peak API load (profile rate + burst)",
+      "duration_note": "Spec expects a morning-window proof (prefer >= 60m). Short smokes are plumbing only and cannot set capacity_accepted on P/S hosts.",
+      "duration_seconds": 600.0,
+      "error_rate_pct": 0.0,
+      "error_rate_target_pct": 1.0,
+      "overall_p95_ms": 57.9,
+      "overall_p95_target_ms": 1500.0,
+      "target_req_per_hour": 500
+    }
+  },
+  "notes": [
+    "No dev-auth bypass, direct database seed or disabled audit/PII check was used.",
+    "Only tagged loadtest.* identities and public API paths were used.",
+    "Synthetic cost comes from analytics/load-guard (usage_records), not LiteLLM spend.",
+    "Real-user p95/error requires the full profile Prometheus exporter.",
+    "Per-endpoint latency and NFR slices are in endpoint_latency_ms / nfr_slices; full NFR matrix is docs/evidence/test_report.md."
+  ],
+  "p95_target_ms": 1500.0,
+  "profile": "r1",
+  "release": "0.1.0",
+  "requested_rate_per_hour": 500,
+  "requests": 85,
+  "started_at": "2026-11-02T00:42:13.736797+00:00",
+  "status": "passed",
+  "tool": "scripts/load_test.py",
+  "traffic_class": "synthetic"
+}

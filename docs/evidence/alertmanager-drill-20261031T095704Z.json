@@ -1,0 +1,10 @@
+{
+  "generated_at": "20261031T095704Z",
+  "url": "http://127.0.0.1:9093/api/v2/alerts",
+  "http_status": 0,
+  "curl_rc": 7,
+  "body_excerpt": "",
+  "error": "curl: (7) Failed to connect to 127.0.0.1 port 9093 after 0 ms: Couldn't connect to server\n",
+  "status": "failed_or_unreachable",
+  "note": "Actual Alertmanager response; not a signed on-call drill."
+}

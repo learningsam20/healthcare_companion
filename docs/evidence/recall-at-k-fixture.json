@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "id": "ms-01",
+      "k": 5,
+      "language": "en-IN",
+      "recall_at_k": 1.0,
+      "relevant": 1,
+      "retrieved": 2
+    },
+    {
+      "id": "ms-02",
+      "k": 5,
+      "language": "hi-IN",
+      "recall_at_k": 1.0,
+      "relevant": 2,
+      "retrieved": 2
+    },
+    {
+      "id": "ms-03",
+      "k": 5,
+      "language": "en-IN",
+      "recall_at_k": 1.0,
+      "relevant": 1,
+      "retrieved": 2
+    },
+    {
+      "id": "ms-04",
+      "k": 5,
+      "language": "mr-IN",
+      "recall_at_k": 1.0,
+      "relevant": 1,
+      "retrieved": 1
+    },
+    {
+      "id": "ms-05",
+      "k": 5,
+      "language": "en-IN",
+      "recall_at_k": 1.0,
+      "relevant": 1,
+      "retrieved": 2
+    },
+    {
+      "id": "ms-06",
+      "k": 5,
+      "language": "hi-IN",
+      "recall_at_k": 1.0,
+      "relevant": 1,
+      "retrieved": 1
+    }
+  ],
+  "dataset": "mixed_script_recall",
+  "k": 5,
+  "limitations": [
+    "Scores use fixture retrieved_chunk_ids unless a live harness replaces them.",
+    "Not a production retrieval SLA claim."
+  ],
+  "mean_recall_at_k": 1.0
+}

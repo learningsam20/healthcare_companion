@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Production reference overlay. It adds disruption budgets, anti-affinity and
+# larger autoscaling bounds, and removes the Mailpit test SMTP sink. Hostnames
+# remain example.invalid placeholders: replace them and build the web image
+# with the matching AUTH_ORIGIN before applying.
+namespace: sahyog
+
+resources:
+  - ../../base
+  - ingress.yaml
+  - pdb.yaml
+
+components:
+  - ../../components/observability
+  - ../../components/local-model
+
+patches:
+  - path: replicas.yaml
+  - path: hpa.yaml
+  - path: topology-spread.yaml
+  - path: strategy.yaml
+  - path: configmap.yaml
+  - path: delete-mailpit.yaml
+
+# Override with immutable digests at deploy time. The tags below are a starting
+# point for an air-gapped registry mirror, not a production pin.
+images:
+  - name: sahyog-api
+    newTag: 0.1.0
+  - name: sahyog-web
+    newTag: 0.1.0

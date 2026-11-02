@@ -1,0 +1,71 @@
+# LiteLLM proxy configuration. Keys come from the environment, never this file.
+model_list:
+  - model_name: local_main
+    litellm_params:
+      model: os.environ/OLLAMA_CHAT_MODEL
+      api_base: os.environ/OLLAMA_BASE_URL
+    model_info:
+      mode: chat
+      egress: local
+  - model_name: local_small
+    litellm_params:
+      model: os.environ/OLLAMA_SMALL_MODEL
+      api_base: os.environ/OLLAMA_BASE_URL
+    model_info:
+      mode: chat
+      egress: local
+  - model_name: external_reasoning
+    litellm_params:
+      model: openrouter/openai/gpt-4o-mini
+      api_key: os.environ/OPENROUTER_API_KEY
+    model_info:
+      mode: chat
+      egress: external_deidentified
+  - model_name: external_judge
+    litellm_params:
+      model: openrouter/openai/gpt-4o-mini
+      api_key: os.environ/OPENROUTER_API_KEY
+    model_info:
+      mode: chat
+      egress: external_deidentified
+  - model_name: local_embedding
+    litellm_params:
+      model: ollama/bge-m3
+      api_base: os.environ/OLLAMA_BASE_URL
+    model_info:
+      mode: embedding
+      egress: local
+
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 2
+  timeout: 60
+  allowed_fails: 1
+  cooldown_time: 30
+  fallbacks:
+    - local_main: [local_small]
+    - external_reasoning: [local_main]
+
+litellm_settings:
+  drop_params: true
+  set_verbose: false
+  telemetry: false
+  request_timeout: 90
+  max_budget: 250
+  budget_duration: 30d
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/LITELLM_DATABASE_URL
+  store_model_in_db: false
+  disable_spend_logs: false
+
+# MCP servers are registered here so model tool calls cross the gateway boundary.
+# The broker validates a signed _context argument before forwarding.
+mcp_servers:
+  sahyog:
+    url: http://mcp-broker:8100/mcp
+    transport: http
+    auth_type: bearer_token
+    auth_value: os.environ/MCP_SERVICE_TOKEN
+    allowed_tools: []

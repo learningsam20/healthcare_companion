@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sahyog-seed
+  labels:
+    app.kubernetes.io/name: sahyog-seed
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: app
+spec:
+  backoffLimit: 5
+  activeDeadlineSeconds: 900
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sahyog-seed
+        app.kubernetes.io/part-of: sahyog
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: seed
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - >-
+              python scripts/keycloak_admin.py sync &&
+              python scripts/keycloak_admin.py seed-demo &&
+              python scripts/seed_demo.py --load-test 0
+          envFrom:
+            - secretRef:
+                name: sahyog-secrets
+            - configMapRef:
+                name: sahyog-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

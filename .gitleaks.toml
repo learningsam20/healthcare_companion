@@ -1,0 +1,13 @@
+[extend]
+useDefault = true
+
+# Documentation prose and example manifests contain obvious placeholders that the
+# generic-api-key rule flags. Allow only the exact shapes; no default rule is disabled.
+[allowlist]
+description = "Placeholder values and documentation prose flagged by generic-api-key"
+regexes = [
+  '''(?i)^replace([_-](me|with)).*$''',
+  '''^API/Keycloak$''',
+  '''^S3-compatible$''',
+  '''^test-broker-secret-that-is-long-enough-123$''',
+]

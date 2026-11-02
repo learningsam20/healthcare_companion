@@ -1,0 +1,103 @@
+{
+  "note": "Aggregates committed synthetic eval evidence; not a new model run.",
+  "routing": "config/models.yaml language_routing",
+  "slices": [
+    {
+      "language_slices": {
+        "ragas": {
+          "en-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.615979,
+              "context_precision": 1.0,
+              "context_recall": 0.944444,
+              "faithfulness": 0.925
+            },
+            "scored_cases": 6
+          },
+          "hi-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.433011,
+              "context_precision": 1.0,
+              "context_recall": 0.944444,
+              "faithfulness": 0.766667
+            },
+            "scored_cases": 6
+          },
+          "mixed-script": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.337746,
+              "context_precision": 0.833333,
+              "context_recall": 1.0,
+              "faithfulness": 0.708333
+            },
+            "scored_cases": 6
+          },
+          "mr-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.428726,
+              "context_precision": 1.0,
+              "context_recall": 0.944444,
+              "faithfulness": 0.802778
+            },
+            "scored_cases": 6
+          }
+        }
+      },
+      "missing": false,
+      "source": "docs/evidence/eval-ragas-w3-20261025T083908Z.json"
+    },
+    {
+      "language_slices": {
+        "deepeval": {
+          "en-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.791667,
+              "contextual_precision": 1.0,
+              "contextual_recall": 1.0,
+              "faithfulness": 0.875
+            },
+            "scored_cases": 6
+          },
+          "hi-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.622222,
+              "contextual_precision": 1.0,
+              "contextual_recall": 0.916667,
+              "faithfulness": 0.716667
+            },
+            "scored_cases": 6
+          },
+          "mixed-script": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.672222,
+              "contextual_precision": 1.0,
+              "contextual_recall": 1.0,
+              "faithfulness": 0.625
+            },
+            "scored_cases": 6
+          },
+          "mr-IN": {
+            "case_count": 6,
+            "mean_scores": {
+              "answer_relevancy": 0.5,
+              "contextual_precision": 0.833333,
+              "contextual_recall": 0.833333,
+              "faithfulness": 0.694444
+            },
+            "scored_cases": 6
+          }
+        }
+      },
+      "missing": false,
+      "source": "docs/evidence/eval-deepeval-x01-20261025T095159Z.json"
+    }
+  ],
+  "status": "aggregated"
+}

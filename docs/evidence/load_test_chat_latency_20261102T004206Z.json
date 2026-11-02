@@ -1,0 +1,48 @@
+{
+  "status": "scored",
+  "generated_at": "2026-11-02T00:42:13.636352+00:00",
+  "api_base_url": "http://localhost:5706",
+  "patient_user": "loadtest.patient01",
+  "probes": [
+    {
+      "nfr": "NFR-PERF-01",
+      "name": "w1_triage_turn",
+      "target_p95_ms": 4000.0,
+      "samples": 6,
+      "errors": 0,
+      "p50_ms": 127.8,
+      "p95_ms": 1216.7,
+      "p99_ms": 1216.7,
+      "meets_target": true
+    },
+    {
+      "nfr": "NFR-PERF-02",
+      "name": "w2_record_ask",
+      "target_p95_ms": 8000.0,
+      "samples": 6,
+      "errors": 0,
+      "skipped": false,
+      "p50_ms": 129.2,
+      "p95_ms": 161.8,
+      "p99_ms": 161.8,
+      "meets_target": true
+    },
+    {
+      "nfr": "NFR-PERF-07",
+      "name": "chat_completion_warm_proxy",
+      "target_p95_ms": 2000.0,
+      "note": "Full response latency used as conservative TTFT proxy; SSE ttft span preferred when exported.",
+      "samples": 6,
+      "errors": 0,
+      "p50_ms": 123.8,
+      "p95_ms": 178.0,
+      "p99_ms": 178.0,
+      "meets_target": true
+    }
+  ],
+  "notes": [
+    "Uses Keycloak password grant against loadtest.* only.",
+    "NFR-PERF-03 scribe draft is measured from Langfuse/API traces or a doctor-role probe; not included here.",
+    "NFR-PERF-04 booking median < 3 min requires an instrumented UX/Playwright run."
+  ]
+}

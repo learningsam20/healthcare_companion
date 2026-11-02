@@ -1,0 +1,712 @@
+# Internal MCP services. The broker validates the signed _context before forwarding;
+# the app never calls a leaf MCP service directly. Each service is independently
+# scalable and exposes only /healthz plus its declared MCP transport.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-broker
+  labels:
+    app.kubernetes.io/name: mcp-broker
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-broker
+  ports:
+    - name: http
+      port: 8100
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-broker
+  labels:
+    app.kubernetes.io/name: mcp-broker
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-broker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-broker
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_broker.main:app", "--host", "0.0.0.0", "--port", "8100"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          env:
+            - name: MCP_CONTEXT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: MCP_CONTEXT_SECRET
+            - name: MCP_SERVICE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: MCP_SERVICE_TOKEN
+          ports:
+            - name: http
+              containerPort: 8100
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-scheduling
+  labels:
+    app.kubernetes.io/name: mcp-scheduling
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-scheduling
+  ports:
+    - name: http
+      port: 8101
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-scheduling
+  labels:
+    app.kubernetes.io/name: mcp-scheduling
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-scheduling
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-scheduling
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command:
+            ["uvicorn", "sahyog_mcp_scheduling.main:app", "--host", "0.0.0.0", "--port", "8101"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8101
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-records
+  labels:
+    app.kubernetes.io/name: mcp-records
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-records
+  ports:
+    - name: http
+      port: 8102
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-records
+  labels:
+    app.kubernetes.io/name: mcp-records
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-records
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-records
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_records.main:app", "--host", "0.0.0.0", "--port", "8102"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8102
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-clinical
+  labels:
+    app.kubernetes.io/name: mcp-clinical
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-clinical
+  ports:
+    - name: http
+      port: 8103
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-clinical
+  labels:
+    app.kubernetes.io/name: mcp-clinical
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-clinical
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-clinical
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_clinical.main:app", "--host", "0.0.0.0", "--port", "8103"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8103
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-platform
+  labels:
+    app.kubernetes.io/name: mcp-platform
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-platform
+  ports:
+    - name: http
+      port: 8104
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-platform
+  labels:
+    app.kubernetes.io/name: mcp-platform
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-platform
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-platform
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_platform.main:app", "--host", "0.0.0.0", "--port", "8104"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8104
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-decider
+  labels:
+    app.kubernetes.io/name: mcp-decider
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-decider
+  ports:
+    - name: http
+      port: 8105
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-decider
+  labels:
+    app.kubernetes.io/name: mcp-decider
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-decider
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-decider
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_decider.main:app", "--host", "0.0.0.0", "--port", "8105"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8105
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-pii
+  labels:
+    app.kubernetes.io/name: mcp-pii
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-pii
+  ports:
+    - name: http
+      port: 8106
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-pii
+  labels:
+    app.kubernetes.io/name: mcp-pii
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-pii
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-pii
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_pii.main:app", "--host", "0.0.0.0", "--port", "8106"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          env:
+            - name: PII_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: PII_TOKEN_SECRET
+          ports:
+            - name: http
+              containerPort: 8106
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-stt
+  labels:
+    app.kubernetes.io/name: mcp-stt
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  selector:
+    app.kubernetes.io/name: mcp-stt
+  ports:
+    - name: http
+      port: 8107
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-stt
+  labels:
+    app.kubernetes.io/name: mcp-stt
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mcp-stt
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mcp-stt
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: ai
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          command: ["uvicorn", "sahyog_mcp_stt.main:app", "--host", "0.0.0.0", "--port", "8107"]
+          envFrom:
+            - configMapRef:
+                name: sahyog-config
+          ports:
+            - name: http
+              containerPort: 8107
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: "2"
+              memory: 3Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: cache
+              mountPath: /home/sahyog/.cache
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: cache
+          emptyDir: {}

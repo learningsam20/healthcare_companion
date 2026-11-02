@@ -1,0 +1,275 @@
+{
+    "insights": [
+        {
+            "id": "32ae6d56-7dd5-4e06-8b6d-4aeeac5cce95",
+            "title": "Review red-flag triggers",
+            "status": "proposed",
+            "generator": "local_model",
+            "created_at": "2026-10-25T07:31:28.475081+00:00",
+            "model_alias": "local_main",
+            "ai_generated": true
+        },
+        {
+            "id": "5876079d-6138-4bca-8ba6-174d2b1951f1",
+            "title": "Record evaluation baseline",
+            "status": "proposed",
+            "generator": "local_model",
+            "created_at": "2026-10-25T07:31:28.475081+00:00",
+            "model_alias": "local_main",
+            "ai_generated": true
+        },
+        {
+            "id": "0e0eef67-e66d-438d-af6c-16001fd8c922",
+            "title": "Localize record-bearing prompts",
+            "status": "proposed",
+            "generator": "local_model",
+            "created_at": "2026-10-25T07:31:28.475081+00:00",
+            "model_alias": "local_main",
+            "ai_generated": true
+        }
+    ],
+    "job_runs": [
+        {
+            "detail": {
+                "alerts": [
+                ],
+                "snapshot_age_hours": 0.9764233038888889,
+                "reconciliation_age_hours": 0.7500263166666666
+            },
+            "status": "succeeded",
+            "job_name": "analytics.staleness",
+            "error_code": null,
+            "started_at": "2026-10-25T08:55:19.009779+00:00",
+            "finished_at": "2026-10-25T08:55:19.445577+00:00"
+        },
+        {
+            "detail": {
+            },
+            "status": "succeeded",
+            "job_name": "finops.reconcile",
+            "error_code": null,
+            "started_at": "2026-10-25T08:10:19.031656+00:00",
+            "finished_at": "2026-10-25T08:10:19.063445+00:00"
+        },
+        {
+            "detail": {
+                "key": "anchors/20261025T075644Z.json",
+                "event_count": 315,
+                "digest_sha256": "7929d6eb57b03490227772dbe4d373bb60be63fbdb01990c8d188ff6b7e4770b",
+                "previous_digest_sha256": "8490d73ddfd64826af0d913389c61bc383a3726f6960f08921537187ac5ec12d"
+            },
+            "status": "succeeded",
+            "job_name": "analytics.audit_anchor",
+            "error_code": null,
+            "started_at": "2026-10-25T07:56:44.006488+00:00",
+            "finished_at": "2026-10-25T07:56:44.116391+00:00"
+        },
+        {
+            "detail": {
+                "alerts": [
+                ],
+                "snapshot_age_hours": 0.3620567025,
+                "reconciliation_age_hours": 0.035987952499999996
+            },
+            "status": "succeeded",
+            "job_name": "analytics.staleness",
+            "error_code": null,
+            "started_at": "2026-10-25T07:56:44.002788+00:00",
+            "finished_at": "2026-10-25T07:56:44.009704+00:00"
+        },
+        {
+            "detail": {
+                "created": 0,
+                "expired": 0,
+                "updated": 3,
+                "generator": "local_model",
+                "skipped_decided": 0
+            },
+            "status": "succeeded",
+            "job_name": "analytics.insights",
+            "error_code": null,
+            "started_at": "2026-10-25T07:56:44.002659+00:00",
+            "finished_at": "2026-10-25T07:56:50.651736+00:00"
+        },
+        {
+            "detail": {
+                "metrics": {
+                    "consent_active": 1,
+                    "usage_calls_1d": 18,
+                    "active_users_1d": 10,
+                    "consent_expired": 0,
+                    "latest_audit_at": "2026-10-25T07:56:27.736547+00:00",
+                    "chat_messages_1d": 37,
+                    "chat_sessions_1d": 9,
+                    "usage_cost_usd_1d": 0.0,
+                    "red_flag_triggers_1d": 5,
+                    "bookings_confirmed_1d": 18
+                },
+                "snapshot_id": "1d21d7ff-6931-424b-96a7-cce810f2eea5",
+                "metric_version": "1"
+            },
+            "status": "succeeded",
+            "job_name": "analytics.snapshot",
+            "error_code": null,
+            "started_at": "2026-10-25T07:56:44.002502+00:00",
+            "finished_at": "2026-10-25T07:56:44.066118+00:00"
+        },
+        {
+            "detail": {
+                "alerts": [
+                ],
+                "snapshot_age_hours": 0.2498808286111111,
+                "reconciliation_age_hours": 0.01622490111111111
+            },
+            "status": "succeeded",
+            "job_name": "analytics.staleness",
+            "error_code": null,
+            "started_at": "2026-10-25T07:50:00.171343+00:00",
+            "finished_at": "2026-10-25T07:50:00.175377+00:00"
+        },
+        {
+            "detail": {
+                "metrics": {
+                    "consent_active": 1,
+                    "usage_calls_1d": 11,
+                    "active_users_1d": 10,
+                    "consent_expired": 0,
+                    "latest_audit_at": "2026-10-25T07:35:00.531934+00:00",
+                    "chat_messages_1d": 27,
+                    "chat_sessions_1d": 8,
+                    "usage_cost_usd_1d": 0.0,
+                    "red_flag_triggers_1d": 5,
+                    "bookings_confirmed_1d": 14
+                },
+                "snapshot_id": "e09c2cfc-1d86-46ff-ad34-a63017648d27",
+                "metric_version": "1"
+            },
+            "status": "succeeded",
+            "job_name": "analytics.snapshot",
+            "error_code": null,
+            "started_at": "2026-10-25T07:35:00.601614+00:00",
+            "finished_at": "2026-10-25T07:35:00.620707+00:00"
+        },
+        {
+            "detail": {
+                "alerts": [
+                    "FinOps reconciliation is stale (none recorded)."
+                ],
+                "snapshot_age_hours": 0.004513454722222222,
+                "reconciliation_age_hours": null
+            },
+            "status": "succeeded",
+            "job_name": "analytics.staleness",
+            "error_code": null,
+            "started_at": "2026-10-25T07:31:44.706339+00:00",
+            "finished_at": "2026-10-25T07:31:44.711948+00:00"
+        },
+        {
+            "detail": {
+                "key": "anchors/20261025T073144Z.json",
+                "event_count": 220,
+                "digest_sha256": "8490d73ddfd64826af0d913389c61bc383a3726f6960f08921537187ac5ec12d",
+                "previous_digest_sha256": null
+            },
+            "status": "succeeded",
+            "job_name": "analytics.audit_anchor",
+            "error_code": null,
+            "started_at": "2026-10-25T07:31:44.377373+00:00",
+            "finished_at": "2026-10-25T07:31:44.697792+00:00"
+        },
+        {
+            "detail": {
+                "created": 3,
+                "expired": 0,
+                "updated": 0,
+                "generator": "local_model",
+                "skipped_decided": 0
+            },
+            "status": "succeeded",
+            "job_name": "analytics.insights",
+            "error_code": null,
+            "started_at": "2026-10-25T07:31:28.475081+00:00",
+            "finished_at": "2026-10-25T07:31:44.364148+00:00"
+        },
+        {
+            "detail": {
+                "metrics": {
+                    "consent_active": 1,
+                    "usage_calls_1d": 7,
+                    "active_users_1d": 8,
+                    "consent_expired": 0,
+                    "latest_audit_at": "2026-10-25T07:31:00.217691+00:00",
+                    "chat_messages_1d": 23,
+                    "chat_sessions_1d": 6,
+                    "usage_cost_usd_1d": 0.0,
+                    "red_flag_triggers_1d": 5,
+                    "bookings_confirmed_1d": 11
+                },
+                "snapshot_id": "0a2225b5-baee-4daa-9330-22f09307fa3c",
+                "metric_version": "1"
+            },
+            "status": "succeeded",
+            "job_name": "analytics.snapshot",
+            "error_code": null,
+            "started_at": "2026-10-25T07:31:28.458774+00:00",
+            "finished_at": "2026-10-25T07:31:28.471862+00:00"
+        }
+    ],
+    "snapshots": [
+        {
+            "id": "1d21d7ff-6931-424b-96a7-cce810f2eea5",
+            "metrics": {
+                "consent_active": 1,
+                "usage_calls_1d": 18,
+                "active_users_1d": 10,
+                "consent_expired": 0,
+                "latest_audit_at": "2026-10-25T07:56:27.736547+00:00",
+                "chat_messages_1d": 37,
+                "chat_sessions_1d": 9,
+                "usage_cost_usd_1d": 0.0,
+                "red_flag_triggers_1d": 5,
+                "bookings_confirmed_1d": 18
+            },
+            "captured_at": "2026-10-25T07:56:44.002502+00:00",
+            "metric_version": "1",
+            "suppression_applied": true
+        },
+        {
+            "id": "e09c2cfc-1d86-46ff-ad34-a63017648d27",
+            "metrics": {
+                "consent_active": 1,
+                "usage_calls_1d": 11,
+                "active_users_1d": 10,
+                "consent_expired": 0,
+                "latest_audit_at": "2026-10-25T07:35:00.531934+00:00",
+                "chat_messages_1d": 27,
+                "chat_sessions_1d": 8,
+                "usage_cost_usd_1d": 0.0,
+                "red_flag_triggers_1d": 5,
+                "bookings_confirmed_1d": 14
+            },
+            "captured_at": "2026-10-25T07:35:00.601614+00:00",
+            "metric_version": "1",
+            "suppression_applied": true
+        },
+        {
+            "id": "0a2225b5-baee-4daa-9330-22f09307fa3c",
+            "metrics": {
+                "consent_active": 1,
+                "usage_calls_1d": 7,
+                "active_users_1d": 8,
+                "consent_expired": 0,
+                "latest_audit_at": "2026-10-25T07:31:00.217691+00:00",
+                "chat_messages_1d": 23,
+                "chat_sessions_1d": 6,
+                "usage_cost_usd_1d": 0.0,
+                "red_flag_triggers_1d": 5,
+                "bookings_confirmed_1d": 11
+            },
+            "captured_at": "2026-10-25T07:31:28.458774+00:00",
+            "metric_version": "1",
+            "suppression_applied": true
+        }
+    ],
+    "generated_at": "2026-10-25T09:14:35.651432+00:00"
+}

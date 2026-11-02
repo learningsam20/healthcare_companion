@@ -1,0 +1,175 @@
+# Shared FinOps sizing/cost model. This is the same model referenced by docs/infra.md
+# and used by the FinOps what-if workspace. All amounts are planning ranges, not quotes.
+# Accounting currency USD; display currency INR at the configured FX rate.
+version: 1
+model_version: 2026-10-25.1
+accounting_currency: USD
+display_currency: INR
+fx_usd_inr: 88
+amounts_exclude_tax: true
+price_basis_date: 2026-10-25
+profiles:
+  P:
+    label: Laptop pilot
+    host: Mac M4 Pro, 14-core CPU, 20-core GPU, 26 GB unified memory, 1 TB
+    inputs:
+      registered_users: 50
+      monthly_active_users: 30
+      peak_requests_per_hour: 100
+      burst_factor: 2
+      concurrent_runs: 10
+      appointments_per_day: 25
+      documents_per_month: 50
+      chunks_searchable: 40000
+      audio_hours_per_month: 10
+      external_llm_share: 0.40
+      chat_turns_per_day: 1000
+    capex_inr: {min: 0, max: 0, replacement_min: 250000, replacement_max: 380000}
+    opex_inr_month: {min: 6300, max: 25000}
+    cloud_opex_inr_month: {min: 26000, max: 75000}
+    tco_3y_inr_lakh: {min: 2.3, max: 9.0, replacement_min: 4.8, replacement_max: 12.8}
+    availability: Single host; no HA
+  S:
+    label: Demo and acceptance
+    host: 16 vCPU / 64 GB / 2 TB NVMe; optional 24 GB GPU
+    inputs:
+      registered_users: 2000
+      monthly_active_users: 500
+      peak_requests_per_hour: 500
+      burst_factor: 4
+      concurrent_runs: 50
+      appointments_per_day: 200
+      documents_per_month: 500
+      chunks_searchable: 60000
+      audio_hours_per_month: 20
+      external_llm_share: 0.60
+      chat_turns_per_day: 1500
+    capex_inr_lakh: {min: 6, max: 10, with_gpu_min: 10, with_gpu_max: 17}
+    opex_inr_month: {min: 30000, max: 70000}
+    cloud_opex_inr_month: {min: 90000, max: 150000}
+    tco_3y_inr_lakh: {min: 17, max: 42}
+    cloud_tco_3y_inr_lakh: {min: 32, max: 54}
+    availability: Single host; best effort
+  M:
+    label: Hosted pilot
+    host: 2 app nodes, DB, Redis, storage, 1 x 48 GB GPU
+    inputs:
+      registered_users: 10000
+      monthly_active_users: 3000
+      peak_requests_per_hour: 1400
+      burst_factor: 4
+      concurrent_runs: 100
+      appointments_per_day: 2000
+      documents_per_month: 2000
+      chunks_searchable: 500000
+      audio_hours_per_month: 200
+      external_llm_share: 0.40
+      chat_turns_per_day: 10000
+    capex_inr_lakh: {min: 31, max: 45}
+    opex_inr_month: {min: 130000, max: 220000}
+    cloud_opex_inr_month: {min: 320000, max: 460000}
+    tco_3y_inr_lakh: {min: 78, max: 124}
+    cloud_tco_3y_inr_lakh: {min: 115, max: 166}
+    availability: N+1 application; database backup/restore
+  L:
+    label: Production HA
+    host: 3 app nodes, DB primary+standby, Redis HA, 3 storage nodes, 2 x 48 GB GPU
+    inputs:
+      registered_users: 50000
+      monthly_active_users: 20000
+      peak_requests_per_hour: 1400
+      burst_factor: 4
+      concurrent_runs: 250
+      appointments_per_day: 9000
+      documents_per_month: 10000
+      chunks_searchable: 2000000
+      audio_hours_per_month: 1000
+      external_llm_share: 0.20
+      chat_turns_per_day: 60000
+    capex_inr_lakh: {min: 87, max: 120}
+    opex_inr_month: {min: 450000, max: 750000}
+    cloud_opex_inr_month: {min: 1200000, max: 1700000}
+    tco_3y_inr_lakh: {min: 249, max: 390}
+    cloud_tco_3y_inr_lakh: {min: 432, max: 612}
+    availability: Multi-AZ; RPO 24 h baseline / 15 min target; RTO 4 h
+unit_costs:
+  external_input_per_million_usd: 0.15
+  external_output_per_million_usd: 0.60
+  stt_cloud_per_audio_hour_usd: 0.36
+  sms_per_segment_usd: 0.0045
+  email_per_message_usd: 0.0004
+  electricity_inr_per_kwh: 9
+  pue: 1.5
+  support_percent_capex_per_year: 10
+  ops_fte_loaded_inr_month: 150000
+formulas:
+  rps_peak: "peak_requests_per_hour / 3600"
+  rps_burst: "peak_requests_per_hour * burst_factor / 3600"
+  vector_gb: "chunks_searchable * embedding_dimensions * 4 * 1.3 / 1e9"
+  document_storage_gb: "documents_per_month * 10 * 0.5 * retention_months"
+  audio_storage_gb: "audio_hours_per_month * 60 * (24 / 730)"
+  llm_monthly_usd: "chat_turns_per_day * 30 * (input_tokens * external_input_per_million_usd + output_tokens * external_output_per_million_usd) / 1e6 * external_llm_share"
+  tco_3y_inr_lakh: "(capex_inr + opex_inr_month * 36) / 100000"
+  unit_cost_per_turn_usd: "direct_model_cost_usd / completed_turns"
+  gross_margin_pct: "(revenue_usd - direct_cost_usd) / revenue_usd"
+scenarios:
+  laptop_pilot:
+    label: Laptop pilot
+    profile: P
+    hosting: laptop
+    notes: Owned hardware; model spend and power dominate.
+  colo:
+    label: Colo
+    profile: M
+    hosting: colo
+    notes: Client-provided rack and power; hardware capex is project cost.
+  on_prem:
+    label: On-premises
+    profile: M
+    hosting: on_prem
+    notes: Hospital-owned data centre; requires operations capacity.
+  india_cloud:
+    label: India cloud
+    profile: M
+    hosting: india_cloud
+    notes: Region-pinned managed services; higher run rate, easier HA.
+  hybrid:
+    label: Hybrid
+    profile: M
+    hosting: hybrid
+    notes: Local data plane with cloud burst for evaluation and DR.
+growth:
+  - year: 1
+    registered_users: 10000
+    monthly_active_users: 3000
+    chunks_searchable: 500000
+    audio_hours_per_month: 200
+    profile: M
+    capex_inr_lakh: {min: 31, max: 45}
+    onprem_opex_inr_month: {min: 130000, max: 220000}
+    cloud_opex_inr_month: {min: 320000, max: 460000}
+  - year: 2
+    registered_users: 25000
+    monthly_active_users: 8000
+    chunks_searchable: 1200000
+    audio_hours_per_month: 500
+    profile: M+
+    incremental_capex_inr_lakh: {min: 15, max: 25}
+    onprem_opex_inr_month: {min: 210000, max: 340000}
+    cloud_opex_inr_month: {min: 500000, max: 700000}
+  - year: 3
+    registered_users: 50000
+    monthly_active_users: 20000
+    chunks_searchable: 2000000
+    audio_hours_per_month: 1000
+    profile: L
+    incremental_capex_inr_lakh: {min: 40, max: 70}
+    onprem_opex_inr_month: {min: 450000, max: 750000}
+    cloud_opex_inr_month: {min: 1200000, max: 1700000}
+what_if_defaults:
+  profile: P
+  hosting: laptop
+  horizon_months: 36
+  revenue_per_active_user_inr_month: 0
+  showback_only: true
+  currency: INR

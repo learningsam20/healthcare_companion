@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-10-31T17:07:45Z",
+  "prometheus_rules":
+[{"group": "sahyog-api", "rules": ["SahyogApiDown", "SahyogLiteLlmHighErrorRate", "SahyogMcpBrokerUnhealthy"]}, {"group": "sahyog-jobs", "rules": ["SahyogJobStale", "SahyogJobFailures"]}, {"group": "sahyog-pii-egress", "rules": ["SahyogExternalEgressWithoutCompositePii"]}]
+,
+  "sahyog_api_target":
+[{"health": "up", "scrapeUrl": "http://api:8000/metrics", "lastError": ""}]
+,
+  "job_last_success_sample_count":
+6
+,
+  "metrics_endpoint_excerpt":
+["sahyog_job_last_success_timestamp{job_name=\"analytics.audit_anchor\"} 1793398359.539", "sahyog_job_last_success_timestamp{job_name=\"analytics.insights\"} 1793398374.014", "sahyog_job_last_success_timestamp{job_name=\"finops.reconcile\"} 1793464800.267", "sahyog_job_last_success_timestamp{job_name=\"ops.stock_import\"} 1793466000.542", "sahyog_job_last_success_timestamp{job_name=\"analytics.staleness\"} 1793461800.579", "sahyog_job_last_success_timestamp{job_name=\"analytics.snapshot\"} 1793464500.222"]
+,
+  "alerts_present": ["SahyogJobStale","SahyogJobFailures"],
+  "note": "Job failure/staleness alerts are loaded and metrics are scraped. Encrypted backup success remains a residual (BACKUP_OUT_DIR / host docker). Overlay docker-compose.metrics-overlay.yml used until next image rebuild."
+}

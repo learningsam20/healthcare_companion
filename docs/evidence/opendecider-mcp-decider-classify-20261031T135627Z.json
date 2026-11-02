@@ -1,0 +1,14 @@
+{
+  "probed_at": "20261031T135627Z",
+  "service": "mcp-decider",
+  "http_status": 200,
+  "elapsed_seconds": 114.45,
+  "result": {
+    "engine": "opendecider_openai_compatible",
+    "model": "hf.co/manjunathshiva/opendecider-small-GGUF:Q8_0",
+    "intent": "book_appointment",
+    "category": "workflow",
+    "confidence": 0.99,
+    "scores": {}
+  }
+}

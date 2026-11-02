@@ -1,0 +1,29 @@
+{
+  "_instructions": "Copy this file, fill reviewer_id and reviewed_at, label every item good or bad against the rubric in judge_calibration.json, then set attested_human_review to true. A file with attested_human_review=false is rejected. Labels are the reviewer's own decision; do not use a model to produce them and do not add scores.",
+  "_reserved_reviewer_ids": ["unreviewed", "pending", "system", "model", "judge", "n/a", "none"],
+  "reviewer_id": "replace-with-reviewer-id",
+  "reviewed_at": "YYYY-MM-DD",
+  "attested_human_review": false,
+  "labels": {
+    "cal-p01-good": null,
+    "cal-p01-bad": null,
+    "cal-p02-good": null,
+    "cal-p02-bad": null,
+    "cal-p03-good": null,
+    "cal-p03-bad": null,
+    "cal-p04-good": null,
+    "cal-p04-bad": null,
+    "cal-p05-good": null,
+    "cal-p05-bad": null,
+    "cal-p06-good": null,
+    "cal-p06-bad": null,
+    "cal-p07-good": null,
+    "cal-p07-bad": null,
+    "cal-p08-good": null,
+    "cal-p08-bad": null,
+    "cal-p09-good": null,
+    "cal-p09-bad": null,
+    "cal-p10-good": null,
+    "cal-p10-bad": null
+  }
+}

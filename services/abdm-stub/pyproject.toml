@@ -1,0 +1,16 @@
+[project]
+name = "sahyog-abdm-stub"
+version = "0.1.0"
+description = "Local ABDM v3 path-mirroring stub (not certification)"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sahyog_abdm_stub"]

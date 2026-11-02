@@ -1,0 +1,59 @@
+# Non-secret application behaviour. Secrets come from the environment or a vault.
+version: 1
+app:
+  name: Sahyog Care Companion
+  supported_locales: [en-IN, hi-IN, mr-IN]
+  default_locale: en-IN
+  timezone: Asia/Kolkata
+  disclaimer_key: demo_not_medical_device
+clinics:
+  - code: BANER
+    name: Sahyog Clinic — Baner
+    timezone: Asia/Kolkata
+  - code: KOTHRUD
+    name: Sahyog Clinic — Kothrud
+    timezone: Asia/Kolkata
+http:
+  api_prefix: /api/v1
+  request_timeout_seconds: 60
+  max_page_size: 100
+  default_page_size: 20
+uploads:
+  max_document_mb: 25
+  max_audio_mb: 200
+  allowed_document_types: [application/pdf, image/png, image/jpeg]
+  allowed_audio_types: [audio/wav, audio/mpeg, audio/mp4, audio/webm]
+retention:
+  audio_hours: 24
+  chat_days: 30
+  audit_days: 365
+  notes_days: 365
+  export_days: 7
+  notification_delivery_days: 90
+  deletion_grace_days: 30
+rate_limits:
+  anonymous_per_minute: 20
+  authenticated_per_minute: 120
+  chat_turns_per_minute: 12
+  uploads_per_hour: 30
+grid:
+  allowed_page_sizes: [10, 20, 50, 100]
+  default_sort: updated_at_desc
+  max_search_length: 120
+analytics:
+  small_cell_minimum: 5
+  refresh_cron: "15 2 * * *"
+  stale_after_hours: 30
+  timezone: Asia/Kolkata
+  allowed_dimensions: [date, clinic, workflow, channel, model_alias, status, locale]
+finops:
+  fx_rate_usd_inr: 88
+  fx_rate_date: 2026-10-25
+  display_currency: INR
+  accounting_currency: USD
+  budget_owner_default: clinic
+chat:
+  max_title_chars: 80
+  max_message_chars: 8000
+  max_context_turns: 20
+  source_panel_required: true

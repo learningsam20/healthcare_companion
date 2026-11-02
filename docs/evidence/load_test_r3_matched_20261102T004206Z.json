@@ -1,0 +1,344 @@
+{
+  "actual_requests_per_hour": 1833.5,
+  "auth": "keycloak_password_grant",
+  "burst": 4,
+  "capacity_acceptance_note": "P/S host profiles and non-passing runs cannot establish M/L capacity.",
+  "capacity_accepted": false,
+  "cohort": {
+    "identities": 10,
+    "subjects": 11,
+    "users": [
+      "loadtest.patient01",
+      "loadtest.patient02",
+      "loadtest.patient03",
+      "loadtest.patient04",
+      "loadtest.patient05",
+      "loadtest.frontdesk01",
+      "loadtest.frontdesk02",
+      "loadtest.frontdesk03",
+      "loadtest.frontdesk04",
+      "loadtest.frontdesk05"
+    ]
+  },
+  "duration_seconds": 300.0,
+  "endpoint_latency_ms": {
+    "/api/v1/appointments": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 24.9,
+      "p95_ms": 50.9,
+      "p99_ms": 50.9,
+      "requests": 19,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/chat/sessions": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 23.7,
+      "p95_ms": 53.6,
+      "p99_ms": 57.7,
+      "requests": 22,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/doctors": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 25.6,
+      "p95_ms": 55.2,
+      "p99_ms": 55.2,
+      "requests": 14,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/doctors/Dr.%20Ananya%20Rao/slots": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 19.0,
+      "p95_ms": 53.6,
+      "p99_ms": 53.6,
+      "requests": 12,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/me/memory": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 21.3,
+      "p95_ms": 24.0,
+      "p99_ms": 24.0,
+      "requests": 10,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/meta": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 18.3,
+      "p95_ms": 23.7,
+      "p99_ms": 25.7,
+      "requests": 20,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/notifications": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 22.4,
+      "p95_ms": 25.7,
+      "p99_ms": 52.9,
+      "requests": 21,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/patients": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 25.1,
+      "p95_ms": 54.8,
+      "p99_ms": 54.8,
+      "requests": 13,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/records/documents": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 25.8,
+      "p95_ms": 28.6,
+      "p99_ms": 28.6,
+      "requests": 13,
+      "target_p95_ms": 500.0
+    },
+    "/api/v1/records/medications": {
+      "error_rate_pct": 0.0,
+      "errors": 0,
+      "meets_target": true,
+      "nfr": "NFR-PERF-05",
+      "p50_ms": 23.1,
+      "p95_ms": 52.9,
+      "p99_ms": 52.9,
+      "requests": 9,
+      "target_p95_ms": 500.0
+    }
+  },
+  "endpoints": {
+    "/api/v1/appointments": 19,
+    "/api/v1/chat/sessions": 22,
+    "/api/v1/doctors": 14,
+    "/api/v1/doctors/Dr.%20Ananya%20Rao/slots": 12,
+    "/api/v1/me/memory": 10,
+    "/api/v1/meta": 20,
+    "/api/v1/notifications": 21,
+    "/api/v1/patients": 13,
+    "/api/v1/records/documents": 13,
+    "/api/v1/records/medications": 9
+  },
+  "error_rate_pct": 0.0,
+  "finished_at": "2026-11-02T00:57:15.375097+00:00",
+  "guard": {
+    "abort_on_real_slo": false,
+    "aborts": [],
+    "allow_real_users": false,
+    "approval_ref_present": false,
+    "baseline_synthetic_cost_usd": 0.0,
+    "budget_usd": 5.0,
+    "prometheus_available": false,
+    "samples": [
+      {
+        "at": "2026-11-02T00:52:29.983949+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:52:45.000037+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:53:00.021928+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:53:15.036608+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:53:30.055194+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:53:45.076171+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:54:00.090489+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:54:15.104842+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:54:30.118379+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:54:45.137513+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:55:00.149680+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:55:15.175725+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:55:30.205355+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:55:45.231302+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:56:00.259623+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:56:15.313154+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:56:30.340194+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:56:45.365217+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      },
+      {
+        "at": "2026-11-02T00:57:00.389938+00:00",
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      }
+    ]
+  },
+  "host_profile": "P",
+  "include_llm": false,
+  "issued": 153,
+  "latency_ms": {
+    "p50": 22.8,
+    "p95": 50.9,
+    "p99": 55.2
+  },
+  "mode": "client_side_public_api",
+  "nfr_slices": {
+    "NFR-PERF-01_02_03_07_workflows": {
+      "description": "Triage / record-ask / scribe-draft / TTFT",
+      "measured_in_this_run": false,
+      "note": "Requires --include-llm plus graph-specific probes; CRUD GETs do not satisfy NFR-PERF-01/02/03/07. See docs/evidence/test_report.md."
+    },
+    "NFR-PERF-05_grid": {
+      "description": "Form/list grid and catalogue GETs",
+      "meets_target": true,
+      "p95_ms": 50.9,
+      "requests": 153,
+      "target_p95_ms": 500.0
+    },
+    "NFR-SCALE-01_peak": {
+      "actual_req_per_hour": 1833.5,
+      "description": "Peak API load (profile rate + burst)",
+      "duration_note": "Spec expects a morning-window proof (prefer >= 60m). Short smokes are plumbing only and cannot set capacity_accepted on P/S hosts.",
+      "duration_seconds": 300.0,
+      "error_rate_pct": 0.0,
+      "error_rate_target_pct": 1.0,
+      "overall_p95_ms": 50.9,
+      "overall_p95_target_ms": 2000.0,
+      "target_req_per_hour": 1400
+    }
+  },
+  "notes": [
+    "No dev-auth bypass, direct database seed or disabled audit/PII check was used.",
+    "Only tagged loadtest.* identities and public API paths were used.",
+    "Synthetic cost comes from analytics/load-guard (usage_records), not LiteLLM spend.",
+    "Real-user p95/error requires the full profile Prometheus exporter.",
+    "Per-endpoint latency and NFR slices are in endpoint_latency_ms / nfr_slices; full NFR matrix is docs/evidence/test_report.md."
+  ],
+  "p95_target_ms": 2000.0,
+  "profile": "r3",
+  "release": "0.1.0",
+  "requested_rate_per_hour": 1400,
+  "requests": 153,
+  "started_at": "2026-11-02T00:52:14.637101+00:00",
+  "status": "passed",
+  "tool": "scripts/load_test.py",
+  "traffic_class": "synthetic"
+}

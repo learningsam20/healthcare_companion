@@ -1,0 +1,125 @@
+# Demonstration red-flag rules. These are NOT clinically validated and must be reviewed
+# by the clinical safety owner before any pilot. Rules are deterministic and always run;
+# the decider provides a second pass, never the only gate.
+version: 1
+reviewed_by: clinical-safety-owner
+reviewed_at: null
+clinical_validation: pending
+rules:
+  - id: RF-CHEST-PAIN
+    name: Chest pain with warning features
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "chest pain"
+      - "pain in the chest"
+      - "seene mein dard"
+      - "छाती में दर्द"
+    qualifiers:
+      - "sweating"
+      - "shortness of breath"
+      - "radiating to arm"
+      - "fainting"
+      - "pale"
+      - "पसीना"
+      - "सांस की तकलीफ"
+      - "सांस लेने में तकलीफ"
+      - "बेहोशी"
+      - "घाम"
+      - "दम लागत"
+      - "शुद्ध हरपली"
+  - id: RF-STROKE
+    name: Possible stroke
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "face drooping"
+      - "arm weakness"
+      - "slurred speech"
+      - "sudden confusion"
+      - "sudden vision loss"
+      - "चेहरा टेढ़ा"
+      - "बोली लड़खड़ाना"
+  - id: RF-BREATHLESS
+    name: Severe breathlessness
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "cannot breathe"
+      - "can't breathe"
+      - "severe breathlessness"
+      - "gasping"
+      - "saans nahi aa rahi"
+      - "सांस नहीं आ रही"
+  - id: RF-BLEEDING
+    name: Severe or uncontrolled bleeding
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "heavy bleeding"
+      - "bleeding will not stop"
+      - "vomiting blood"
+      - "blood in stool"
+      - "खून बह रहा"
+  - id: RF-SUICIDE
+    name: Suicidal ideation or self-harm
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "want to die"
+      - "end my life"
+      - "kill myself"
+      - "self harm"
+      - "आत्महत्या"
+      - "मरना चाहता"
+  - id: RF-ANAPHYLAXIS
+    name: Possible severe allergic reaction
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "throat swelling"
+      - "tongue swelling"
+      - "anaphylaxis"
+      - "cannot swallow"
+  - id: RF-PREGNANCY-BLEEDING
+    name: Bleeding in pregnancy
+    severity: emergency
+    action: emergency_handoff
+    patterns:
+      - "pregnant and bleeding"
+      - "bleeding during pregnancy"
+      - "गर्भावस्था में खून"
+  - id: RF-HIGH-FEVER-INFANT
+    name: High fever in an infant
+    severity: urgent
+    action: same_day_clinician
+    patterns:
+      - "baby fever"
+      - "infant fever"
+      - "newborn fever"
+    qualifiers:
+      - "under 3 months"
+      - "less than 3 months"
+      - "lethargic"
+      - "not feeding"
+  - id: RF-HEAD-INJURY
+    name: Head injury with warning signs
+    severity: urgent
+    action: same_day_clinician
+    patterns:
+      - "head injury"
+      - "hit his head"
+      - "hit her head"
+      - "head trauma"
+    qualifiers:
+      - "vomiting"
+      - "loss of consciousness"
+      - "confusion"
+      - "seizure"
+safety_copy:
+  emergency_en: "This may be an emergency. Please call local emergency services or go to the nearest emergency department now. Do not wait for an online reply."
+  emergency_hi: "यह आपातकाल हो सकता है। कृपया तुरंत स्थानीय आपातकालीन सेवा को कॉल करें या निकटतम आपातकालीन विभाग जाएँ। ऑनलाइन उत्तर की प्रतीक्षा न करें।"
+  emergency_mr: "ही आपत्कालीन परिस्थिती असू शकते. कृपया त्वरित स्थानिक आपत्कालीन सेवेला कॉल करा किंवा जवळच्या आपत्कालीन विभागात जा. ऑनलाइन उत्तराची प्रतीक्षा करू नका."
+  urgent_en: "This needs same-day clinical review. Please contact the clinic now or go to the nearest urgent care. If symptoms worsen, call local emergency services."
+  urgent_hi: "इसकी आज ही चिकित्सकीय समीक्षा आवश्यक है। कृपया अभी क्लिनिक से संपर्क करें या निकटतम आपातकालीन देखभाल केंद्र जाएँ। लक्षण बिगड़ने पर स्थानीय आपातकालीन सेवा को कॉल करें।"
+  urgent_mr: "यास आजच वैद्यकीय तपासणी आवश्यक आहे. कृपया आता क्लिनिकशी संपर्क साधा किंवा जवळच्या तातडीच्या काळजी केंद्रात जा. लक्षणे बिघडल्यास स्थानिक आपत्कालीन सेवेला कॉल करा."

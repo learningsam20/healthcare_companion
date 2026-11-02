@@ -1,0 +1,29 @@
+# Dev overlay when `docker compose build api` cannot reach Debian apt mirrors.
+# Mounts hotfixed API modules + rebuilt web static assets.
+# Remove after the next successful image rebuild.
+services:
+  api:
+    volumes:
+      - ./apps/api/app/modules/health/router.py:/app/apps/api/app/modules/health/router.py:ro
+      - ./apps/api/app/modules/meta/router.py:/app/apps/api/app/modules/meta/router.py:ro
+      - ./apps/api/app/agents/checkpointer.py:/app/apps/api/app/agents/checkpointer.py:ro
+      - ./apps/api/app/agents/conversation_graph.py:/app/apps/api/app/agents/conversation_graph.py:ro
+      - ./apps/api/app/agents/scribe_graph.py:/app/apps/api/app/agents/scribe_graph.py:ro
+      - ./apps/api/app/agents/w2_ask_graph.py:/app/apps/api/app/agents/w2_ask_graph.py:ro
+      - ./apps/api/app/agents/intent_graph.py:/app/apps/api/app/agents/intent_graph.py:ro
+      - ./apps/api/app/agents/w1_triage_graph.py:/app/apps/api/app/agents/w1_triage_graph.py:ro
+  worker:
+    volumes:
+      - ./apps/api/app/modules/health/router.py:/app/apps/api/app/modules/health/router.py:ro
+      - ./apps/api/app/agents/checkpointer.py:/app/apps/api/app/agents/checkpointer.py:ro
+      - ./apps/api/app/agents/conversation_graph.py:/app/apps/api/app/agents/conversation_graph.py:ro
+      - ./apps/api/app/agents/scribe_graph.py:/app/apps/api/app/agents/scribe_graph.py:ro
+      - ./apps/api/app/agents/w2_ask_graph.py:/app/apps/api/app/agents/w2_ask_graph.py:ro
+      - ./apps/api/app/agents/intent_graph.py:/app/apps/api/app/agents/intent_graph.py:ro
+      - ./apps/api/app/agents/w1_triage_graph.py:/app/apps/api/app/agents/w1_triage_graph.py:ro
+  scheduler:
+    volumes:
+      - ./apps/api/app/modules/health/router.py:/app/apps/api/app/modules/health/router.py:ro
+  web:
+    volumes:
+      - ./apps/web/dist:/usr/share/nginx/html:ro

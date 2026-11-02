@@ -1,0 +1,68 @@
+# FR-DATA-01 five public sources + seed sample + tagged generated layer.
+# Public sources are actual Kaggle/OpenML datasets — never invent row counts.
+# Seed/sample is the only offline synthetic path (FR-DATA-12). Generated layer
+# (FR-DATA-02/03) is separate and always tagged synthetic=true.
+version: 1
+raw_dir: data/raw
+sources:
+  - id: appointments
+    name: Medical Appointment No Shows
+    kaggle: joniarroba/noshowappointments
+    openml_id: 43439
+    pack_rows_context: 110527
+    licence: CC BY-NC-SA 4.0
+    sensitivity: deidentified_public
+    expected_sha256: null
+    enabled: true
+    kind: public
+    use: Scheduling/no-show signal
+  - id: notes
+    name: Medical Transcriptions
+    kaggle: tboyle10/medicaltranscriptions
+    pack_rows_context: 5000
+    licence: check_and_record
+    sensitivity: deidentified_public
+    expected_sha256: null
+    enabled: true
+    kind: public
+    use: Dictation/transcript seed
+  - id: symptoms
+    name: Disease Symptom Prediction
+    kaggle: itachi9604/disease-symptom-description-dataset
+    pack_rows_context: 4900
+    licence: check_and_record
+    sensitivity: deidentified_public
+    expected_sha256: null
+    enabled: true
+    kind: public
+    use: Symptom→specialty signal
+  - id: medicines
+    name: A-Z Medicine Dataset of India
+    kaggle: shudhanshusingh/az-medicine-dataset-of-india
+    pack_rows_context: 250000
+    licence: check_and_record
+    sensitivity: deidentified_public
+    expected_sha256: null
+    enabled: true
+    kind: public
+    use: Formulary/stock reference
+  - id: patients
+    name: Healthcare Dataset (Kaggle; dataset itself labelled synthetic)
+    kaggle: prasad22/healthcare-dataset
+    pack_rows_context: 55000
+    licence: check_and_record
+    sensitivity: deidentified_public
+    expected_sha256: null
+    enabled: true
+    kind: public
+    use: Patient/encounter master
+  - id: seed_sample
+    name: Sahyog seed/sample demo
+    kaggle: null
+    licence: proprietary-demo
+    sensitivity: synthetic_seed
+    expected_sha256: null
+    enabled: true
+    kind: seed
+    use: Offline demo via scripts/load-data.sh --sample (FR-DATA-12)
+    loader: sample

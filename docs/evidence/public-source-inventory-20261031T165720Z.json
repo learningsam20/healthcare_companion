@@ -1,0 +1,74 @@
+{
+  "g2": "G2 requires all five public sources inventoried with exact counts and licences.",
+  "generated_at": "2026-10-31T16:57:20Z",
+  "missing": [],
+  "rule": "Actual public files only; seed/sample is separate (FR-DATA-12).",
+  "sources": [
+    {
+      "csv": "data/raw/appointments/KaggleV2-May-2016.csv",
+      "id": "appointments",
+      "kaggle": "joniarroba/noshowappointments",
+      "licence": "CC BY-NC-SA 4.0",
+      "name": "Medical Appointment No Shows",
+      "pack_rows_context": 110527,
+      "path": "data/raw/appointments",
+      "present": true,
+      "row_count": 110527,
+      "sha256": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "status": "inventoried"
+    },
+    {
+      "csv": "data/raw/notes/mtsamples.csv",
+      "id": "notes",
+      "kaggle": "tboyle10/medicaltranscriptions",
+      "licence": "check_and_record",
+      "name": "Medical Transcriptions",
+      "pack_rows_context": 5000,
+      "path": "data/raw/notes",
+      "present": true,
+      "row_count": 4999,
+      "sha256": "a92cb78569f460606661ee7da50c92305b60d0fac2be4b06c8d2de0f234612d4",
+      "status": "inventoried"
+    },
+    {
+      "csv": "data/raw/symptoms/dataset.csv",
+      "id": "symptoms",
+      "kaggle": "itachi9604/disease-symptom-description-dataset",
+      "licence": "check_and_record",
+      "name": "Disease Symptom Prediction",
+      "pack_rows_context": 4900,
+      "path": "data/raw/symptoms",
+      "present": true,
+      "row_count": 4920,
+      "sha256": "ebbd391c4ba4d64f57a00eb3d0a55f0ca9b920b0c5de6b9af4234e72519c9618",
+      "status": "inventoried"
+    },
+    {
+      "csv": "data/raw/medicines/A_Z_medicines_dataset_of_India.csv",
+      "id": "medicines",
+      "kaggle": "shudhanshusingh/az-medicine-dataset-of-india",
+      "licence": "check_and_record",
+      "name": "A-Z Medicine Dataset of India",
+      "pack_rows_context": 250000,
+      "path": "data/raw/medicines",
+      "present": true,
+      "row_count": 253973,
+      "sha256": "f89c1cdea39c615151201f15a99082e83c1aac0cd41a742d0f0c3a511c87a2d7",
+      "status": "inventoried"
+    },
+    {
+      "csv": "data/raw/patients/healthcare_dataset.csv",
+      "id": "patients",
+      "kaggle": "prasad22/healthcare-dataset",
+      "licence": "check_and_record",
+      "name": "Healthcare Dataset (Kaggle; dataset itself labelled synthetic)",
+      "pack_rows_context": 55000,
+      "path": "data/raw/patients",
+      "present": true,
+      "row_count": 55500,
+      "sha256": "d8c23c7dddaf0e1f5daf26182eb908c219d28a63bb574377c3ba6cb09be8a342",
+      "status": "inventoried"
+    }
+  ],
+  "status": "passed"
+}

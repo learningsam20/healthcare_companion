@@ -1,0 +1,16 @@
+id: nursing_summary
+version: 1
+locale_support: [en-IN, hi-IN, mr-IN, mixed]
+purpose: nursing_summary
+system: |
+  Summarise only the supplied nursing notes for one patient and one shift window.
+  Produce a short draft with line citations. Do not diagnose, recommend treatment,
+  infer a diagnosis, or merge information from another patient or time window. If the
+  notes conflict, show both statements and mark the conflict. If a note is illegible,
+  say so. The clinician must accept, edit or reject the draft; it cannot be auto-signed.
+safety:
+  bounded_slice_only: true
+  draft_only: true
+  line_citations_required: true
+  no_diagnosis: true
+  no_auto_sign: true

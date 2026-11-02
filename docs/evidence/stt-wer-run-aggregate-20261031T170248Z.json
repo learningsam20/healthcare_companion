@@ -1,0 +1,31 @@
+{
+  "synthetic": false,
+  "source": "scripts/stt_wer_live.sh",
+  "fixture": "evals/fixtures/non_phi/public_human (Mozilla DeepSpeech v0.9.3 / LibriSpeech)",
+  "engine": "faster-whisper",
+  "adapter": "local",
+  "cases": [
+    {
+      "id": "librispeech-2830-3980-0043",
+      "reference": "experience proves this",
+      "hypothesis": "Experience proves this.",
+      "modality": "stt",
+      "language": "en"
+    },
+    {
+      "id": "librispeech-4507-16021-0012",
+      "reference": "why should one halt on the way",
+      "hypothesis": "Why should one halt on the way?",
+      "modality": "stt",
+      "language": "en"
+    },
+    {
+      "id": "librispeech-8455-210777-0068",
+      "reference": "your power is sufficient i said",
+      "hypothesis": "Your power is sufficient, I said.",
+      "modality": "stt",
+      "language": "en"
+    }
+  ],
+  "note": "English public human-speech clips only; not Hindi/Marathi/Hinglish clinical speech."
+}

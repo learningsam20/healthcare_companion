@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {
+      "id": "librispeech-2830-3980-0043",
+      "language": "en",
+      "metric": "wer",
+      "score": 0.0
+    },
+    {
+      "id": "librispeech-4507-16021-0012",
+      "language": "en",
+      "metric": "wer",
+      "score": 0.0
+    },
+    {
+      "id": "librispeech-8455-210777-0068",
+      "language": "en",
+      "metric": "wer",
+      "score": 0.0
+    }
+  ],
+  "mean": 0.0,
+  "source_run": "docs/evidence/stt-wer-run-aggregate-20261031T170248Z.json",
+  "status": "measured"
+}

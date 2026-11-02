@@ -1,0 +1,14 @@
+{
+  "probed_at": "20261031T134008Z",
+  "backend": "ollama",
+  "model": "hf.co/manjunathshiva/opendecider-small-GGUF:Q8_0",
+  "result": {
+    "engine": "opendecider_openai_compatible",
+    "model": "hf.co/manjunathshiva/opendecider-small-GGUF:Q8_0",
+    "intent": "book_appointment",
+    "category": "workflow",
+    "confidence": 0.99,
+    "scores": {}
+  },
+  "note": "Parses message.reasoning / thinking when content empty (G-29 follow-up)."
+}

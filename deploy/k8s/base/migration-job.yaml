@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sahyog-migrate
+  labels:
+    app.kubernetes.io/name: sahyog-migrate
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: app
+spec:
+  backoffLimit: 10
+  activeDeadlineSeconds: 900
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sahyog-migrate
+        app.kubernetes.io/part-of: sahyog
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: migrate
+          image: sahyog-api:0.1.0
+          imagePullPolicy: IfNotPresent
+          workingDir: /app/apps/api
+          command:
+            - /bin/sh
+            - -c
+            - >-
+              until python -c 'import socket; socket.create_connection(("postgres", 5432), 2)' 2>/dev/null;
+              do sleep 2; done;
+              exec alembic upgrade head
+          envFrom:
+            - secretRef:
+                name: sahyog-secrets
+            - configMapRef:
+                name: sahyog-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

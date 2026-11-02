@@ -1,0 +1,17 @@
+{
+  "synthetic": false,
+  "source": "scripts/stt_wer_live.sh",
+  "mcp_status": "ok",
+  "engine": "faster-whisper",
+  "adapter": "local",
+  "audio_url": "http://wer-audio-fixture/8455-210777-0068.wav",
+  "cases": [
+    {
+      "id": "librispeech-8455-210777-0068",
+      "reference": "your power is sufficient i said",
+      "hypothesis": "Your power is sufficient, I said.",
+      "modality": "stt",
+      "language": "en"
+    }
+  ]
+}

@@ -1,0 +1,2001 @@
+display_name,doctor,medical_condition,medication,hospital
+Bobby Jackson,Matthew Smith,Cancer,Paracetamol,Sons and Miller
+Leslie Terry,Samantha Davies,Obesity,Ibuprofen,Kim Inc
+Danny Smith,Tiffany Mitchell,Obesity,Aspirin,Cook PLC
+Andrew Watts,Kevin Wells,Diabetes,Ibuprofen,"Hernandez Rogers and Vang,"
+Adrienne Bell,Kathleen Hanna,Cancer,Penicillin,White-White
+Emily Johnson,Taylor Newton,Asthma,Ibuprofen,Nunez-Humphrey
+Edward Edwards,Kelly Olson,Diabetes,Paracetamol,Group Middleton
+Christina Martinez,Suzanne Thomas,Cancer,Paracetamol,"Powell Robinson and Valdez,"
+Jasmine Aguilar,Daniel Ferguson,Asthma,Aspirin,Sons Rich and
+Christopher Berg,Heather Day,Cancer,Paracetamol,Padilla-Walker
+Michelle Daniels,John Duncan,Cancer,Paracetamol,Schaefer-Porter
+Aaron Martinez,Douglas Mayo,Hypertension,Lipitor,Lyons-Blair
+Connor Hansen,Kenneth Fletcher,Diabetes,Penicillin,"Powers Miller, and Flores"
+Robert Bauer,Theresa Freeman,Asthma,Lipitor,Rivera-Gutierrez
+Brooke Brady,Roberta Stewart,Cancer,Paracetamol,Morris-Arellano
+Ms. Natalie Gamble,Maria Dougherty,Obesity,Aspirin,Cline-Williams
+Haley Perkins,Erica Spencer,Arthritis,Paracetamol,Cervantes-Wells
+Mrs. Jamie Campbell,Justin Kim,Obesity,Paracetamol,"Torres, and Harrison Jones"
+Luke Burgess,Justin Moore Jr.,Hypertension,Aspirin,Houston PLC
+Daniel Schmidt,Denise Galloway,Asthma,Penicillin,Hammond Ltd
+Timothy Burns,Krista Smith,Asthma,Aspirin,Jones LLC
+Christopher Bright,Gregory Smith,Asthma,Lipitor,Williams-Davis
+Kathryn Stewart,Vanessa Newton,Arthritis,Lipitor,Clark-Mayo
+Dr. Eileen Thompson,Donna Martinez MD,Asthma,Lipitor,and Sons Smith
+Paul Henderson,Stephanie Kramer,Hypertension,Paracetamol,Wilson Group
+Peter Fitzgerald,Angela Contreras,Obesity,Aspirin,Garner-Bowman
+Cathy Small,Wendy Glenn,Asthma,Ibuprofen,"Brown, and Jones Weaver"
+Mr. Kenneth Moore,James Ellis,Diabetes,Lipitor,Serrano-Dixon
+Mary Hunter,Jared Bruce Jr.,Hypertension,Penicillin,Gardner-Miller
+Joshua Oliver,Brandy Mitchell,Hypertension,Paracetamol,Guerrero-Boone
+Thomas Martinez,Jacob Huynh,Asthma,Ibuprofen,Hart Ltd
+James Patterson,Kristina Frazier,Arthritis,Penicillin,Cruz-Santiago
+William Cooper,John Hartman,Arthritis,Penicillin,Group Duncan
+Erin Ortega,Heather Garcia,Cancer,Ibuprofen,Lopez-Phillips
+Nicole Rodriguez,Lynn Young,Diabetes,Lipitor,Poole Inc
+David Anderson,Emma Allison,Asthma,Lipitor,Sons and Cox
+Denise Torres,Laura Myers,Diabetes,Paracetamol,LLC Martin
+Cassandra Robinson,Travis Parsons,Hypertension,Ibuprofen,Espinoza-Stone
+Nicole Lucero,Christine Johnson,Diabetes,Lipitor,"and Garcia Morris Cunningham,"
+Pamela Fernandez,Emily Taylor,Obesity,Penicillin,Walton-Meyer
+Christopher Lee,William Reynolds,Hypertension,Lipitor,PLC Young
+Thomas Morse,Jennifer Carter,Hypertension,Aspirin,Meadows Group
+Mr. Eric Lane,Matthew Thomas,Asthma,Paracetamol,"and Howell Brooks, Rogers"
+Katherine Smith,Mary Logan,Obesity,Paracetamol,"and Mcclure White Boone,"
+Paul Williams,Kristin Martinez,Cancer,Penicillin,"Gates Brown, and Stuart"
+Lynn Martinez,Daniel Murphy,Cancer,Penicillin,Group Armstrong
+Christopher Chapman,Emily Patterson,Hypertension,Paracetamol,Ltd Schwartz
+Chris Frye,Heather Smith,Diabetes,Aspirin,Nelson-Phillips
+Kyle Bennett,John Smith,Hypertension,Ibuprofen,"Knight and Nguyen, Riggs"
+Brandon Collins,Cameron Young,Asthma,Ibuprofen,Lopez PLC
+Michael Liu,Vicki Nguyen,Hypertension,Paracetamol,"Fernandez and Phillips, Singh"
+Stephanie Kent,Mary Moss,Cancer,Ibuprofen,Beck-Galloway
+Jesse Banks,Alexander Garcia,Cancer,Penicillin,"Decker Glover, and Christensen"
+Peggy Lee,Patrick Burns,Obesity,Lipitor,"Nelson Walker Myers, and"
+Tamara Hernandez,Kayla Powers,Asthma,Ibuprofen,Mitchell-Navarro
+Mr. David Pierce Md,Julia Cox,Hypertension,Paracetamol,Group Delgado
+Bethany Moore,Penny Pruitt,Cancer,Paracetamol,"and Montes Graves, Thomas"
+Michael Mills,Mrs. Lori Hurst PhD,Hypertension,Ibuprofen,Hall-Bentley
+Kyle Wiley,Stephen Carr,Cancer,Ibuprofen,Taylor-Nguyen
+Jacqueline Jordan,Jacob Daniel,Hypertension,Paracetamol,Hunter-Grant
+Ashley Gutierrez,Tyler Braun,Obesity,Paracetamol,Miller-Lawson
+Kim Scott,Cindy Ellis,Asthma,Ibuprofen,Scott-Kelly
+Travis Carter,Megan Hahn,Cancer,Aspirin,"Moss and Ferguson, Baker"
+Larry Rodgers,Eric Kelly,Hypertension,Aspirin,"and Mason Smith Chase,"
+Nancy Glover,Jennifer Larson,Hypertension,Aspirin,"Khan, and Rodriguez Fischer"
+Jessica King,William Hess,Cancer,Lipitor,Sons Watson and
+Christopher Gonzalez,Patricia Dunn,Diabetes,Penicillin,Rhodes-Carey
+John Hartman,Jack Jackson,Hypertension,Lipitor,Bullock-Ramsey
+Michael Miller,Jonathan Drake,Diabetes,Penicillin,"Clark Brown, and Myers"
+Erica Myers,Ian Benitez,Arthritis,Penicillin,"Jackson and Lane, Dillon"
+Carol Patterson,Jamie Baker,Cancer,Ibuprofen,"Turner Cook, Banks and"
+Jose Lopez,Erika Jackson,Obesity,Aspirin,"Miles, and Weaver Hudson"
+Kevin Simmons Jr.,Amanda Garcia,Cancer,Paracetamol,Evans Ltd
+Duane Haney,Raven Wong,Diabetes,Penicillin,Sons and Schaefer
+Jonathan Yates,Cynthia Scott,Arthritis,Paracetamol,Sons Hodges and
+John Thomas,Mark Padilla,Arthritis,Paracetamol,Simpson-Mccall
+Adrian Buckley,Julie Ramirez,Arthritis,Penicillin,"Lin Thompson Wells, and"
+April Santiago,Jacob Rich,Diabetes,Penicillin,Jones-Scott
+Diane Schultz,Mark Hartman Jr.,Arthritis,Penicillin,Howe-Kelly
+Timothy Myers,Timothy Baker,Cancer,Ibuprofen,and Sons Reyes
+Nicole Hughes,Lori Sanchez,Arthritis,Ibuprofen,Shaw-Young
+Chad Moreno,Connie Boyd,Hypertension,Penicillin,Inc Skinner
+Sean Jennings,James Tucker,Diabetes,Penicillin,Clark-Johnson
+Diane Branch,Juan Acevedo,Obesity,Aspirin,Perez and Sons
+Cindy Orozco,Julie Finley,Asthma,Ibuprofen,Kemp LLC
+Patricia Medina,Miguel Parker,Cancer,Ibuprofen,LLC Dixon
+Kayla Padilla,Jermaine Peters,Asthma,Penicillin,"and Morales Jennings Cook,"
+Juan Klein,Lisa Edwards,Arthritis,Ibuprofen,Group Hood
+William Hill,Matthew Walker,Cancer,Aspirin,Lindsey Inc
+Carl Best,Gregory Hansen,Hypertension,Paracetamol,Ltd Wang
+Tina Griffin,Jessica Cruz,Cancer,Penicillin,Inc Ford
+Mr. Tyler Taylor Phd,Robert Salazar,Diabetes,Lipitor,Dean-Hawkins
+Taylor Howell Dds,Kyle Patterson,Diabetes,Ibuprofen,Walter PLC
+Michael Martin,John Summers,Asthma,Ibuprofen,Sons Horn and
+Heather Miller,Scott Grant,Diabetes,Lipitor,"Powell Ward, and Mercado"
+Catherine Gardner,David Ruiz,Hypertension,Lipitor,James Ltd
+Anne Thompson,Kyle Smith,Diabetes,Aspirin,Kemp-Munoz
+Todd Cooper,Jason Price,Diabetes,Ibuprofen,Henderson-Taylor
+Phillip Lyons,Stephanie Clements,Cancer,Aspirin,"Parsons, Hartman Martinez and"
+Mark Ford,Steven James,Asthma,Aspirin,Luna Inc
+Marcus Zamora,Jeremiah Wolf,Arthritis,Aspirin,"Hernandez, Ritter and Huffman"
+Katie Henry,Roberto Petersen,Diabetes,Aspirin,Reed LLC
+William Morton,Christina Hammond,Diabetes,Ibuprofen,Thompson-Walker
+Katrina Martin,Patricia Colon,Diabetes,Penicillin,Group Nguyen
+Hunter Mckay,Dominic Mitchell,Arthritis,Aspirin,Newton-White
+Dwayne Davis,Wendy Davis,Cancer,Ibuprofen,Ltd Thomas
+Sarah Caldwell,Daniel Carson,Obesity,Aspirin,"Pierce Ward, Torres and"
+David Higgins,Erin Henderson MD,Arthritis,Penicillin,"Evans and Hall Schneider,"
+Bradley Combs,Christopher Butler,Hypertension,Penicillin,Stout-Brown
+Christina Schmitt,Samuel Robles,Cancer,Ibuprofen,Cruz Ltd
+Colton Strong,Benjamin Webb,Asthma,Paracetamol,Stewart Sons and
+Mark Price,Krystal Fox,Arthritis,Ibuprofen,"Hall Roberts and Duarte,"
+Suzanne Schneider,Bruce Garrett,Hypertension,Lipitor,Ramirez-Robinson
+Michael Hurley,Jonathan Watson,Obesity,Lipitor,"Garcia, and Bishop Hernandez"
+Lindsey Lambert,Christopher Guerra,Hypertension,Ibuprofen,"and Brown Oneal, Shah"
+Rebecca Parsons,Steven Adams,Asthma,Penicillin,Group White
+Judy Johnson,Victoria Patel,Cancer,Penicillin,"Hughes and Erickson, Anderson"
+Tonya Campbell,Louis Bell,Asthma,Ibuprofen,Lane-Kelly
+James Ross,Michael Baker,Diabetes,Aspirin,Cox-Hester
+Sara Cook,Douglas Fleming,Arthritis,Aspirin,"Jarvis Scott, Fleming and"
+Anne Howell,Patrick Carter,Obesity,Penicillin,Cline-Carpenter
+Renee Bailey,Sarah Shaffer,Cancer,Ibuprofen,"Johnson, and Ross Harris"
+Jeffrey Turner,Matthew Carter,Obesity,Ibuprofen,"Kim Rosario, and Hammond"
+Dr. Lauren Clark Dds,Brian Wagner,Cancer,Lipitor,PLC Jimenez
+Terry Thomas,Lucas Cole,Asthma,Paracetamol,Cantu-Berry
+Jason Baker,Julia Yoder,Obesity,Ibuprofen,Wright-Alexander
+Jessica Gutierrez,Crystal Chavez,Obesity,Lipitor,Guzman-Carlson
+Courtney Hodges,Brenda Lopez,Obesity,Aspirin,Meyer-Hill
+Anthony Reyes,Michael Cole,Obesity,Penicillin,Dudley-Atkinson
+Leah Cross Dds,Michael Larson,Diabetes,Ibuprofen,Kelly-Allen
+Paul Martinez,Tracey Spence,Hypertension,Aspirin,"Lewis Livingston, Lowe and"
+Denise Rodriguez,Susan Gibson,Hypertension,Paracetamol,Rodriguez Ltd
+Ashley Erickson,Gerald Hooper,Cancer,Penicillin,"and Johnson Moore, Branch"
+Sean Cardenas,Todd Sanchez,Diabetes,Aspirin,"Holmes and Hughes, Phillips"
+Alan Alvarez,Elizabeth Morales,Hypertension,Lipitor,"and Smith, Tucker Cross"
+Jessica Phillips,Kimberly Petersen,Hypertension,Paracetamol,Sons and Lozano
+Timothy Coleman,Misty Garcia,Cancer,Lipitor,Russell Ltd
+Christina Woods,Melissa Fernandez,Arthritis,Paracetamol,Jones Ltd
+Melissa Scott,Kari Moore,Asthma,Ibuprofen,Gordon-Ward
+Gary Hopkins,David Hubbard,Obesity,Paracetamol,Barnes and Sons
+April Valencia,Lonnie Morgan,Diabetes,Aspirin,Levine-Miller
+Rita Archer,Victoria Gonzales,Diabetes,Lipitor,"and Marquez Silva Smith,"
+Kim Pena,Cindy White,Hypertension,Lipitor,Jackson-Copeland
+Jason Foley,Douglas Li,Diabetes,Paracetamol,"Perez and Ochoa White,"
+Shaun Guzman,Lori Mendoza,Arthritis,Aspirin,Ltd Conrad
+Matthew White,Ryan Ross,Diabetes,Ibuprofen,Hampton-Thomas
+Alexis Wilson,Brian Walton,Arthritis,Paracetamol,Thomas-Kelley
+Jacqueline Marshall,Michael Berg,Hypertension,Penicillin,Myers-Monroe
+Robert Higgins,Scott Davis,Asthma,Ibuprofen,"and Ford Lee, Rodriguez"
+Sierra Morton,Daniel Shelton,Asthma,Ibuprofen,Sons Garcia and
+Natalie Stanton,Tara Moreno,Asthma,Paracetamol,"Perry Little, and Moore"
+Jessica Acevedo,Kristie Morgan,Diabetes,Penicillin,Anderson Group
+Jennifer Mcmillan,Joseph Jones,Obesity,Ibuprofen,Rodriguez and Sons
+Christopher Mcclain,Maria Tran,Arthritis,Aspirin,Thomas-Huber
+Kevin Hicks,Kelly Murphy,Arthritis,Ibuprofen,Robinson Inc
+Melinda Richards,Katherine Brown,Cancer,Penicillin,Wood-Mathews
+Robyn Miranda,Elizabeth Frank,Diabetes,Ibuprofen,"Walker and Gardner Fernandez,"
+Scott Castillo,Alyssa Edwards,Diabetes,Penicillin,"Smith and Johnston, Collins"
+John Garcia,Jesse Thomas,Diabetes,Penicillin,Sons Miller and
+Michael Taylor,Erica Mccormick,Asthma,Ibuprofen,Donaldson-Frey
+Jeffrey Wood,Amber Holmes,Cancer,Aspirin,Brown-Yoder
+Michael Smith,Austin Jackson,Obesity,Aspirin,"Morgan Rios and Keller,"
+William Griffith,Shane Morris,Asthma,Penicillin,Gonzalez-King
+Christina Lawrence,Brent Smith,Asthma,Penicillin,Wagner Ltd
+Jessica Holmes,Kayla Davis,Arthritis,Paracetamol,"and Brown White, Jones"
+Tracey Greene,Rose Zuniga,Cancer,Ibuprofen,James-Smith
+Amanda Lopez,Ethan Wagner,Hypertension,Lipitor,Hanson Group
+Laura Peters,Phillip Williams,Cancer,Lipitor,Mcclain-Reed
+Lauren Anderson,Maureen Hill,Asthma,Paracetamol,Young-Smith
+William Campos,Heidi Compton MD,Asthma,Penicillin,Hart-Brock
+Jessica Gonzales,Kimberly Gonzalez,Hypertension,Penicillin,"Jones and Jones, Turner"
+Bruce Gonzales,Rebecca Morgan,Arthritis,Penicillin,Spears-Shah
+Robert Walsh,Sabrina Rogers,Cancer,Paracetamol,"and Anderson Smith Sanchez,"
+Lisa Lewis,Kevin Brown,Asthma,Ibuprofen,"Tran, and Ferrell Garcia"
+William Ruiz,Sarah Cole,Obesity,Paracetamol,Ltd Walton
+Steven Baldwin,Jennifer Hall,Diabetes,Aspirin,Group Rodriguez
+Megan Colon,Emily Cruz,Asthma,Paracetamol,Carr LLC
+Kimberly Brooks,Michael Anderson,Cancer,Ibuprofen,Rodriguez-Guerra
+Edward Smith Jr.,Natalie Sellers,Hypertension,Lipitor,"Sullivan Mullins, Macias and"
+Allison Cordova,Patrick Ochoa,Hypertension,Lipitor,Ballard PLC
+Linda Thomas,Daniel Rodgers,Obesity,Penicillin,Liu-Wilson
+Parker Moore,Taylor Baldwin,Diabetes,Lipitor,LLC Lewis
+Tanya Soto,Adam Ross,Obesity,Lipitor,"Stokes Chambers and Martin,"
+Michael Jordan,Amy Williams,Hypertension,Ibuprofen,Hernandez-Green
+Christina Martin,Martha Graham,Diabetes,Paracetamol,Inc Lee
+Tracy Burke,Emily Thomas,Obesity,Lipitor,Wilkins Group
+David Spence,Terrance Rosales,Diabetes,Penicillin,Valentine Ltd
+Joseph Foster,Daniel Smith,Obesity,Penicillin,Alvarado-Deleon
+Nicholas Hall,Marissa Stevenson,Diabetes,Ibuprofen,"Alexander and Jensen Andrews,"
+Christina Macias,Katie Fitzpatrick,Asthma,Ibuprofen,"and Black, Henson Rhodes"
+Scott Jones,Dennis Small,Diabetes,Aspirin,Sons and Marshall
+James Anderson,Chris Holt,Asthma,Lipitor,Rodriguez-Franco
+Shaun Long,Jenny Griffith,Obesity,Aspirin,"Fritz Henderson Stanton, and"
+Kristina Mora,Gregory Lambert,Hypertension,Paracetamol,West-Young
+Joshua Richmond,Michael Armstrong,Obesity,Lipitor,Ltd Solis
+Mark Lawrence,Melissa Terry,Diabetes,Ibuprofen,Mcneil-Blake
+John Ellis,Thomas Bruce,Hypertension,Paracetamol,Moore-Waters
+Mrs. Tiffany Dennis,James James DVM,Diabetes,Ibuprofen,Group Scott
+Cynthia Huang,Sean Smith,Arthritis,Lipitor,and Simmons Sons
+Melissa Lawrence,John Hansen,Obesity,Lipitor,"Humphrey and Browning Fitzgerald,"
+Steven Goodwin,Teresa Mccarthy,Obesity,Ibuprofen,Adams-Molina
+Mary Hunt,Stephanie Barnett,Hypertension,Lipitor,Guzman LLC
+Eric Rivera,Mr. Luke Nunez Jr.,Cancer,Lipitor,Gonzalez-Pacheco
+Alan Taylor,Stacy Stewart,Diabetes,Lipitor,"Hunt, Carlson and Cherry"
+Michael Campbell,Andrea Oneal,Diabetes,Aspirin,Ltd Barnes
+Ashley Webb Dds,Eric Coleman,Cancer,Penicillin,"Gordon, Fox Lane and"
+Shannon Brown,Anthony Barnes,Obesity,Ibuprofen,Petersen Ltd
+Lawrence Shepherd,Michael Hickman,Asthma,Ibuprofen,and Mcdonald Sons
+Scott Wade,Dustin Wolf,Arthritis,Paracetamol,"Smith, Elliott and Blackburn"
+Heather Curtis,Amanda Wells,Asthma,Penicillin,PLC Oliver
+Kevin Jefferson,Jason Miller,Cancer,Aspirin,"Griffin and Lyons Rivers,"
+David Griffin,Holly James,Asthma,Ibuprofen,Craig-Garcia
+Grant George,April Cox,Cancer,Penicillin,Baker-Jones
+Eric Stewart,Virginia Lynch,Diabetes,Penicillin,Duffy-Kelly
+Robert Pittman,Patricia Fuller,Arthritis,Lipitor,Rodriguez-Becker
+Sydney Cross,Michelle Ward,Cancer,Lipitor,Group Brown
+David Crawford,Robin Adams,Hypertension,Ibuprofen,Powers-Vincent
+Leah Drake,Emily Morales,Obesity,Paracetamol,"and Ramos Brown Edwards,"
+Diana Hall,Adriana Morrow,Diabetes,Ibuprofen,Johnson Group
+Justin Le,Michael Mitchell,Arthritis,Paracetamol,Atkins Inc
+Karen Price Dds,Caroline Choi,Cancer,Ibuprofen,Marshall LLC
+Carolyn Steele,Michael Robinson,Hypertension,Paracetamol,Ltd Cruz
+Lauren Ramirez,Heather Miller,Asthma,Paracetamol,Harrison-Parker
+Jacob Newman,Howard Obrien,Diabetes,Ibuprofen,Lee-Clayton
+Katherine Barnett,Faith Cook,Arthritis,Penicillin,Mcdaniel and Sons
+Jodi Martinez,Donna Colon,Obesity,Ibuprofen,Inc Lynch
+Andrea Allen,David Lindsey,Obesity,Aspirin,"and Mendoza Rich Morales,"
+Noah Baxter,Anthony Nixon,Arthritis,Paracetamol,Proctor-Jones
+Hector Maxwell,Doris Hawkins,Obesity,Lipitor,"and Ramirez Figueroa May,"
+Holly Walters,Caleb James,Hypertension,Penicillin,Michael-Jenkins
+Joseph Smith,Patricia Moore,Obesity,Penicillin,Hardy Inc
+Albert Thomas,Matthew Gray,Asthma,Paracetamol,"Turner, and Williams Mercado"
+Jeffery Williamson,Justin Lowe,Cancer,Ibuprofen,PLC Williams
+Jonathan Meadows,Danny Mcdonald,Asthma,Aspirin,Evans Ltd
+Kristin Bennett,Gina Weaver,Hypertension,Paracetamol,Merritt-Gray
+Joseph Carpenter,Miss Valerie Saunders MD,Arthritis,Penicillin,Rodriguez-Zimmerman
+Larry Mayer,Richard Petty,Cancer,Aspirin,Miller PLC
+Clayton Peterson,Patricia Bean,Cancer,Paracetamol,"May, Mullins and Martin"
+Donald Alvarez,Ronald Jones,Diabetes,Ibuprofen,Moore-Robbins
+Sarah Lee,Jack Wall,Arthritis,Aspirin,Ltd Howard
+John Perez,Felicia Morrison,Asthma,Lipitor,Group Crosby
+Timothy Jacobs,Crystal Schultz,Hypertension,Penicillin,Cook Ltd
+Nathan Small,Bailey Gonzalez,Obesity,Lipitor,"Rivas, Mcconnell Hill and"
+Dustin Wright,Michael Guzman,Obesity,Aspirin,Conner-Flores
+Jacob Williams,Elizabeth Flowers,Arthritis,Ibuprofen,Suarez-Nelson
+William Mccoy,Whitney Vaughan,Asthma,Penicillin,"and Walker Glenn, Long"
+Dr. Matthew Wilkins,Seth Nelson,Cancer,Lipitor,PLC Anderson
+Joseph Gonzalez,Erin Wright,Hypertension,Aspirin,Blackwell-Gamble
+Robert Fields,Jennifer Flores,Hypertension,Aspirin,Wagner PLC
+Lawrence Miranda,Brandi Knight,Diabetes,Paracetamol,Goodman-Kelly
+Mitchell Carroll,Chad Irwin,Arthritis,Paracetamol,"and Boyd Powell, Sims"
+Cody Nichols,Victoria Williams,Diabetes,Lipitor,"and Conrad Boyd, Burnett"
+Kelli Thompson,Travis Walton,Asthma,Ibuprofen,Ayala-Armstrong
+Danielle Lopez,Catherine Hernandez,Hypertension,Lipitor,"and Lambert White, Vargas"
+Melinda Jones,Kristen Johnson,Diabetes,Paracetamol,Group Doyle
+Kristin Smith,Tammy Chavez,Arthritis,Aspirin,Henderson-Johnson
+Stephanie Reynolds,Savannah Colon,Arthritis,Penicillin,"Baker Conrad and Andrews,"
+Anna Norman,Jessica Parks MD,Obesity,Aspirin,"Perkins, Salazar and Johnson"
+Maria Hayes,Joshua Singleton,Arthritis,Aspirin,Johnson-Perez
+Tonya Riley Md,Vincent Ramirez,Hypertension,Penicillin,Powell-Werner
+Regina Dunn,Natasha Smith,Asthma,Penicillin,Morales Group
+Michael Jacobs,John Sparks,Hypertension,Paracetamol,"and Fernandez, Wilson Morrison"
+Jason Moore Md,Michelle Gutierrez,Obesity,Ibuprofen,Mayo and Sons
+Eric Hall,Rachel Williams,Diabetes,Ibuprofen,"Huffman Hall Orozco, and"
+Malik Martinez,Sergio Shelton,Cancer,Aspirin,White-Buchanan
+Lisa Kennedy,Mr. Michael White MD,Arthritis,Ibuprofen,"and Dixon Taylor Hunter,"
+Kristin Ochoa,Mary Drake,Arthritis,Lipitor,"Anderson and Medina, Sullivan"
+Joseph Zuniga,Tonya Wade,Arthritis,Aspirin,PLC Dixon
+Kyle Tyler,Charles Torres,Obesity,Ibuprofen,Bowman-Keith
+Eric Duncan,Jennifer Freeman,Asthma,Aspirin,Tyler PLC
+Rachel Romero,Reginald Becker,Asthma,Aspirin,Velazquez-Patton
+Michael Anderson,Charles Webb,Arthritis,Ibuprofen,Bass Inc
+Emily Clark,Emily Perez,Arthritis,Penicillin,"Newton, Smith Ruiz and"
+Daniel Mckinney,Rachel Thomas,Obesity,Ibuprofen,Graham-Fisher
+Bonnie Williams,Christopher Flores,Diabetes,Paracetamol,Scott Ltd
+Marcus Henry,Jennifer Stevenson,Asthma,Paracetamol,Rosales-Sweeney
+Katherine Hart,Matthew Garcia,Obesity,Ibuprofen,"Larson Andrews, and Lynch"
+Michelle Pierce,Brett Meyer,Arthritis,Paracetamol,PLC York
+Julie Mejia,David Murphy,Asthma,Ibuprofen,Kelly-Watson
+Cameron Sanchez,Erin Henson,Diabetes,Ibuprofen,"Smith Gonzalez Robinson, and"
+David Vincent,Katrina Fuentes,Obesity,Penicillin,Cook-Taylor
+Melissa Gomez,Harold Jackson,Diabetes,Aspirin,Robinson-Reyes
+Amanda Ponce,Christopher Merritt,Arthritis,Penicillin,Reid Inc
+Carol Gomez,Haley Kim,Diabetes,Paracetamol,"Kemp and Taylor, Jones"
+Christopher Palmer,Dr. Steven Johnson,Cancer,Ibuprofen,Richards-Mack
+Paul Hahn,Erin Cole,Cancer,Paracetamol,"and Smith Harmon, Marshall"
+Ashley Moore,Breanna Nielsen,Cancer,Paracetamol,"Velasquez and Walker Russo,"
+Linda Hamilton,John Smith,Arthritis,Paracetamol,"Harrington, and Owens Preston"
+Robin Cox,Frank Gonzalez,Obesity,Aspirin,Downs PLC
+Anthony Hall,Matthew Williams,Obesity,Ibuprofen,"Zhang Long Eaton, and"
+Robert Smith,Jonathan Gray,Arthritis,Lipitor,PLC Mills
+Derek Carter,Timothy Rodriguez,Cancer,Paracetamol,"Hoffman Cox Mcdonald, and"
+Heather May,Victor Welch,Hypertension,Aspirin,Carpenter and Sons
+Peter Gonzalez,Robert Adams MD,Arthritis,Lipitor,"Collins and Moore Chan,"
+Chris Fletcher,Andrew Jefferson,Asthma,Aspirin,"and Wood Lewis, Monroe"
+Shirley Wilkinson,Sharon Hensley,Hypertension,Ibuprofen,"and Keller, Ortega Miller"
+Courtney Farrell,Eugene Branch,Cancer,Ibuprofen,"Austin, and Reynolds Duran"
+Andrea Willis,Anthony Greer,Asthma,Ibuprofen,Lopez LLC
+Chad Huff,Bob Moyer,Hypertension,Paracetamol,Clark-Tran
+Devin Gilbert,Heather Shea,Cancer,Ibuprofen,"Villanueva and Carter Hughes,"
+Donald Davis,Nicholas Stevenson,Obesity,Paracetamol,Ltd Osborn
+Kurt Murphy,Laura Guerra,Hypertension,Penicillin,LLC Hodge
+Sylvia West,Michele Bradford,Obesity,Aspirin,"Lopez and Shepard Smith,"
+Donald Vazquez,Mr. Jesse Cook,Arthritis,Ibuprofen,"Moss and Meadows Jones,"
+Rebecca Rush,Heather Simon,Diabetes,Lipitor,Young-Williams
+Christopher Curry,Larry Mendez,Arthritis,Ibuprofen,"Bailey Morgan Frey, and"
+Michael Edwards,Taylor Smith,Hypertension,Paracetamol,"Neal Price and Smith,"
+Christopher Arnold,Ian Singleton,Obesity,Ibuprofen,"and Johnson Hobbs Owens,"
+Rachel Hickman,Angela Burton,Obesity,Aspirin,Melton Inc
+Ashley Gray,Lisa Payne,Asthma,Aspirin,and Weber Sons
+Elizabeth Perez,Sara Perry,Arthritis,Ibuprofen,"Chung Rodriguez Bradley, and"
+Angel Randolph Dds,Ann Brown,Asthma,Aspirin,"White Wilson and Farmer,"
+Mark Saunders,David Marshall,Arthritis,Ibuprofen,Group Thompson
+Christian Lang,Shirley Dawson,Cancer,Lipitor,and Sons Rangel
+Pam Perkins,Susan Hernandez,Diabetes,Ibuprofen,"Travis, and Richardson Hampton"
+Kayla Greene,Gina Edwards,Hypertension,Ibuprofen,"and Wilson Matthews, Faulkner"
+Michael David,Laura Howell,Asthma,Lipitor,Group Bailey
+Alexis Mccall,Scott Beltran,Asthma,Aspirin,Rosales-Johnson
+Mr. Brandon Perez Md,William Campbell,Arthritis,Penicillin,Bush-Brown
+Dr. Jeffrey Cole,Ethan Brock,Asthma,Ibuprofen,Saunders-Smith
+Matthew Brown,Nicholas Gomez,Arthritis,Lipitor,"and Mckay, Morrow Myers"
+Robert Sexton,Richard Buchanan,Cancer,Penicillin,Sherman-Martinez
+Ashley Vasquez,David Gonzalez,Asthma,Ibuprofen,"Baker, Weber Patton and"
+Michelle Flynn,Kristin Schmitt,Cancer,Lipitor,"and Fitzgerald Shaw, Edwards"
+Steven Tran,Kelly King,Cancer,Ibuprofen,Kim-Higgins
+James Miller,Jeffery Morgan,Diabetes,Paracetamol,"Morgan, Kramer Munoz and"
+Bonnie Hill,Patricia Fowler,Hypertension,Paracetamol,Harvey Group
+Anthony Davis,David Patterson,Asthma,Penicillin,Mercer-Rogers
+David Sheppard,Daisy Eaton,Cancer,Paracetamol,Duran Sons and
+Jodi Lang,Benjamin Bryant,Diabetes,Ibuprofen,"Vaughan Parker and Wagner,"
+Vanessa Taylor,Cynthia Velazquez,Arthritis,Ibuprofen,Lee-Jacobson
+Wayne Lynch,William Brock,Cancer,Paracetamol,"Hayes Robbins and Gallagher,"
+Yesenia Mcfarland,Douglas Lambert,Obesity,Ibuprofen,"Evans and Byrd, Smith"
+Kenneth Wilson,Alex Mcknight,Arthritis,Ibuprofen,and Howell Sons
+Jillian Marks,Gregory Fox,Arthritis,Ibuprofen,"Clements and Scott, Peters"
+Michelle Cruz Dds,Carrie Navarro,Asthma,Ibuprofen,Gomez-Olson
+Clarence Ford Jr.,Laura Murillo,Hypertension,Penicillin,"and Medina Morgan, Whitehead"
+Donald Kane,Alyssa Walsh,Diabetes,Ibuprofen,Miller LLC
+Zachary Larsen,Jeff Barton,Hypertension,Penicillin,Jones-Aguirre
+Sheryl Martinez,Ricky Anderson,Diabetes,Paracetamol,PLC Gonzalez
+Mr. Nathan Avila,John Hurst,Asthma,Penicillin,and Davies Sons
+Anne Anthony,Cristina Wyatt,Diabetes,Aspirin,Soto-Richmond
+Holly Lambert,Christina Fowler,Cancer,Paracetamol,"and Morrison Ho Woods,"
+James Rasmussen,Gary Barr,Obesity,Aspirin,Lewis and Sons
+Sarah Cannon,Frederick Whitney,Diabetes,Paracetamol,Wood-Sandoval
+Melinda Tanner,Mary Miller,Obesity,Ibuprofen,Ball LLC
+Laurie Joseph,Evan Lewis,Arthritis,Penicillin,Scott LLC
+Stephanie Hunter,Adrienne Howard,Hypertension,Ibuprofen,"and Wright, Long Schroeder"
+Gina Davis,Daniel Jones,Arthritis,Paracetamol,Ltd Crawford
+Christopher Shea Jr.,Craig Wolfe,Diabetes,Penicillin,Group Moore
+Mrs. Sabrina Ball,Tina Griffin,Asthma,Penicillin,Burch-Marks
+Joyce Mccormick,John Hansen,Asthma,Aspirin,Koch-Alvarado
+Devin Bell,Trevor Evans,Arthritis,Penicillin,"Garcia Edwards and Daniel,"
+Allison Ramirez,Mark Johnson,Cancer,Lipitor,Carter-Camacho
+Laura Romero,James Hays,Diabetes,Lipitor,Malone LLC
+Toni Faulkner,Nicholas Ferguson,Diabetes,Penicillin,Zamora PLC
+Patricia Turner,Mr. Jeffrey Powell,Diabetes,Penicillin,Ltd Hernandez
+Nathan Ray,Timothy Carter,Diabetes,Lipitor,"Gomez Ray, and Jones"
+Ryan Sanchez,Jennifer Gonzales,Obesity,Ibuprofen,"Davis, Ray and Thompson"
+Thomas Dennis,Leonard Chen,Asthma,Paracetamol,Mckinney-Edwards
+Mr. Timothy Flores,Margaret Ramos,Arthritis,Paracetamol,Parker-Shannon
+Wendy Levine,Joy Davis,Hypertension,Ibuprofen,Lawrence LLC
+Nicole Gonzalez,Mary Mckee,Asthma,Aspirin,"and Thompson Burke, Harrington"
+Michael Ellison,John Evans,Diabetes,Aspirin,"Johnson Goodman Clark, and"
+Brandon Davis,Benjamin Payne,Cancer,Paracetamol,"Doyle Hess, and Dudley"
+Vanessa Garcia,Jeanne Allen,Asthma,Lipitor,Bass PLC
+Autumn Peck,Kelly Jackson,Obesity,Aspirin,"Willis and Hunt Pope,"
+Nathaniel Reynolds,Michael Barber,Hypertension,Penicillin,"Gray, Hensley and Hanson"
+Joyce Moody,Steven Clark,Obesity,Paracetamol,Moore-Woods
+Mark Fuentes,Amy Bailey,Hypertension,Aspirin,Moore-Franco
+Brett Ferguson,Cody Houston,Asthma,Lipitor,Hamilton and Sons
+Travis Simmons,Gregory Nichols,Asthma,Ibuprofen,Burke Group
+Jeremy Frye,Christopher Odom,Cancer,Paracetamol,Anderson LLC
+Cameron Miller,Raymond Bell,Cancer,Lipitor,Sims-Jimenez
+William Williams Dds,Autumn Fitzgerald,Diabetes,Ibuprofen,Holloway PLC
+Tracie Wright,James Armstrong,Hypertension,Ibuprofen,Cain-Stone
+David Reyes,Darius Schaefer,Asthma,Lipitor,Garner Group
+Paige King,Katherine Dunn,Diabetes,Ibuprofen,Ltd Logan
+James Garcia,Katherine Flynn,Diabetes,Penicillin,Bishop PLC
+Lori Harvey,Julian Perkins,Asthma,Lipitor,Lewis-Mitchell
+Amy Wang,Holly Taylor,Obesity,Ibuprofen,and Campbell Sons
+Jordan Vargas,Mark King,Cancer,Paracetamol,James PLC
+Gordon Kelly,Shelby Johnson,Obesity,Lipitor,Colon-Meyer
+Nathan Scott,Angela Logan MD,Obesity,Aspirin,"and Woods Liu, Berry"
+Lisa Green,Gloria Schultz,Diabetes,Ibuprofen,LLC Clayton
+Amy Combs,Victor Morales,Cancer,Paracetamol,Le-Hawkins
+Kelly Sanford,Nancy Vaughn,Arthritis,Lipitor,"Martinez Taylor Lopez, and"
+Mrs. Jessica Black Md,Christopher Rivera,Diabetes,Ibuprofen,Williams Group
+Robert Gould,Brittany Rocha,Obesity,Ibuprofen,Schmidt-Douglas
+Christine Vargas,Patricia Hall,Obesity,Paracetamol,Ltd Fleming
+Barbara Diaz,Christopher Hudson,Obesity,Lipitor,"Smith Brown Wallace, and"
+John Washington,Walter Perez,Hypertension,Ibuprofen,Boyer Inc
+Devin Stewart,Jonathan Chang,Arthritis,Lipitor,Miranda-Collins
+James Roberts,Maria Ritter,Cancer,Ibuprofen,Hoffman and Sons
+James Yates,Elizabeth Snyder,Obesity,Ibuprofen,Group Ortega
+Peter Nichols,Dennis Harris,Hypertension,Penicillin,"Mitchell, Vasquez and Chaney"
+Karen Price,Caroline Fields,Diabetes,Lipitor,Villa-Simpson
+Christopher Jones,Joseph Rivera,Hypertension,Penicillin,LLC Haynes
+Larry Leonard,Charles Reynolds,Hypertension,Ibuprofen,Inc Cummings
+Michelle Zhang,Patricia Valentine,Arthritis,Paracetamol,Downs-Stephens
+Kristen Flores,Angela Reed,Arthritis,Aspirin,"Carson and Nielsen, Buchanan"
+Matthew Bell,Doris Johnson,Obesity,Aspirin,Hicks-Perez
+Bradley Miranda,Devin Pratt,Asthma,Aspirin,"Wilson and Brown, Ortiz"
+Christopher Moore,Angela Allison,Hypertension,Paracetamol,Berg-Mcconnell
+Dan Pineda,Phyllis Nguyen,Diabetes,Lipitor,Gilbert Ltd
+Mariah Smith,Melissa Mendoza,Cancer,Paracetamol,Gutierrez-Webster
+Sabrina Cook,Christopher Bates,Obesity,Penicillin,Group Thompson
+Melissa Hoffman,April Cummings,Cancer,Lipitor,Cooley-Reid
+Joseph Martin,Andrew Hill,Cancer,Lipitor,"and Davenport Davis Hobbs,"
+Melissa Sims,Susan Sampson,Arthritis,Aspirin,Thompson-Becker
+Sarah Evans,Darren Becker,Diabetes,Aspirin,Mitchell Inc
+Maria Anderson,Lee Santiago,Arthritis,Aspirin,"Mack, Wilson and Fowler"
+Maria Johnston,Holly Walton,Obesity,Aspirin,"Johnson Garcia, and Anthony"
+James Cole,Craig Howard,Obesity,Penicillin,"and Young Powell Mitchell,"
+Isaiah Holt,Diane Riley,Cancer,Ibuprofen,Bishop Inc
+Joseph Gonzales,John Schroeder,Hypertension,Lipitor,Coleman-Dawson
+Jennifer Camacho,Mark Watson,Asthma,Ibuprofen,Cunningham-King
+Hector Jones,Diane Griffin,Hypertension,Penicillin,Anderson PLC
+Jessica Jones Dds,Kenneth Mcintosh,Diabetes,Aspirin,"Freeman King Hodges, and"
+Isabella Martin,Victoria Hernandez,Arthritis,Ibuprofen,Sons Wilson and
+Daniel Palmer,David Zavala,Hypertension,Lipitor,Woodward Ltd
+Stephanie Benson,Frederick Fields,Cancer,Lipitor,"Powell Branch Osborn, and"
+Ashley Williams,Michael Nguyen,Cancer,Ibuprofen,"Brown Brown, and Sanders"
+Gregory Nguyen,Casey Fowler,Asthma,Penicillin,Harris-Oconnor
+Joe Smith,Michael Miller,Hypertension,Aspirin,"Paul Richardson Haynes, and"
+Lisa Watts,Kaylee Hampton,Arthritis,Aspirin,Patterson-Lee
+Alexander Garcia,Amber Gordon,Hypertension,Aspirin,"and Yang Fox Scott,"
+Elizabeth Perkins,Colleen Meyers,Asthma,Paracetamol,"Burch, and Sexton Sandoval"
+Laura Wells,Eileen Hernandez,Diabetes,Aspirin,"Johnson and Delgado, Bennett"
+Robert Mccormick,Carrie Wright,Diabetes,Penicillin,Garza Group
+Michael Yu,Jeffrey Schmidt,Arthritis,Paracetamol,"Olson, Andrade and Dixon"
+Jacob Graham,Jaime Bell,Asthma,Penicillin,Fisher Inc
+Andrea Kennedy,Brian Cooper,Cancer,Lipitor,Farrell-Lyons
+Stacey Anderson,Anthony Graves,Diabetes,Paracetamol,"Greer Cain and Taylor,"
+Jason Marsh,Traci White MD,Hypertension,Aspirin,Turner Ltd
+Tiffany Ferguson,Eric Lutz,Cancer,Lipitor,Johnson Group
+Mark Hernandez,Brenda Hill,Hypertension,Aspirin,Sherman Inc
+Keith Henry,Peter Brown,Cancer,Ibuprofen,"and Garcia Wade Richardson,"
+Michelle Wright,Benjamin Banks,Arthritis,Ibuprofen,White-Graham
+Troy Davis,Natalie Perez,Diabetes,Lipitor,and Miller Sons
+Misty Burton,Erica Williams,Diabetes,Lipitor,"Taylor, and Mullins Lara"
+Robert Robinson,Jasmine Webb,Asthma,Penicillin,"and King, Vega Jones"
+Christina Calderon,David Cabrera,Hypertension,Aspirin,Alvarez-Cruz
+John Graham,Julie Gonzales,Diabetes,Penicillin,"Walker Cisneros and Adams,"
+Michael Parker,Julia Campbell,Asthma,Aspirin,Ltd Lewis
+William Evans,Zachary Robinson,Obesity,Paracetamol,Esparza-Martinez
+Valerie Hodges,Christine Smith,Cancer,Paracetamol,"Baker Hernandez and Scott,"
+Brenda Beck,Barbara Burgess,Obesity,Aspirin,Group Lopez
+Christine Davis,Malik Goodwin,Obesity,Lipitor,"and Le Martin Young,"
+Kevin Daniel,Diana Shaw,Asthma,Paracetamol,PLC Cook
+Brittney Wagner,Michael Mason,Arthritis,Lipitor,"Baker, Davis Hill and"
+Cristian Buchanan,Alexis Bradford,Obesity,Paracetamol,Johnson-Gray
+Michael Brady,Jasmine Parker,Cancer,Ibuprofen,"Mitchell, and Garcia Saunders"
+Jordan Leon,Christina Lopez,Arthritis,Penicillin,Dennis-Roth
+Katelyn Cunningham,Richard Franco,Asthma,Penicillin,"Mcgee Patton Aguirre, and"
+Krystal Mendoza,Marc Reid,Cancer,Aspirin,Foster-Thomas
+Alex Rodriguez,Ryan Simmons,Cancer,Paracetamol,Group Mann
+Geoffrey Barker,Clinton Sanchez,Hypertension,Paracetamol,Martinez-Strickland
+Alec Mitchell,Cindy Gonzalez,Hypertension,Ibuprofen,"Shaw Tapia and Barnes,"
+Jason Jordan,Christy Ochoa,Obesity,Paracetamol,Morris-Campbell
+Philip Reyes,Gabriel Livingston,Arthritis,Paracetamol,"Anderson Morton and Vang,"
+Aaron Bradshaw,Mackenzie Phillips,Arthritis,Lipitor,Olson LLC
+Erica Ford,Gabriel Lane,Hypertension,Lipitor,Juarez and Sons
+Dr. Katie Barrett Dvm,Whitney Chavez,Hypertension,Aspirin,"Ramos Hansen Clark, and"
+Jacob Young,Tara Tucker,Obesity,Aspirin,PLC Aguirre
+Amy Ramos,Dustin Alvarez,Arthritis,Ibuprofen,"Nelson Baldwin, Boyd and"
+Patrick Morales,Jessica Conway,Hypertension,Ibuprofen,"Martinez, and Moore White"
+Sophia Conway,Heidi Wood,Diabetes,Ibuprofen,"Barker, Costa Hahn and"
+James Moore,David Gordon,Diabetes,Paracetamol,"Anderson and Higgins Galvan,"
+Christopher Cochran,Jonathan Thomas,Diabetes,Lipitor,Flores-Roman
+Robert Carter,Lori Diaz,Obesity,Aspirin,"Miller, Moon Boyd and"
+Morgan Nguyen,Martin Dominguez,Diabetes,Ibuprofen,Inc Harmon
+Nathan Montoya,Adam Roberts,Cancer,Ibuprofen,"Elliott Jones Hinton, and"
+Joe Berry Phd,Nancy Beck,Asthma,Aspirin,Sons Mckinney and
+Daniel Ortiz,Christy Hughes,Cancer,Paracetamol,Carroll-Howard
+Matthew Clark,Charles Hernandez,Obesity,Ibuprofen,"and Park, Garcia Lam"
+Jacqueline Hardy,Hannah Clay,Obesity,Ibuprofen,"Chavez Valenzuela, and Gutierrez"
+Emily Joseph,Steven Dixon,Cancer,Lipitor,Hill-Hernandez
+Sarah Hicks,Monica Thomas,Diabetes,Aspirin,Skinner LLC
+Briana Ross,Alexander Moore,Obesity,Ibuprofen,Inc Cox
+Mary Mccullough,Curtis Mckinney,Asthma,Penicillin,Perez Sons and
+Brian Osborne,Stephanie Shepard,Cancer,Ibuprofen,"Parker Turner, Houston and"
+Susan Walters,Russell Soto,Cancer,Paracetamol,Wilson-Chen
+Catherine Harvey,Charles Cardenas,Hypertension,Paracetamol,Boone-Duffy
+Cory Pierce,Brandon Montoya,Hypertension,Paracetamol,Reid-Simmons
+Jesus Jordan,Andrew Bishop,Hypertension,Penicillin,Dunn-Bentley
+Ann Duncan,Daniel Sanders,Asthma,Penicillin,Inc Cherry
+Sarah Porter,Jeremiah Nunez,Diabetes,Paracetamol,Zavala-Fernandez
+Jacqueline Dean,Carolyn Peters,Cancer,Lipitor,Jones-Fleming
+Anne Lam,Paul Ruiz,Asthma,Ibuprofen,Christian-Hall
+Jennifer Gomez,Robert Palmer,Hypertension,Lipitor,LLC Cabrera
+David Curtis,Lisa Grimes,Hypertension,Paracetamol,"Hernandez and Delacruz, Kramer"
+Joshua Johnson,Ronald Russell,Diabetes,Paracetamol,Cervantes-Herrera
+Jeremy Bowen,Tracey Smith,Diabetes,Lipitor,Garrison-Mcfarland
+Dennis Clarke,Mark Baker,Obesity,Lipitor,Warren-Brown
+Jennifer Spence,Austin Perry,Obesity,Aspirin,Ruiz Group
+Billy Fitzgerald,Dr. Mackenzie Bell,Asthma,Ibuprofen,Anderson-Brown
+Kristen James,Kimberly Calhoun,Hypertension,Ibuprofen,Hull Sons and
+Caitlin Bender,Timothy Aguilar,Arthritis,Penicillin,"Oliver Mcdonald, and Johnson"
+Brenda Fuller,Cynthia Stanton MD,Obesity,Aspirin,Lara-Allen
+Cassandra Rice,Craig Delgado,Asthma,Ibuprofen,Group Summers
+Sergio Sanchez,Courtney Parsons,Cancer,Paracetamol,"Phillips Medina, Rivera and"
+Kevin Stein,Sandra Barker,Hypertension,Lipitor,LLC Flores
+Maureen Grant Md,Michael Hogan,Hypertension,Paracetamol,Inc Pace
+Samantha Gutierrez,Toni Perry MD,Diabetes,Penicillin,Garcia-Robinson
+George Woodward,William Bailey,Arthritis,Aspirin,Snow-Day
+Shane Tate,Tiffany Ortega,Cancer,Penicillin,Inc Rangel
+Kerry Hawkins,Willie Lowery,Arthritis,Penicillin,Irwin-Kaufman
+Marissa Mora,Jaime Allen,Asthma,Paracetamol,"Brown and Colon, Anderson"
+Ricky Meyer,Becky Jones,Arthritis,Paracetamol,"and Peterson, Rodriguez Murphy"
+Edward Jones Jr.,Tiffany Frank,Cancer,Lipitor,"and Frederick, Jones Garcia"
+Heather Melendez,Joe Mora,Arthritis,Paracetamol,"and Fuentes Rogers Gill,"
+Jessica Macias,Teresa Tucker,Asthma,Penicillin,Group Schneider
+Jamie Leach,Ruben Cross,Arthritis,Aspirin,Sandoval-Bennett
+Matthew Simmons,Timothy Choi,Diabetes,Lipitor,Young Ltd
+Sheila Baxter,Robert Lester,Diabetes,Ibuprofen,Lopez-Brooks
+Dave Parrish,Sandra Bender,Arthritis,Lipitor,"Leblanc Conway, Holt and"
+Bryan Stewart,Martin Smith,Arthritis,Ibuprofen,Ltd Roberts
+James Bell,Martha Johnson,Arthritis,Lipitor,and Carter Sons
+Joshua Love,Mercedes Harris,Diabetes,Paracetamol,"Moore and Rhodes Lang,"
+Robert Clark,Gregory Chung,Obesity,Aspirin,Poole LLC
+Marisa Golden,James Young,Arthritis,Penicillin,Hansen-Torres
+Nancy Hamilton,Carla Combs,Hypertension,Paracetamol,Park-Douglas
+Bryan Bowers,Peter Martinez,Asthma,Ibuprofen,"Ruiz, Scott Mitchell and"
+Nicole Martin,Christopher Spears,Cancer,Paracetamol,"and Rodriguez Gallegos Henry,"
+William Harmon,Carrie Howell,Arthritis,Ibuprofen,Ltd Miller
+Tom Brown,Tina Ray,Diabetes,Aspirin,"Turner Bradford and Allison,"
+Cynthia Nelson,Debbie Jones,Arthritis,Penicillin,Goodwin Ltd
+Todd Gross,Anthony Ortiz,Asthma,Lipitor,Carrillo-Price
+Stephanie Chung,Jason Stewart,Arthritis,Ibuprofen,and Sons Lee
+Kayla Perez,Derek Dorsey,Cancer,Lipitor,Rogers-Robles
+Joshua Nelson,Angel Jones,Hypertension,Lipitor,Arias-Galvan
+Jake Copeland,Christopher Fowler,Diabetes,Penicillin,Scott-Moore
+Maria Gardner,Stephanie Herrera,Cancer,Lipitor,Jarvis-Roberts
+Janet Roberts Dds,Scott Herring,Asthma,Paracetamol,Clay LLC
+Peter Ramsey,Angela Cook,Arthritis,Ibuprofen,"Quinn, Bentley and Allen"
+Ashley Farmer,Michael Davis,Diabetes,Paracetamol,Williams PLC
+Katherine Hale,Thomas Hunt,Arthritis,Penicillin,"Griffith Mccullough Mendoza, and"
+Gary Bowen,Dylan Hale,Asthma,Ibuprofen,Meyers-Moore
+Laura Ryan,Bradley Holt,Asthma,Aspirin,Blair-Bell
+Timothy Lopez,Sandra Powers,Diabetes,Ibuprofen,Lester-Fletcher
+Anthony Guzman,Evan Campbell,Arthritis,Penicillin,Rodriguez LLC
+Michael Sharp,Sylvia Villarreal,Arthritis,Aspirin,LLC Baldwin
+David Carroll,Matthew Hopkins,Arthritis,Lipitor,Riley PLC
+Connor Barton,Joseph Miller,Asthma,Paracetamol,Snyder-Perry
+Angela Scott,Charles Palmer,Obesity,Ibuprofen,Perez-Carlson
+David Ortiz,Michael Walters,Arthritis,Penicillin,"Richardson Mccormick, Cruz and"
+Patrick Pierce,Scott Smith,Cancer,Ibuprofen,Underwood-Mcguire
+Keith Johnson,Nicole Jensen,Arthritis,Aspirin,"Galvan, Lopez Salazar and"
+Antonio Smith,Brent Dickerson,Asthma,Ibuprofen,Fisher-Perez
+John Taylor,Nicole Young,Asthma,Aspirin,"Maldonado Anderson and Adkins,"
+Barbara Stewart,Jared Kemp,Asthma,Paracetamol,Ruiz PLC
+Larry Tanner,Dennis Gilbert,Hypertension,Paracetamol,Ltd Watts
+Mallory Diaz,William Mcguire,Diabetes,Aspirin,and Martinez Sons
+John Williams,Jesus Wagner,Cancer,Ibuprofen,Harrington-Marshall
+Peter Miller,Jose Cooley,Obesity,Lipitor,Robbins Inc
+Ryan Butler,Andrew Clark,Diabetes,Penicillin,"and Conway George, Huff"
+Samantha Lowery,Evelyn Patterson,Asthma,Penicillin,Group Thompson
+Tiffany Lee,Maria Estes,Obesity,Lipitor,Rodriguez-Arnold
+Samantha Willis,Mrs. Linda Miles,Diabetes,Lipitor,"and Sullivan, Mcclure Shields"
+Pamela Brown,Catherine Wiley,Diabetes,Lipitor,Charles LLC
+Carla Walker,Olivia Nichols,Cancer,Aspirin,Morgan-Young
+Mary Gonzales,Christie Vargas,Arthritis,Aspirin,"Garcia and Nguyen, Leonard"
+Shelley Fleming,Nathaniel Jacobson,Hypertension,Ibuprofen,PLC Fox
+Mark Blake,Kayla Clark,Hypertension,Paracetamol,"Bell Preston Washington, and"
+Scott King,Jessica Jackson,Diabetes,Paracetamol,LLC Hernandez
+Jessica Davis,Lynn Benson,Arthritis,Paracetamol,Steele PLC
+Anthony Odom,Michael Dodson MD,Asthma,Paracetamol,"and Sims, Gonzalez Huff"
+Charles Brown,David Nunez,Cancer,Penicillin,Allen-Perez
+Rachel Davis,Lindsay Pierce,Cancer,Ibuprofen,"and Alexander Crawford Graham,"
+Sandra Mccall,Dr. Jeffrey Barnes Jr.,Cancer,Penicillin,Moyer-Lamb
+Nicole Francis,Kristie Roberts,Asthma,Ibuprofen,Taylor-Wilson
+Steven Smith,Allison Harper,Asthma,Lipitor,PLC Sutton
+Karen Johnson,Heather Howard,Obesity,Aspirin,and Sons Sanders
+Anna Rogers,Vickie King,Asthma,Aspirin,Gentry and Sons
+Priscilla Decker,Christopher Yoder,Cancer,Penicillin,Haynes-Silva
+Trevor Wright,Matthew Nelson,Cancer,Lipitor,"Marshall, and Koch Harper"
+William Tucker,Martin Lynch,Diabetes,Aspirin,Duffy-Jackson
+Jessica Keller,David Hall,Hypertension,Lipitor,Brown-Diaz
+William Henry,Benjamin Tyler,Asthma,Aspirin,Mcdaniel-Castaneda
+Robin Clarke,Tyler Adams DDS,Diabetes,Penicillin,Lyons LLC
+Jessica Garza,William White,Asthma,Paracetamol,PLC French
+Jamie Salazar,Amanda Webb,Diabetes,Aspirin,LLC Coleman
+Steven Vaughan,Travis Holmes,Arthritis,Penicillin,Tucker-Warren
+Michael Contreras,Amy Small,Obesity,Ibuprofen,Wang-Hill
+Allen Roberts,Katherine Gutierrez,Arthritis,Penicillin,Jones Ltd
+Amy Powell,Susan Hess,Arthritis,Lipitor,"White West Herman, and"
+Kenneth Smith,Kristen Thornton,Diabetes,Ibuprofen,Inc Newton
+Matthew West,Jerry Fisher,Cancer,Ibuprofen,Huerta-Sanchez
+Erik Montoya,Elizabeth Miller,Obesity,Aspirin,Snyder-Parrish
+Austin Lewis,Reginald Grimes,Diabetes,Paracetamol,Inc Bryant
+Kenneth Thompson,Steven Smith,Diabetes,Paracetamol,Williams Inc
+Amanda Durham,Katelyn Davis,Obesity,Lipitor,"Smith White, and Ryan"
+Stephen Hudson,Matthew Jones,Arthritis,Paracetamol,"Williams Dillon White, and"
+Cassandra Velazquez,Diana Tran,Diabetes,Penicillin,Vargas-Cohen
+Susan Pena,Kevin Kelley,Obesity,Lipitor,Gardner Group
+Anthony Perkins,Anthony Green,Obesity,Lipitor,Garcia-Blake
+Katrina Lopez,Jordan Porter,Diabetes,Lipitor,Castaneda-Tran
+Brian Foster,James Thompson,Asthma,Ibuprofen,Kim-Ibarra
+Jason Thompson,Andrea King,Arthritis,Ibuprofen,Boyer-Burgess
+David Ayala,Lucas Torres,Arthritis,Paracetamol,Cross Ltd
+Jared Yoder,Sarah Garcia,Obesity,Lipitor,"Patel Payne, and Young"
+Gregory Cannon,Amanda Alvarado,Diabetes,Lipitor,Group Santana
+Lisa Anderson,Samantha Preston,Hypertension,Ibuprofen,Sons and Cook
+Elizabeth Shields,David Maxwell,Asthma,Penicillin,Martin-Rice
+Patricia Kim,Kevin Butler,Cancer,Lipitor,"Ortiz, and Rios Price"
+Jessica Soto,Shannon Sanchez,Obesity,Aspirin,Barnes-Williams
+Jenny Reynolds,Shelly Bright,Cancer,Paracetamol,Hardy-Gutierrez
+Shannon Barrett,Stephanie Wilcox,Asthma,Aspirin,Cole LLC
+Terri Perry,Amy Diaz,Cancer,Paracetamol,White-Rowe
+Joseph Madden,Stacey Nguyen,Arthritis,Ibuprofen,"Rodriguez Harris, Willis and"
+Rebecca Hogan,Peter Wright,Asthma,Aspirin,"Santana Garcia, Alexander and"
+Kelly Walker,Eric Shaw,Hypertension,Aspirin,Collins-Lozano
+Julia Mueller,Susan Gaines,Cancer,Paracetamol,Brown-Clark
+Kayla Moore,Collin Green,Diabetes,Lipitor,"Mcmahon and Kim, Holmes"
+Kaitlyn Smith,Richard Harris,Hypertension,Penicillin,Gomez-Smith
+Daniel Kemp,Charles Fernandez,Obesity,Lipitor,"Hall Lee Bailey, and"
+Laura Myers,Kyle Williams MD,Obesity,Lipitor,"Brennan Bentley, and Hunter"
+Carol Reed,Susan Rios DDS,Asthma,Paracetamol,"Mullins, Gray and Reed"
+Jessica Carter,Sarah Ibarra,Obesity,Penicillin,Anderson Group
+Vanessa Schaefer,Jonathan Burns MD,Arthritis,Lipitor,"Walsh, Howell and Jennings"
+Miguel Gomez,Jennifer Miller,Hypertension,Penicillin,Haney-Marshall
+Linda Cardenas,Zachary Scott,Asthma,Ibuprofen,"Rich and Roach, King"
+Annette James,Dennis Robbins,Asthma,Lipitor,"Johnson, and Petty Rubio"
+Susan Hurley,Sean Rodgers,Cancer,Penicillin,"Morse, Hudson Williams and"
+Carolyn Wade,Nathan Payne,Arthritis,Penicillin,"Kane, and Dickson Schwartz"
+Angela Deleon,Kristina Gray,Arthritis,Paracetamol,Inc Mccullough
+Carolyn Cooper,Regina Bryant,Hypertension,Penicillin,Taylor-Wong
+Rebecca Harris,Karen Donovan,Obesity,Lipitor,Avery-Roy
+Gary Curtis,Amber Lopez,Diabetes,Lipitor,LLC Anderson
+Ryan Liu,Vernon Diaz,Diabetes,Penicillin,Castaneda-Young
+Dennis Morrow,Luke Nunez,Diabetes,Lipitor,"and Thomas Strong, Cook"
+Jennifer Cooper,Mary Williams,Obesity,Aspirin,Wells-Price
+Jacob Lopez,Gina Richards,Obesity,Penicillin,Rios Ltd
+Carol Mcclain,Julie West,Diabetes,Penicillin,Vincent-Hill
+Michael Richardson,Greg Scott,Obesity,Paracetamol,Brooks LLC
+Mark Nguyen,Tracy Serrano,Diabetes,Aspirin,Group Carpenter
+Eric Cook,Rhonda Gilbert,Cancer,Lipitor,"Henderson Carpenter and Barrett,"
+Kristen Stephens,Penny Bryant,Arthritis,Lipitor,Mcdaniel-Walsh
+Dana Walton,Edward Webster,Cancer,Lipitor,Ross-Jones
+Scott Arnold,Brandon Flores,Arthritis,Penicillin,"Mathews, Smith and Moss"
+Megan Wheeler,Courtney Crane,Hypertension,Paracetamol,"and Lawrence, Williams Thomas"
+Aaron Cox,Eric Wallace,Arthritis,Lipitor,Wilkerson Group
+Cassandra Martinez,Nicole Norton,Obesity,Paracetamol,Villanueva-Garcia
+Shawn Brown,Angela Cunningham,Hypertension,Paracetamol,Duffy-Bowman
+Sandra Williamson,Jessica Morgan,Diabetes,Aspirin,Tyler-Velasquez
+Jennifer Stephens,Shari Foster,Hypertension,Ibuprofen,James Inc
+Stephanie Rodriguez,Danielle Collins,Diabetes,Penicillin,Montgomery-Jones
+Caroline Mcintyre,Beth Mckenzie,Arthritis,Penicillin,Montgomery-Anthony
+Mr. Cameron Robinson,Evan Johnson,Asthma,Ibuprofen,Davis-Padilla
+Tammy Pineda,Wendy Rivera,Arthritis,Paracetamol,Ellison-Hayden
+Natalie Anderson,Cindy Maxwell,Obesity,Lipitor,Long-Lee
+Jasmine Rodriguez,Crystal Hays,Hypertension,Aspirin,Graves LLC
+Debra Mckee,Jay Barr,Arthritis,Lipitor,and Sons Dixon
+Sandra Greene,Lisa Long,Obesity,Ibuprofen,"Clark, Garza Tate and"
+Crystal Morris,Brianna Kelly,Arthritis,Aspirin,Bates Inc
+Jason Parker,David Hanson,Arthritis,Ibuprofen,LLC Sanford
+Roy Jones,David Stevens,Asthma,Penicillin,and Harper Sons
+Richard Anderson,Richard Ayala,Hypertension,Penicillin,"Young Mcclain, Newman and"
+Jennifer Foster,Nathan Adams,Cancer,Ibuprofen,"Ray, Cain and Miller"
+Debbie Wilson,Jennifer Munoz,Hypertension,Lipitor,Zamora-Rivers
+Travis Flores,Beth Brown,Obesity,Paracetamol,"and Perez Smith, Kim"
+Emily Young,Karen Jones,Arthritis,Penicillin,Johnson-Wilson
+Sandy Hall,Seth Burnett,Hypertension,Paracetamol,Delacruz-Chavez
+Madison Wright,Kevin Johnson,Obesity,Paracetamol,"and Gonzalez, Warren Moore"
+Amy Mann,Julie Garza,Hypertension,Penicillin,Ramirez-Humphrey
+Jason Steele,Brian Mack,Diabetes,Aspirin,and Sons Ford
+Pamela Middleton,Jennifer Johnson,Arthritis,Penicillin,"and Wells, Thomas Kline"
+Lisa Jackson,Joseph Barnes,Hypertension,Ibuprofen,Wood-Herring
+Samantha Patel,Daryl Cross,Obesity,Paracetamol,Wilkerson LLC
+Herbert Rodriguez,Jonathan Edwards,Obesity,Aspirin,Brown-Henry
+Olivia Powell,Adam Hardy,Diabetes,Penicillin,Sheppard-Livingston
+Samantha Perkins,Robert Ashley,Cancer,Ibuprofen,Golden PLC
+Michael Potts,Mary Vaughn,Hypertension,Paracetamol,"and Perez, Bennett Townsend"
+Kerry Hernandez,Steven Simmons,Obesity,Ibuprofen,"Johnson, and Benson Harris"
+Joshua Reyes,Mrs. Jessica Martinez,Obesity,Penicillin,"and Clay, Morton Cunningham"
+Jennifer Ortega,Erin Arias,Asthma,Lipitor,Anderson-Estrada
+Brittany Braun,Daniel Golden,Obesity,Ibuprofen,and Sons Carlson
+Daniel Chen,Anthony Malone,Hypertension,Ibuprofen,Gonzalez Inc
+Erica Hart,Charlotte Reyes MD,Asthma,Penicillin,Schaefer-Hoffman
+Alicia Scott,Miguel Green,Asthma,Penicillin,Wilson Group
+Amanda Aguirre,Frederick White,Obesity,Penicillin,"and Vargas Reynolds Evans,"
+Mark Hicks,Lisa Ruiz,Diabetes,Paracetamol,"Cantu and Tanner Rojas,"
+Timothy Davis,Cody Rice,Cancer,Aspirin,"Thornton, Adams Mccarty and"
+Lonnie Dominguez,April Foster,Hypertension,Ibuprofen,Cantrell-Griffith
+Kimberly Hale,Justin Russell,Diabetes,Aspirin,Martin Group
+Dana Williamson,Daniel Thomas,Hypertension,Aspirin,and Sons Nelson
+Mr. George Brown Jr.,Emily Williamson,Hypertension,Aspirin,Ramirez-Hill
+Allen Camacho,Veronica Christian,Obesity,Paracetamol,Jackson-Butler
+Nathan Woods,Monica Odonnell,Asthma,Lipitor,Miller-Avila
+Catherine Smith,Cody Berger,Diabetes,Lipitor,Reyes-Crawford
+Jerry Lee,Jeffrey White,Obesity,Penicillin,Marshall-Smith
+Alexander Coleman,Stacey Burgess,Cancer,Ibuprofen,"and Peterson Matthews Robinson,"
+David Jensen,Ethan Spencer,Obesity,Paracetamol,Nelson PLC
+Deborah Evans,Jonathan Baker,Cancer,Penicillin,Perez-Mitchell
+Alexandria Colon,Tonya Burton,Cancer,Paracetamol,"Gross, Thompson Smith and"
+Samuel Hanson,Phillip Campos,Diabetes,Ibuprofen,"Burch, Moore and Thompson"
+Bryan Phillips,Billy Rodgers,Obesity,Lipitor,Hamilton Group
+Nathan Wiley,Sherri Campbell,Obesity,Paracetamol,Shaw LLC
+Alisha Murphy,Alex Neal,Cancer,Lipitor,"and Day, Lewis Coleman"
+Amanda Lucero,Mark Martin,Asthma,Paracetamol,Stone-Perez
+Sheila Sellers,James Smith,Hypertension,Lipitor,Ltd Foley
+Susan Chan,Amber Walker,Obesity,Lipitor,Ward-Mayer
+Angel Mitchell,Laura Pena,Hypertension,Aspirin,and Martinez Sons
+Darlene Cohen,Tracy Wilson,Arthritis,Aspirin,Group Anderson
+Kristy Oneill,Michelle Cox,Arthritis,Paracetamol,"Garcia, and Marshall Maxwell"
+Sherri Garcia,Marie Reed,Hypertension,Ibuprofen,Inc Martinez
+Michael Weber,Philip Vaughn,Hypertension,Ibuprofen,"Mcmahon Ortiz, Owens and"
+Beth Schwartz,Kyle Montes,Asthma,Lipitor,Williams-Saunders
+Cynthia Clarke,Mr. Ronald Hoover,Obesity,Penicillin,Spencer Ltd
+Mark Giles,Daniel Hurley,Cancer,Penicillin,Mathis-Schwartz
+Tamara Beltran,Nicole Young,Diabetes,Ibuprofen,Romero-Ramsey
+Joseph Gutierrez,Christopher Mills,Obesity,Aspirin,Avery and Sons
+Jamie Jimenez,Richard Webster,Arthritis,Lipitor,Ltd Richardson
+Charles Murphy,David Soto,Diabetes,Penicillin,and Sons Williams
+Carlos Lopez,Michael Paul,Diabetes,Penicillin,Carter-Reyes
+Johnny Irwin,Robert Gregory,Arthritis,Aspirin,LLC Gray
+Scott Werner,Ashley Lane,Hypertension,Ibuprofen,"Gonzalez Anderson Jacobson, and"
+Terri Stewart,Jennifer Brown,Asthma,Ibuprofen,"Miller Massey Lopez, and"
+David Davis,Kristen Aguirre,Diabetes,Paracetamol,"Taylor Walsh Hawkins, and"
+Stephen Harris,Kathryn Trevino,Arthritis,Aspirin,LLC Brown
+Bridget Adams,Amanda Ramos,Cancer,Penicillin,Nelson-Wong
+Michael Morton,Mr. William Decker,Cancer,Lipitor,LLC Berry
+Michelle Liu,Michael Grant,Hypertension,Lipitor,Anderson-Jenkins
+Regina Bright,Megan Jones,Arthritis,Penicillin,Wells and Sons
+Samuel Decker,Mr. Andrew Hall Jr.,Diabetes,Aspirin,"Allen, Williams and Phillips"
+Paul Wright,Joseph Hernandez,Diabetes,Penicillin,Gonzalez-Cummings
+Brian Olson,Bryan Brock,Hypertension,Paracetamol,"and Richardson Webster Smith,"
+Tracey Harrison,Austin Henderson,Asthma,Penicillin,Hudson-Flores
+Erika Johnson,Jessica Bruce MD,Hypertension,Aspirin,Inc Rios
+Peter Cunningham,Kenneth Green,Arthritis,Lipitor,PLC Thompson
+Sierra White,Shelley Garcia,Asthma,Penicillin,"Rosario Wells, Roberts and"
+Eddie Russo Dvm,Justin Douglas,Diabetes,Paracetamol,Ramirez-Taylor
+Yvette Turner,William Faulkner,Asthma,Paracetamol,Murphy-Mason
+James Charles,Stephanie Davis,Diabetes,Ibuprofen,"Edwards Johnson, and Burgess"
+Alexis Allen,Ronald Parker,Arthritis,Penicillin,LLC Spears
+Stephanie Martin,Kevin Tucker,Obesity,Penicillin,Perez-Smith
+Shelby Anderson,Katrina Allen,Asthma,Ibuprofen,and Sons Mcbride
+Abigail Farmer,Alicia Lopez,Cancer,Lipitor,Sons and Chapman
+Christina Miller,Stephen Lopez,Arthritis,Lipitor,Cole-Davila
+Matthew Wyatt,Alexandra Sims,Asthma,Penicillin,"Pearson, and Lynch Oconnor"
+David Montoya,Andrea Lee,Cancer,Ibuprofen,Rivera-Peck
+Eric Park,Olivia Anderson,Cancer,Lipitor,Hess-White
+Lori Trevino,Michelle Barnett,Cancer,Aspirin,"Fox and Moreno Williams,"
+Dwayne Castillo,Johnathan Mcmahon,Arthritis,Penicillin,Johnson-Estrada
+Kristine Mccall,Deborah Lawson,Cancer,Lipitor,Rivera-Mosley
+Joseph Sellers,Diana Boyd,Cancer,Paracetamol,"Diaz Smith Johnson, and"
+Dr. Donald Anderson,Crystal Ritter,Arthritis,Lipitor,Harris-Ingram
+Victoria Williams,Carla Mcneil,Asthma,Aspirin,and Esparza Sons
+Anna Jones,Peggy Nunez,Hypertension,Penicillin,Hunt Sons and
+Mr. Robert Davis,Kenneth White,Cancer,Aspirin,LLC Hernandez
+Jeffrey Hall,Leonard Alvarez,Arthritis,Lipitor,Perez-Smith
+Terry Graves,Henry Rogers,Asthma,Ibuprofen,"Foster Lamb, Graham and"
+Jerome Morales,George Smith,Diabetes,Penicillin,Sanchez LLC
+Keith Rodriguez,Anthony Anderson,Cancer,Ibuprofen,Fox-Anthony
+Tamara Davenport,Meghan Bailey,Cancer,Lipitor,"Fuentes Knight, Sandoval and"
+Jonathan Simon,Jason Phillips,Cancer,Paracetamol,Hudson-Williams
+Holly Armstrong,Bailey Ibarra,Arthritis,Aspirin,"Lowery, Dunn Anderson and"
+Ronald Banks,Kelsey Simpson,Hypertension,Aspirin,Mullen-Hernandez
+Ryan Bradford Dds,Sarah Guerra,Hypertension,Lipitor,"Herman, Liu and Hill"
+Janice Hall,Tony Matthews,Diabetes,Paracetamol,"Davis White, Flores and"
+Jacob Mcdonald,David Gonzalez,Obesity,Ibuprofen,Williams-Jones
+Glenn Massey,Michael Villanueva,Cancer,Lipitor,Inc Holloway
+Sandra Murray,Alan Cain,Diabetes,Lipitor,"Phillips Jones and Wu,"
+Mark Williams,Melissa Turner,Diabetes,Penicillin,"Wilson and Lopez, Molina"
+Stephanie Reid Dvm,Alexander Robles,Obesity,Aspirin,Jones-Garrett
+Seth Bartlett Ii,Joseph Carr,Obesity,Penicillin,"and Brown, James Green"
+Jeremy Rich,David Poole,Hypertension,Aspirin,"Meadows and Nelson, Owen"
+Elizabeth Miller,Cynthia Thomas,Hypertension,Ibuprofen,Sons and Gallegos
+Erin Martin,Rebecca Reed,Asthma,Paracetamol,Davis Group
+Frank Hess,Steven Boyle,Cancer,Ibuprofen,Herrera Group
+Paul Rogers,Bryan Wu,Cancer,Ibuprofen,Juarez-Weiss
+Jennifer Edwards,James Quinn,Obesity,Lipitor,Dawson-Jones
+Brian Hall,Ryan Rich,Arthritis,Paracetamol,Hickman Group
+Kimberly Williams,James Robinson,Hypertension,Ibuprofen,Herman-Ewing
+Isaac Mendez,Edwin Sparks,Cancer,Penicillin,Gutierrez Inc
+Sarah Smith,Tyler Parsons,Arthritis,Lipitor,Hurley-Gill
+Daniel Wolf,Kirk Rich II,Obesity,Aspirin,Dillon PLC
+Robert Ross,Andrew Neal,Hypertension,Aspirin,"Murphy, and Garcia Jones"
+Douglas Foster,Susan Silva,Asthma,Penicillin,Ramsey-Thomas
+Louis Lowery,Lynn York,Obesity,Ibuprofen,Miller and Sons
+Jessica Tyler,Ellen Bush,Cancer,Paracetamol,"Chung Herrera, and Pollard"
+William Davies,Anthony Smith,Obesity,Penicillin,"and Hernandez Waters, Cruz"
+Jessica Reyes,Mary Schwartz,Diabetes,Paracetamol,Schmidt Sons and
+Daniel Jones,Victoria Osborne,Cancer,Lipitor,"and Carroll Orr Kelly,"
+Paula Morales,Regina Glass,Hypertension,Penicillin,"Smith and Rose Rivera,"
+David Spears,Craig Ray,Cancer,Paracetamol,Odonnell-Watts
+Scott Berry,Carlos Steele,Asthma,Penicillin,Inc Roberts
+Dalton Nguyen,Michael Pugh,Asthma,Ibuprofen,LLC Chaney
+Scott Clark,Mark Mccarthy,Asthma,Penicillin,"Hutchinson, Wilson Daniel and"
+Jamie Baker,Shane Green,Diabetes,Lipitor,Davis-Martin
+Courtney Patrick,Hayley Payne,Hypertension,Penicillin,"and Thompson Cook Wiggins,"
+William Ware,Christopher Sharp,Hypertension,Lipitor,Baldwin PLC
+Amber Anderson,Joseph Chandler,Cancer,Aspirin,Heath-Brown
+Casey Johnson,Brandi Elliott,Cancer,Lipitor,"Mendez, and Smith Munoz"
+Zachary Collins,Brian Fox,Diabetes,Paracetamol,Inc Daugherty
+Zachary Reed,Paul Coleman,Hypertension,Penicillin,Gonzalez LLC
+Christopher Weiss,Kelly Thompson,Asthma,Penicillin,Hunter-Hughes
+Charles Strong,Corey Perez,Diabetes,Penicillin,"and Woods, Rodriguez Williams"
+Katherine Kelly,Blake Phillips,Asthma,Lipitor,Lowery-Howard
+Christopher Henderson,Nicole Phelps,Arthritis,Aspirin,Colon-Leon
+Joseph Brown,Lorraine Powers,Diabetes,Penicillin,Boyle-Woods
+Joseph Sanchez,Michael Colon,Diabetes,Penicillin,"and Graham Morris, Gonzales"
+Kyle Perez,Taylor Sullivan,Obesity,Aspirin,Tucker-Moyer
+Eduardo Houston,Natalie Howell,Asthma,Penicillin,Sons and Stephenson
+Lori Roach,Lonnie Duncan,Diabetes,Lipitor,Hernandez PLC
+Eric Butler,Bruce Rivera,Cancer,Ibuprofen,Dougherty Group
+Jeffrey Brown,Jordan Shannon,Arthritis,Aspirin,"Morgan Zimmerman, Matthews and"
+Thomas Haas,Cindy Jones,Arthritis,Penicillin,Jimenez-Huff
+Kelly Turner,Reginald Mckinney,Arthritis,Penicillin,Stevenson-Chen
+Lance Simpson,Tiffany Hunt,Asthma,Ibuprofen,Parker-White
+Jeffrey Green,Frank Pierce,Arthritis,Aspirin,"Vang Schneider and Torres,"
+Eric Collins,Olivia White,Cancer,Paracetamol,Booth-Williams
+Brianna Williams,Laura Hill,Cancer,Lipitor,Gray-Black
+Robert Graves,Angela Rogers,Obesity,Lipitor,Johnson-Garcia
+Cindy Williams,James Smith,Obesity,Penicillin,"Salinas Terrell Villanueva, and"
+Victor Sullivan,Brian Cooper,Asthma,Aspirin,Phelps Group
+Frank Scott,Jonathan Jimenez,Asthma,Paracetamol,"Harrison and Erickson, Barnett"
+Mark Bradshaw,Ashley Bishop,Hypertension,Lipitor,Fischer Ltd
+Jessica Dunn,Charles Harris,Cancer,Penicillin,Rhodes-Kelly
+Kelsey Fox,Brandon Richardson,Diabetes,Penicillin,"Tate Pierce and Jackson,"
+Mary Rice,Shane Wong,Diabetes,Lipitor,Inc Daniel
+Rachel Jackson,Michael Oliver,Arthritis,Lipitor,"and Roberson Lee Young,"
+Leah Frederick,John Cooper,Obesity,Lipitor,Giles-Miller
+Connor Odonnell,Daniel Freeman,Arthritis,Penicillin,"Martinez, and Snyder Hill"
+Claudia Downs,Adriana Gould,Hypertension,Paracetamol,Barber-Page
+William Lang,Amanda Hall,Diabetes,Lipitor,"and Hess Delgado Foster,"
+Lisa Moran,Michael Mcbride,Asthma,Lipitor,Johnson-Holland
+Ruben Burton,Deborah Wise,Arthritis,Paracetamol,"and Gonzales Dunn, Camacho"
+Brandon Smith,Ronald Edwards,Diabetes,Ibuprofen,"Rodriguez Diaz Daugherty, and"
+Jessica Murphy,Raymond Bowen,Arthritis,Aspirin,Rowland-Abbott
+Misty Williams,Jill Bailey,Asthma,Penicillin,"Murphy, Reid Knox and"
+Brandy George,Jennifer Pope,Arthritis,Ibuprofen,Ryan-Mcneil
+Andrea Buck,Taylor Craig,Asthma,Aspirin,"Ramos Miller and Moore,"
+Stephanie Burke,Kristy Waters,Obesity,Aspirin,Sons Cherry and
+Stephanie Moon,Elizabeth Blevins,Asthma,Aspirin,Cook LLC
+Sharon Johnson,Janice Jones,Cancer,Penicillin,Phillips Ltd
+Matthew Haley,Joann Anderson,Arthritis,Paracetamol,"Oliver Griffin Johnson, and"
+Sabrina May,Christine Mejia,Asthma,Lipitor,Gregory Group
+Melinda Austin,Pamela Reed,Hypertension,Aspirin,"and Camacho Thomas Malone,"
+Angela Montgomery,William Holmes,Arthritis,Aspirin,LLC Smith
+Vanessa Martin,Heather Bowman,Arthritis,Aspirin,"Cunningham Andrade and Butler,"
+Gabriel Stevens,Brittany Burns,Obesity,Penicillin,Curtis-Lin
+Michael Wolfe,Amber Carpenter,Cancer,Paracetamol,Ltd Smith
+Brooke Torres,Kimberly Castaneda,Diabetes,Lipitor,Inc Sanchez
+Victor Duke,Jessica Vasquez,Asthma,Lipitor,"Rice, Cooper Rivera and"
+Joseph Garrett,Joseph Robinson,Arthritis,Ibuprofen,Garcia LLC
+Kara Li,Travis Morales,Cancer,Penicillin,Bell Ltd
+Juan Kelley,Carrie Montes,Hypertension,Paracetamol,"Hogan, Young Holmes and"
+Shawna Russell,Alexander Walters,Hypertension,Lipitor,Vazquez-Sanchez
+Lori Lawrence,Justin Paul,Obesity,Paracetamol,Mcintyre Ltd
+Whitney Jones,Curtis Fox,Hypertension,Lipitor,"White Roberts and Lee,"
+Joe Davila,Theresa Harrison,Obesity,Penicillin,"Simpson Espinoza, and Thompson"
+Lisa Keller,Mark Maynard,Asthma,Paracetamol,and Moore Sons
+Jordan Bush,Randy Graham,Arthritis,Paracetamol,"and Mclaughlin Powers Stevens,"
+Brenda Yu,Michael Jenkins,Arthritis,Aspirin,"and Anderson, Porter Becker"
+Jasmine Short,Amy Johnson,Cancer,Lipitor,Bailey-Hunt
+Tamara Leonard,Timothy Wagner,Arthritis,Paracetamol,"King and Bryant Olsen,"
+Kevin Wong,Kara Stevens,Asthma,Aspirin,"Watson Johnson Joseph, and"
+Lisa Lopez,David Keller,Obesity,Ibuprofen,Group Evans
+Justin Vargas,Emily Sanders,Arthritis,Paracetamol,"Collins Porter and Rodgers,"
+Jody Lopez,Chris Green,Obesity,Penicillin,"and Goodwin, Hernandez Andrade"
+Jonathan Woods,Kurt Hamilton,Asthma,Penicillin,Solomon PLC
+Emma Ray,Richard Jones,Cancer,Penicillin,Flores Sons and
+Andrea Johnson,Brian Herrera,Cancer,Paracetamol,Lowe LLC
+Wayne Sharp,Robert Perkins,Diabetes,Paracetamol,"Lopez Keller, Williams and"
+Shelby Black,Peter Nunez,Asthma,Paracetamol,Brown-Wood
+Martha Martin,Diane Richardson,Arthritis,Aspirin,Martinez-Davis
+Amanda Wilson,Julia Monroe,Cancer,Lipitor,Alexander-Oconnor
+Jeremy Nguyen,Michael Palmer,Arthritis,Penicillin,Carlson-Stone
+Eileen Harris,Hector King,Hypertension,Penicillin,"George Ward, and Clark"
+John Becker,Michael Webster,Diabetes,Penicillin,Nicholson-Johnson
+Felicia Wiley,Christy Maxwell,Asthma,Aspirin,PLC Carr
+Jesse Jones,Jorge Armstrong,Asthma,Penicillin,Alexander-Middleton
+Steven Glenn,Alexander Patterson,Obesity,Paracetamol,Horton-Martinez
+Caroline Swanson,Richard Rodgers,Arthritis,Paracetamol,Group Schneider
+Terry Nicholson,Jasmine King,Hypertension,Aspirin,PLC Obrien
+Kelly Thomas,Nancy Sutton,Cancer,Ibuprofen,Ramos-Holt
+Steven Mcgee,Brittany Anderson,Diabetes,Paracetamol,"Patterson and Peterson, Velazquez"
+Shelley Ware,Heather Long,Diabetes,Lipitor,"Jensen and Jackson, Greene"
+Melissa Brady,Amy Hawkins,Hypertension,Paracetamol,Mathews-Lawrence
+Maria Hall,Victor Fowler,Obesity,Penicillin,"Morales, Johnson and Carlson"
+Andre Smith,Sharon Hall,Hypertension,Penicillin,"Wilson, Ward Taylor and"
+Karen Gonzalez,Jeffrey Arellano,Hypertension,Ibuprofen,Torres-Johnson
+Vincent Sellers,Mary Johnson,Hypertension,Lipitor,Inc Mcbride
+Brandon Burke,Kimberly Key,Obesity,Paracetamol,"and Dunlap, Wright Mays"
+Mr. Mark Hancock,Tara Lopez,Arthritis,Penicillin,Sullivan-Crosby
+Kenneth Perez,Angela Lara,Arthritis,Paracetamol,"and Shaw, Davis Pollard"
+Martin Hansen,Laurie Brewer,Asthma,Ibuprofen,Williams LLC
+Susan Brown,Margaret Hensley DVM,Hypertension,Paracetamol,Franklin Ltd
+Nicole Alvarado,Adam Bowers,Arthritis,Penicillin,Galloway-Barnett
+Jessica Rodriguez,Renee Odom,Asthma,Aspirin,"Miller Olson, and Collins"
+Tina Price,Amanda Morris,Asthma,Lipitor,"Wheeler and Miller Burch,"
+Mr. Jack Willis,Gregory Oneill,Hypertension,Penicillin,Mercer-Booker
+Gregory Adams,Erika Smith,Cancer,Penicillin,"and Burke Skinner Myers,"
+David Roberts,Michelle Harmon,Hypertension,Ibuprofen,"and Parker, Stout Chase"
+Cory Perry,Shane Russell,Asthma,Ibuprofen,"Fernandez Harris, and Wilson"
+Jessica Barry,Rhonda Miller,Hypertension,Ibuprofen,Young-Myers
+Cynthia Thomas,Aaron Turner,Cancer,Paracetamol,Johnson PLC
+Shannon Johnson,Angela Anderson,Hypertension,Penicillin,"Barber Waters Castillo, and"
+Justin White,Caitlin Jackson,Arthritis,Aspirin,Jarvis-Craig
+Regina Stewart,Jeremy Stout,Diabetes,Ibuprofen,Schneider-Patton
+Chelsea Finley,Michele Warren,Obesity,Ibuprofen,"Kane Porter and Robinson,"
+Emma Bennett,Eric English,Obesity,Aspirin,Archer Inc
+Alan Lee,Shirley Armstrong,Cancer,Penicillin,Castaneda-Powell
+Katelyn Miller,Mary Miller,Arthritis,Paracetamol,"King, Williams and Terry"
+Amanda Morris,Steve Anderson,Cancer,Penicillin,Henry PLC
+David Pratt,Candice Harris,Diabetes,Ibuprofen,"and Carpenter, Hernandez Chang"
+Matthew Cunningham,Rhonda Lucas,Asthma,Aspirin,Santiago-Bush
+Bobby Carson,Cody Mcintyre,Arthritis,Paracetamol,"Williams Hale and Summers,"
+Melinda Wilson,Scott Adams DDS,Diabetes,Aspirin,Ltd Carroll
+Nancy Hansen,Jason Dixon,Diabetes,Penicillin,"Stevenson, Harding and Woods"
+Gregory Walls,Larry Williams,Hypertension,Lipitor,Munoz Ltd
+Amber Nixon,Candice Gray,Arthritis,Penicillin,LLC Hernandez
+Kristin Franco,Michael Richardson,Asthma,Lipitor,"Kidd Romero, and Douglas"
+Jeremiah Vazquez,Megan Allen,Cancer,Lipitor,and Cordova Sons
+Anthony Smith,Jonathan Crawford,Obesity,Penicillin,Garcia-Clark
+Victoria Brady,Benjamin Cruz,Hypertension,Penicillin,Robinson Group
+Erin Clark,Tracy Marks,Obesity,Aspirin,"Hayes Ryan, and Martinez"
+Heather Boyle,Nathan Benjamin,Obesity,Aspirin,"Glover and Oneill Miller,"
+Elizabeth Sheppard,Sara Cole,Cancer,Penicillin,Diaz Inc
+Robert Boone,Sara Warner,Hypertension,Lipitor,Martin-Nguyen
+Geoffrey Daniels,Stanley Moreno,Obesity,Paracetamol,Roberts Inc
+John Khan,Nina Smith,Cancer,Lipitor,"Riley, Grimes Ruiz and"
+Christopher Armstrong,Justin Nguyen,Diabetes,Lipitor,Ltd Rogers
+Jennifer Lopez,Michele Ramos,Arthritis,Lipitor,Gomez Inc
+Melissa Robertson,James Harris,Arthritis,Aspirin,PLC Mack
+Lisa Franklin,Luke York,Arthritis,Penicillin,"Chan, Goodman and Gould"
+Kristin Burton,Whitney Phillips,Obesity,Aspirin,"Russell and Randolph, Lawrence"
+Caitlin Adams,Daniel Johnson,Arthritis,Penicillin,Evans-Gonzalez
+Evan Hernandez,Audrey Lewis,Cancer,Paracetamol,Miller Sons and
+Jennifer Knight,Donald Wagner,Obesity,Aspirin,Watts-Schneider
+Bonnie Wilson,Lisa Fisher,Diabetes,Paracetamol,Harrell Inc
+Kenneth Ramirez,Amber Williams,Arthritis,Aspirin,"Reed Valdez and Pratt,"
+Ellen Mccullough,Patrick Medina,Arthritis,Lipitor,Ali Group
+Thomas Stone,Sheri Castro,Hypertension,Paracetamol,Conner-Nelson
+Kathleen Armstrong,Crystal Thornton,Hypertension,Aspirin,"and Miller Prince Rodriguez,"
+Terry Bennett,Kimberly Carter,Hypertension,Penicillin,"Parker Davis Clark, and"
+Kristin Nguyen,Frederick Arnold,Hypertension,Ibuprofen,Mills-Petersen
+Angela Randolph,Anna Atkinson,Cancer,Paracetamol,"Smith Anderson and Hunt,"
+Christopher Tate,Mary Coleman,Cancer,Paracetamol,Kennedy-Smith
+Christopher Walton,Jeremy Parker,Diabetes,Paracetamol,"and Moore, Ballard Johnson"
+Meagan Miranda,Dorothy Garcia,Asthma,Ibuprofen,"Williams Reynolds and Rangel,"
+David Brown,John Sanders,Cancer,Aspirin,"Shelton Johnson, and Green"
+Eric Miller,Ashlee Cooper,Asthma,Penicillin,"Lopez, and Howard Morrison"
+Joel Bartlett,Nicole Vance,Asthma,Lipitor,Sons and Cortez
+Stacy Gillespie,Karen Lynn,Cancer,Penicillin,Roberts Ltd
+Cindy Shaw,Rachel Lopez,Obesity,Penicillin,Sellers-Shepard
+Andrew Erickson,Samuel Williams,Asthma,Ibuprofen,"Lloyd Scott, and Reese"
+Ashley Rodriguez,Steven Rogers,Asthma,Paracetamol,Gibson-Osborne
+Darryl Cruz,Melanie Lloyd,Asthma,Ibuprofen,Matthews-Morgan
+Sheila Church,Bobby Mayo,Cancer,Penicillin,Scott and Sons
+Nancy Munoz,Fernando Hodge,Obesity,Ibuprofen,Diaz-Richards
+Rebecca Martinez,Valerie Simmons,Hypertension,Aspirin,LLC Johnson
+John Simmons,Cheryl Herrera,Diabetes,Paracetamol,Murphy Group
+Lance Torres,John Rodriguez MD,Cancer,Paracetamol,"Barajas and Byrd, Wolf"
+Timothy Terry,Ashley Jackson,Hypertension,Lipitor,"Salazar Newman White, and"
+John Moore,Samuel Hebert,Arthritis,Aspirin,Hancock-Lewis
+Bradley Ramos,Ryan Garcia,Arthritis,Paracetamol,Barrett-Wright
+Jill Taylor,Kelli Gutierrez,Obesity,Aspirin,"Bowers Blankenship Jackson, and"
+Kelly Brown,Kenneth Watson,Arthritis,Ibuprofen,Hahn-Wilson
+Jonathan Chavez,Jo Donaldson,Cancer,Paracetamol,"Ramirez and Nelson, Collins"
+Denise Wall,Ronald Patrick,Arthritis,Penicillin,Sosa-Jackson
+Todd Martinez,Lonnie Patton,Obesity,Penicillin,Dillon-Richard
+Jennifer Ford,Gabrielle Hendrix,Asthma,Aspirin,Stokes and Sons
+Raymond Park Jr.,Brandy Parsons,Asthma,Ibuprofen,Inc Nguyen
+Julia Reynolds,Anthony Norris,Cancer,Penicillin,Gallagher-Hernandez
+John Mclean,Kristina Mendez MD,Arthritis,Paracetamol,"Johnson David Carpenter, and"
+Katie Howard,Justin Clark,Asthma,Lipitor,"and Montes Marshall Valdez,"
+Amanda Lawson,Charles Schmidt,Asthma,Aspirin,PLC Kelly
+Paul Murray,Johnny Alvarado,Arthritis,Ibuprofen,Wilson-Sherman
+James Morris,Patricia Kidd,Diabetes,Paracetamol,Peterson Group
+Matthew Collins,Christopher Fleming,Obesity,Penicillin,Hall-Taylor
+Sharon Carpenter,Robert Higgins,Arthritis,Lipitor,Rios PLC
+Marcus Brown,Adrian Powell,Cancer,Ibuprofen,"Lutz, Lester and Kelly"
+Mitchell Decker,Alexander Rivera,Hypertension,Penicillin,"Scott, Moore and Brewer"
+Donald Murphy,Pam Johnson,Diabetes,Penicillin,"Sullivan Henderson Lloyd, and"
+Joseph Farley,Tracy Howard,Cancer,Penicillin,"and Rhodes Trujillo, Booth"
+Brendan Parker,Matthew Taylor,Arthritis,Penicillin,Bailey-White
+Samuel Davis,Sharon Harding,Hypertension,Ibuprofen,Bridges Inc
+Kelsey Porter,Kristine Browning,Asthma,Paracetamol,"Jackson Carr, Garcia and"
+Mark Bryant,Timothy Kim,Arthritis,Penicillin,Richardson-Griffin
+Margaret Zamora,Joshua Ross,Diabetes,Ibuprofen,Allen-Campbell
+David Payne,Linda Adams,Obesity,Ibuprofen,Ferguson-Liu
+Tony Salas Phd,Richard Andrews,Obesity,Ibuprofen,Lee Ltd
+Adrian Bowman,Julie Warren,Cancer,Lipitor,Baldwin-Marshall
+Mrs. Lauren Morgan,Angela Mathis,Diabetes,Lipitor,Norman PLC
+Joshua Murray,Beth Williams,Hypertension,Lipitor,Boyd-Fisher
+Jason Weber,Alejandra Williams,Arthritis,Aspirin,Inc Davis
+Rebecca Lewis,Jennifer Mitchell,Diabetes,Ibuprofen,Perry Inc
+Joan Archer,Bradley Hunter,Asthma,Aspirin,"and Brown Larson Moyer,"
+Brittany Edwards,Todd Houston,Asthma,Ibuprofen,Soto-Boyle
+Timothy Diaz,Michael Grant,Diabetes,Ibuprofen,Jones-Ellis
+Daniel Blankenship,Debra Carpenter,Arthritis,Lipitor,"Jenkins, Mathews and Ho"
+Mary Stephens,Amanda Johnson,Hypertension,Penicillin,Villa Inc
+Brian Figueroa,Joseph Flores,Hypertension,Lipitor,Castro PLC
+Stephanie Anderson,Kyle Gray,Hypertension,Ibuprofen,Ortiz-Martin
+Michael Doyle,Sarah Jackson,Hypertension,Penicillin,Anthony-Torres
+Kathleen Marshall,Alyssa Cox,Arthritis,Penicillin,PLC Drake
+Donald Lynch,Angela Johnson,Cancer,Aspirin,Schmidt Ltd
+David Espinoza,Debbie Browning,Hypertension,Ibuprofen,Ortiz-Gardner
+Julia Keith,James Smith,Asthma,Paracetamol,Smith-White
+Kristen Cohen,Brandy Nichols,Asthma,Aspirin,Ltd Stewart
+Erica Reyes,Jennifer Roach,Asthma,Aspirin,"Hunter and James Wilson,"
+Andrew Bryan,Kenneth Beltran,Obesity,Penicillin,Martinez-Elliott
+Mary Parrish,Elizabeth Freeman,Cancer,Paracetamol,Wright-Nguyen
+Katrina Warren,Elizabeth Campbell,Cancer,Lipitor,"and Johnson Wright Carter,"
+Kevin Robinson,Larry Collier,Cancer,Lipitor,Johnson-Collins
+Michael Bradley,Lisa Howell,Arthritis,Penicillin,Olsen LLC
+Debbie Scott,Ellen Bailey,Arthritis,Ibuprofen,Smith LLC
+Sara Cantrell,Kimberly Gregory,Diabetes,Aspirin,Rodriguez-Morgan
+Catherine Peterson,Timothy Williams,Obesity,Paracetamol,Ltd Bell
+Kyle Thomas,Crystal Thompson,Arthritis,Paracetamol,"and Thompson Mccall, Brooks"
+Scott Simon,John Bryant,Hypertension,Ibuprofen,Castillo LLC
+Valerie Hunter,Robert Brewer,Arthritis,Lipitor,Torres Group
+Ashley Warner,Andrea Bentley,Hypertension,Ibuprofen,"and Wagner, Lee Klein"
+Monique Dominguez,Craig Allen,Asthma,Aspirin,"Boyd and Baker Rasmussen,"
+Cody Taylor,Shannon Hicks,Asthma,Ibuprofen,Owens-Adkins
+Amanda Sullivan,Toni Russell,Asthma,Ibuprofen,PLC Lewis
+Mary Ruiz,Anita Ortega,Hypertension,Paracetamol,Brennan-Walters
+April Martin,Anthony Lopez,Diabetes,Penicillin,"and Mcdonald Taylor, Pitts"
+Sean Bennett,Timothy Johnson,Asthma,Lipitor,Martin LLC
+Ryan Harris,Erica Gallagher,Diabetes,Ibuprofen,Huang-Blanchard
+Tyler Gonzalez,Megan Zimmerman,Diabetes,Aspirin,"Gonzalez and Marks, Lopez"
+Christopher Rodriguez,Kyle Nelson,Cancer,Penicillin,"Molina, Rogers and Horton"
+Brian Arellano,Thomas Cross,Arthritis,Paracetamol,"Haynes Miller, and Gray"
+Danielle Cannon,Stephanie Howard,Obesity,Aspirin,"Garcia Woodward and Morgan,"
+Katie Martinez,Dr. Alex Clark,Diabetes,Paracetamol,and Kennedy Sons
+Pamela Kelly,Joseph Powers,Arthritis,Ibuprofen,Inc Anderson
+Laurie Edwards,Kevin Mack,Hypertension,Aspirin,"Armstrong Everett, Adams and"
+Chad Cross,Savannah Mahoney,Hypertension,Aspirin,Mclaughlin-Jenkins
+Kyle Gray,Taylor Juarez,Hypertension,Ibuprofen,Parks PLC
+Casey Hamilton,Stephanie Thompson,Diabetes,Paracetamol,"Hendrix, Roberts and Pitts"
+Jillian Silva,Christopher Ross,Hypertension,Ibuprofen,"and Berger Perry, Calhoun"
+Donald Ayala,Cassandra Howe,Obesity,Ibuprofen,Evans-Molina
+William Ford,Hannah Garcia,Obesity,Ibuprofen,and Sons Tucker
+Isabella Kennedy,Raymond Mercer,Asthma,Paracetamol,Group Holder
+Justin Brown,Wendy Morgan,Hypertension,Penicillin,Lawrence PLC
+Shannon Alexander,Cynthia Sanders,Obesity,Penicillin,Smith Ltd
+Katherine Whitaker,Michael Munoz,Hypertension,Paracetamol,Howe-Smith
+Jeremy Campbell,Frederick Smith,Cancer,Aspirin,PLC Vargas
+Joel Montgomery,Ricky King,Diabetes,Aspirin,"and Ray Wood Barrett,"
+Christine Frazier,Richard Fox,Diabetes,Paracetamol,"Davis Moore Bartlett, and"
+Brittany Norman,Alexander Preston,Arthritis,Penicillin,Barton-Johnson
+Julie Freeman,Stacey Weaver,Obesity,Aspirin,Salas-Farmer
+Henry Castro,Cole Harris,Arthritis,Paracetamol,"Neal and Roberson Hicks,"
+Dr. Aaron Andersen,Kimberly Martinez,Cancer,Ibuprofen,Robinson Inc
+Brandon Gomez,Daniel Calhoun,Hypertension,Penicillin,and Howard Sons
+Regina Matthews,Zachary Lopez,Arthritis,Aspirin,"and Morris Mullins, Hernandez"
+Alan Roach,Dwayne Bradley,Cancer,Penicillin,Rodriguez-Howard
+Christopher Mcfarland,Francisco Gray,Hypertension,Lipitor,Martin Ltd
+Michaela Patterson Md,Shane Mcintosh,Cancer,Lipitor,Jordan-Hood
+Michael Hoffman,Katherine Taylor,Asthma,Lipitor,Fox-Singleton
+Dylan Simon,Laura Shaw,Arthritis,Ibuprofen,"Holland, Daniels Brennan and"
+Christina Davis,Susan Wheeler,Obesity,Penicillin,Sanchez-Green
+Jennifer Fuentes,Tim Rodriguez,Asthma,Penicillin,Brown LLC
+Peter Kelly,Stephanie Lamb,Cancer,Penicillin,Pacheco-Morris
+Tammy Cole,Frank Bell,Hypertension,Ibuprofen,"Odonnell, Kelly Mejia and"
+Sandra Flynn,Sherry Parker,Obesity,Ibuprofen,Zimmerman-Schneider
+Kathryn Smith,Daniel Johnson,Obesity,Lipitor,"Hoover Rodriguez, and Vang"
+Jacqueline Stanton,Mr. Joseph Smith,Cancer,Penicillin,Fuller Sons and
+Emma Frederick,Abigail Flores,Arthritis,Penicillin,and Sons Bonilla
+Kenneth Jones,Maria Hernandez,Cancer,Penicillin,"and Gordon Lee Yang,"
+Jeffrey Smith,Tonya Potter,Cancer,Penicillin,LLC Howard
+David Owen,Joshua Meyer,Obesity,Lipitor,"and Shields Williams, James"
+Kyle Reed,Stacy Bender,Obesity,Aspirin,Moore-Sanders
+Chad Perez,John Moore,Diabetes,Lipitor,"Ortiz, and Massey Norton"
+Courtney Barnett,Michael Craig,Obesity,Penicillin,PLC Anderson
+Kelly Miller,Christine Wood,Obesity,Ibuprofen,Herring-Smith
+Larry Ramsey,Melissa White,Diabetes,Lipitor,PLC Hale
+Edward Duran,David Obrien,Obesity,Aspirin,"Parker Jackson, Jackson and"
+Leah Sullivan,Matthew Clark,Cancer,Lipitor,"Parsons Petersen, Mckenzie and"
+Susan Owen,Michele Alvarez,Arthritis,Lipitor,Guerrero-Jordan
+Steven James,Patrick Ross,Hypertension,Aspirin,"Lee Pugh, and Orozco"
+Holly Colon,Maureen Jones,Obesity,Penicillin,"Payne Parker, Murphy and"
+Patrick Cook,Eric Beard,Arthritis,Lipitor,"and Hernandez Mckinney Li,"
+Daniel Hendricks,Colleen Lawrence,Arthritis,Penicillin,Hancock Ltd
+Ryan Berg,Stefanie Howard,Arthritis,Paracetamol,"Mitchell Brown and Rice,"
+Debbie Thompson,Mark Wallace,Diabetes,Lipitor,Garcia-Martinez
+Jesse Sanchez,Nichole Washington,Cancer,Penicillin,Douglas-Diaz
+Norman Thomas,Gabrielle Brown,Cancer,Ibuprofen,Ltd Tran
+Catherine Zhang,Sean Ortiz,Asthma,Paracetamol,"Smith and Foster Cooper,"
+John Orozco Md,Jacqueline Monroe,Arthritis,Paracetamol,Hunter Inc
+Wayne Hodge,Nicole Manning,Diabetes,Paracetamol,Sons Flores and
+Elaine Lynch,Donna Callahan,Arthritis,Paracetamol,Green Group
+Derek Lawson,Ashley Warner,Cancer,Paracetamol,"Lewis, Gibbs and Powell"
+Andre Anderson,Noah Schultz,Arthritis,Paracetamol,"Gomez and Espinoza, Wilson"
+Donna Smith,Cassandra Martinez,Diabetes,Lipitor,Sons Martin and
+Dr. Leonard Brewer Ii,Robert Gomez,Diabetes,Penicillin,Sons and Moore
+Pamela Garrett,Adam Torres,Cancer,Penicillin,Hernandez-Pearson
+Phillip Wilson,Dawn Mcintosh,Diabetes,Lipitor,Harrison-Robles
+Vanessa Walker,Cody Shaw,Obesity,Ibuprofen,Ltd Guerra
+Justin Lewis,Ryan Mclean,Asthma,Lipitor,Group Hudson
+Anthony Coleman,Mr. Evan Long PhD,Asthma,Penicillin,Cordova LLC
+Jasmine Luna,Dr. William Santiago,Obesity,Paracetamol,Horton-Boone
+Michael Patton,Kimberly Conner,Hypertension,Lipitor,Campbell-Ryan
+Joshua Turner,Kenneth Glass,Asthma,Ibuprofen,"Johnson Aguilar Hamilton, and"
+Billy Johnson,Preston Werner,Cancer,Lipitor,Moreno Inc
+Anthony Gonzalez Phd,Robin Davis,Arthritis,Aspirin,Group Brown
+Sarah Lopez,Alexandra Kim,Arthritis,Ibuprofen,Inc Singh
+Lawrence Williams,David Moore,Hypertension,Lipitor,Sanchez-Mccullough
+Susan Nichols,John Barker,Diabetes,Aspirin,"Smith Rodriguez and Buchanan,"
+Jean Rodriguez,Taylor Dillon,Hypertension,Aspirin,Grant-Wiggins
+Jennifer Leon,Michael Preston,Cancer,Lipitor,May-Smith
+Meredith Hill,Mark Brown,Cancer,Aspirin,"Franco and Trevino Clayton,"
+Laura Lawrence,Alyssa Tapia,Obesity,Lipitor,Herman-Griffin
+Justin Hicks,Justin Carey,Arthritis,Paracetamol,Mcclure Inc
+Krista Thornton,Kevin Chan,Obesity,Paracetamol,Watson-Hill
+Ian Duffy,Gregory Braun,Cancer,Aspirin,"Martin Rodriguez, Richardson and"
+Jade Baker,Todd Evans,Obesity,Lipitor,"and Gray Smith, Jennings"
+Billy Petersen,Donald Hebert,Obesity,Penicillin,"and Reynolds Moore Martin,"
+Robert Garcia,Erik Santos,Cancer,Ibuprofen,Inc Wyatt
+John Donaldson,Diana Lee,Obesity,Lipitor,"Potts, Salas Fletcher and"
+Raymond Galvan,Cory Mitchell,Obesity,Paracetamol,Carr Group
+Brandon Greene,Michelle Moses,Diabetes,Paracetamol,Osborne-Hayes
+Christine Cooper,Jennifer Herman,Diabetes,Lipitor,Sullivan-Thomas
+Ashley Hawkins,Danielle Jennings,Hypertension,Lipitor,Group Graves
+Derek Singleton,Matthew Calhoun,Hypertension,Paracetamol,Inc Gonzales
+Kyle Anderson,Marcus Green,Diabetes,Aspirin,Roberts-Brock
+Sarah Green,Kelly Warren,Asthma,Penicillin,PLC Johnson
+Shelly Lynn,Jennifer Smith,Arthritis,Paracetamol,"and Gill, King Osborn"
+John Mccarty,Shelia Burns,Asthma,Ibuprofen,"and Johnson, Carter Johnston"
+Courtney Moore,Gina Jackson,Arthritis,Penicillin,"Deleon Oneal, Moore and"
+Javier Hamilton,Jason Jackson,Arthritis,Ibuprofen,Scott-Stewart
+Sandra Graham,Steven Burgess,Hypertension,Ibuprofen,Santos-Harris
+Carol Miller,Kenneth Simmons,Hypertension,Lipitor,Brown PLC
+Brandi Hood,Melinda Valencia,Arthritis,Lipitor,Benson-Cunningham
+Adam Thompson,Anita Ramos,Cancer,Ibuprofen,"and Walker, Li Gomez"
+Amber Reid,Brian Wright,Hypertension,Lipitor,Moore-Arias
+Jennifer Evans,Alvin Guzman,Obesity,Aspirin,Cunningham Group
+Keith Wilcox,Ricky Nguyen,Asthma,Ibuprofen,"Pineda Rhodes, and Luna"
+Cynthia Bryant,Nicole Weaver,Hypertension,Lipitor,"Pearson, Carroll and Lane"
+Nicholas Bell,John Whitney,Obesity,Penicillin,Gonzalez-Keith
+Hannah Carey,Emma Yang,Cancer,Lipitor,Perez-Henderson
+Brad Lewis,Sierra Kerr,Diabetes,Penicillin,Davis-Smith
+Christina Sullivan,James Austin,Cancer,Penicillin,Henderson Inc
+Sharon Ferrell,Jennifer Snyder,Arthritis,Paracetamol,"Williams, and Diaz Campbell"
+Kyle Armstrong,Casey Baker,Obesity,Paracetamol,"Finley Salinas, Jones and"
+Bryce Klein,Joshua Vargas,Hypertension,Paracetamol,"Baker and Barber Baxter,"
+Gabriel Garcia,Calvin Evans,Cancer,Lipitor,Ltd Marquez
+Justin Gibbs,Olivia Morales,Obesity,Paracetamol,Stuart Inc
+Kelly Johnson,Jessica Leblanc,Hypertension,Ibuprofen,Ltd Dixon
+Christopher Brown,Kimberly Vargas,Obesity,Lipitor,PLC Harris
+Lisa Chambers,Lucas Woods,Diabetes,Ibuprofen,Carpenter-Chen
+Michael Zimmerman,Samantha Contreras,Arthritis,Paracetamol,Ltd Wilkinson
+Deanna Collins,Ashley Steele,Asthma,Lipitor,Miles-Sanchez
+Erika Hernandez,Richard Stokes,Diabetes,Paracetamol,Collins Sons and
+Pamela Duncan,Paula Herrera,Asthma,Aspirin,Massey Inc
+Sara Jones,Donald Nguyen,Obesity,Lipitor,"Baker and Thompson, Johnson"
+Theresa Coleman,Jonathon Galvan,Obesity,Penicillin,Group Robbins
+Stacey Wood,Joan Mccarty,Diabetes,Aspirin,White-Stone
+Patrick Flores,Jason Stokes,Cancer,Lipitor,Caldwell Group
+Laura Morgan,Ronald Stafford,Arthritis,Paracetamol,Brown-Thompson
+Nicole Crane,Rebecca Davis,Diabetes,Paracetamol,Sons and Morton
+Robert Arellano,Kathleen Wheeler,Obesity,Aspirin,and Johnson Sons
+Jon Spence,Clifford Wilson,Arthritis,Lipitor,Travis Inc
+Kevin Smith,Ryan Patterson,Arthritis,Paracetamol,Brooks LLC
+Rhonda Jackson,Kathryn Wong,Asthma,Paracetamol,"Nguyen, Simmons and Johnson"
+Daniel Morris,Amy Perry,Arthritis,Lipitor,"Buck and Delgado, Rich"
+Courtney Stephens,Joe Hicks,Obesity,Paracetamol,Snyder Ltd
+Brent Robinson,Aaron Johnson,Obesity,Paracetamol,"Patton and Mclaughlin, Barr"
+Devin Harmon,Margaret Massey,Diabetes,Penicillin,Olson LLC
+Kimberly Shannon,Pamela Miller,Obesity,Penicillin,"Foley, Williams Gonzales and"
+Patricia Benitez,Christopher King,Cancer,Penicillin,Melton Ltd
+Michael Rogers,Debbie Peters,Obesity,Penicillin,Baker PLC
+William Faulkner,William Paul,Obesity,Penicillin,Oconnor and Sons
+Amy Hartman,Dustin Russell,Arthritis,Paracetamol,"Schmitt and Montgomery, Barber"
+Holly Andersen,Mr. Jimmy Gonzales,Cancer,Penicillin,"and Miller Montoya, Small"
+Jennifer Mayo,Nicole Johnson,Cancer,Paracetamol,"Travis Graham and Whitehead,"
+Greg White,Michael Mcdaniel,Diabetes,Ibuprofen,Thomas Ltd
+Kenneth Weeks,John Dixon,Arthritis,Aspirin,LLC Allen
+Jesse York,James Murphy,Diabetes,Aspirin,King Group
+Leah Stone,Jason Hernandez,Arthritis,Lipitor,Lamb-Hansen
+Jeffrey Ferguson,Lisa Thompson,Arthritis,Penicillin,PLC Haney
+Travis Roman,Tanya Gutierrez,Cancer,Aspirin,Moss-Jones
+Ashley Salazar,Christopher Stevens,Obesity,Ibuprofen,"Meyer Bishop and Wallace,"
+David Miranda,Anne Alvarez,Cancer,Paracetamol,Black and Sons
+Angela Sullivan,Sonya Fletcher,Cancer,Ibuprofen,Davis-Bell
+Ashley Bell,Donald Maynard,Arthritis,Penicillin,"Hill, Murphy and Stewart"
+Mrs. Sabrina Moreno,Jessica Byrd,Diabetes,Paracetamol,"Bryant and Thomas, Smith"
+Craig Clarke,George Thompson,Asthma,Aspirin,Sons and Dawson
+Kelly Hill,Lisa Small,Asthma,Paracetamol,"Paul Watts and Perkins,"
+Aaron Weaver,Tonya Dodson,Obesity,Paracetamol,Williams-Gordon
+George Mason,William Scott,Diabetes,Penicillin,"and Chapman Payne, Werner"
+Jonathan Hodges,Robert Evans,Asthma,Ibuprofen,"Thomas, Green and Barron"
+Felicia Yang,Francis Stout,Arthritis,Penicillin,Lambert-Brandt
+Sarah Miller,Jasmine Jimenez,Diabetes,Penicillin,Group Sparks
+Vincent Ray,Robert Martinez,Cancer,Ibuprofen,Inc Swanson
+Jamie Collins,Nathaniel Williams,Asthma,Penicillin,"Mclaughlin, and Tucker Francis"
+Amanda Cummings,Michelle Shepard,Obesity,Aspirin,Inc Copeland
+Rachel Swanson,Andrea Mitchell,Arthritis,Lipitor,Ltd Smith
+Nicole Knight,Marie Glass,Arthritis,Lipitor,Brown LLC
+Michael Mann,Ryan Fisher,Cancer,Aspirin,"Hodges Brown, Munoz and"
+William Rogers,Heather Petty,Asthma,Lipitor,Robinson-Ritter
+Melanie Mitchell,Nicole Stevenson,Obesity,Paracetamol,"Green, Howell and Jordan"
+Steven Robinson,Monica Costa,Cancer,Paracetamol,PLC Garcia
+Brian George,Joseph Copeland,Cancer,Aspirin,"Fox, and Lucas Cain"
+Tony Harrison,Daniel Mayer,Hypertension,Penicillin,and Lee Sons
+Elaine Guzman,Christian Allen,Asthma,Paracetamol,Petty-Lloyd
+Michelle Lane,Amy Gonzales,Cancer,Penicillin,Kelly PLC
+Jason Smith,Tracy Sandoval,Arthritis,Ibuprofen,Conley-Wood
+Janice Moore,Daniel James,Diabetes,Ibuprofen,Choi PLC
+Jennifer Hayes,Kerry Johnson,Hypertension,Lipitor,Yu-Bryant
+Phillip Espinoza,Brian Strong,Arthritis,Aspirin,LLC Chavez
+Charlene Brown Md,Christopher Barnes,Hypertension,Paracetamol,"Mills and Young, Perry"
+Thomas Erickson,Adam Gray,Hypertension,Aspirin,Sims-Castro
+Jerome Day,Michael Thomas,Arthritis,Paracetamol,Gonzalez LLC
+Alejandro Khan,Reginald Williams,Hypertension,Paracetamol,"Hall and Montgomery King,"
+Laurie Cole,Ryan Tran,Asthma,Lipitor,Ingram-Collins
+Bill Walker,Lauren Hines,Diabetes,Penicillin,Watkins Group
+Alexander Cervantes,Jerry Farley,Diabetes,Penicillin,Group Smith
+Manuel Knight,Cameron Smith,Obesity,Ibuprofen,Carpenter PLC
+Aaron Simmons,Kelly Spencer,Diabetes,Aspirin,Sons and Davis
+Sandy George,Michael Russell,Diabetes,Aspirin,"Ellis, and Smith Black"
+Austin Anderson,Stephen Davis,Cancer,Lipitor,Aguilar-Moreno
+Sharon Freeman,Joseph Lee,Obesity,Lipitor,Inc Howard
+Gary Wilson,Krista Hess,Arthritis,Penicillin,Goodwin-Lawrence
+Rebecca Jones,Eddie Williams,Arthritis,Lipitor,PLC Hoffman
+Craig Wyatt,Ellen Brown,Arthritis,Aspirin,Acosta Group
+Amanda Dixon,Stefanie Martinez,Cancer,Aspirin,"Murray, Gilbert and Crawford"
+Clayton Hoffman,Lauren Stevens,Arthritis,Penicillin,Group Blake
+Lindsey Cherry,Jacob Soto,Hypertension,Penicillin,"Price, Neal and Mcpherson"
+Jordan Valdez,Lisa Carrillo,Asthma,Paracetamol,Group Davis
+Misty Clark,Heather Santiago,Diabetes,Penicillin,"Sellers and Nelson, Anderson"
+Rebecca Fuller,Janet Holt,Obesity,Penicillin,Gordon-Foster
+John Lopez,Danielle Turner,Obesity,Penicillin,Boyd Ltd
+Christina Williams,Amanda Grant,Obesity,Aspirin,Cole Inc
+Lauren Friedman,Jeffrey Wilkinson,Obesity,Aspirin,Matthews Group
+Andrea Morgan,Dr. Michael Peters,Asthma,Penicillin,PLC Clarke
+Angela Gilbert,Christopher Griffin,Hypertension,Lipitor,Graham-Smith
+Faith Foster,Daniel Lucero,Obesity,Lipitor,Reynolds and Sons
+Tanner Burgess,Eileen Sanchez,Hypertension,Penicillin,Adams-Kim
+Elizabeth Taylor,Mitchell Kerr,Cancer,Paracetamol,Sons and Good
+Elizabeth Hunt,Amanda Simmons,Cancer,Paracetamol,"Howell, Young Potts and"
+Erin Ryan,Thomas Jenkins,Asthma,Ibuprofen,"Martinez, Reed Watts and"
+Mr. Cody Navarro,David Chan,Cancer,Ibuprofen,LLC Massey
+Laurie Garcia,Bruce Moss,Obesity,Ibuprofen,Lewis-Fletcher
+Devin Shelton,Jamie Williamson,Cancer,Ibuprofen,"and Harmon Brown, Cabrera"
+Oscar Nelson,Crystal Schwartz,Obesity,Ibuprofen,Wagner LLC
+Taylor Brown,Sarah Stafford,Hypertension,Penicillin,Inc Johnson
+Aaron Oneal,Anthony Atkins,Asthma,Lipitor,Inc Taylor
+John Miller,Brenda Clements,Cancer,Paracetamol,Steele-Robinson
+Brittany Watson,Tammy Walker,Hypertension,Paracetamol,"Berry and Fischer, Wells"
+Joseph Livingston,Monica Richardson,Cancer,Ibuprofen,Montes-Evans
+Andrew Brooks,Melissa Tyler,Diabetes,Lipitor,Ortega Ltd
+Harold Webb,Jessica Hoffman PhD,Arthritis,Paracetamol,"and Rose Stewart, Davis"
+Douglas King,Elizabeth Smith,Arthritis,Paracetamol,Melendez LLC
+Jessica Franklin,Heidi Miller,Obesity,Ibuprofen,Vazquez-Brown
+John Howard,Crystal Cortez,Diabetes,Penicillin,Warren-Bowman
+Robyn Thompson,Anthony Sanchez,Hypertension,Paracetamol,"Brown Reed Robinson, and"
+Isaac Morales,Anna Crane,Arthritis,Paracetamol,Ltd Peterson
+Donna Johnson,Daniel Molina,Cancer,Lipitor,Stewart-Dominguez
+Denise Guerrero,Andrea Roach,Obesity,Ibuprofen,Lamb-Herrera
+David Chandler,Damon Hayes,Hypertension,Penicillin,and Sons Morrison
+Michelle Bender,Vincent Bell,Cancer,Ibuprofen,Ellis-Roberson
+Jesse Molina,Nicholas Obrien,Asthma,Penicillin,"and Glover Christensen, Jackson"
+Rita Nelson,Elijah Potts,Hypertension,Lipitor,"Alvarez Austin Snyder, and"
+Janet Boyd,Christina Webb,Diabetes,Aspirin,Erickson-Rodriguez
+Catherine Welch,Donna Dunn,Cancer,Paracetamol,"and Daniel Bryan Brown,"
+Jason Davis,Sarah Davis,Diabetes,Aspirin,Sons and Sanchez
+Christopher Reynolds,Patty Day,Diabetes,Lipitor,Costa LLC
+Leah Martinez,Matthew Smith,Hypertension,Aspirin,Coleman-Aguilar
+Michael Duarte,Christopher Prince,Asthma,Penicillin,PLC Morrison
+Laura Baker,Glenda Jones,Asthma,Ibuprofen,Jones-Graham
+Charles Thompson,Raymond Watson,Cancer,Lipitor,Ltd Brown
+Julia Wade,Dawn Herman,Diabetes,Lipitor,"Bell and Davis Ross,"
+Gloria Vance,Mr. Matthew Luna,Asthma,Aspirin,"Allen Garcia and Wolf,"
+John Atkins,Derek Cruz,Asthma,Aspirin,"Lin Chan, and Moreno"
+Angela Miller,Daniel Padilla,Cancer,Paracetamol,"Dennis, and Hood Guerra"
+Maria Sutton,Sydney Garcia,Obesity,Aspirin,Inc Mercer
+Lauren Taylor,Alexander Mcintosh,Arthritis,Penicillin,Garrett PLC
+Eric Pineda,Alexandria Harris,Diabetes,Aspirin,Rollins-Garrett
+Douglas Turner,Jacob Cabrera,Hypertension,Lipitor,"Medina, and Allen Wilkins"
+Dorothy Quinn,Christopher Patel,Hypertension,Ibuprofen,LLC Smith
+Christina Dyer,Matthew Brown,Hypertension,Aspirin,Martin Group
+Alexandria Coleman,Alex Davis,Hypertension,Penicillin,"Hayes and Miller, Sawyer"
+Victoria Evans,Megan Cohen,Obesity,Paracetamol,"and Phelps Burke Fields,"
+Willie May,Victoria Horton,Arthritis,Penicillin,Inc Smith
+Joseph Ellis,Joshua Graham,Cancer,Ibuprofen,"and Smith Conway, Byrd"
+Isaac Peterson,Joseph Johnson,Cancer,Aspirin,LLC Roberts
+William Bass,David Lee,Diabetes,Aspirin,Sons Gonzalez and
+Michael Evans,Michael Thomas,Diabetes,Paracetamol,"Johnson Kirby and Richard,"
+Andrew Hill,Wesley Mclaughlin,Diabetes,Aspirin,LLC Ware
+Herbert Jimenez,Jenna Thomas,Cancer,Lipitor,"Thomas and Nguyen, King"
+Sandra Murphy,Angela Clayton,Asthma,Aspirin,Bruce-Thomas
+Michael Elliott,Jose Wiggins,Asthma,Ibuprofen,"Baldwin, and Roberts Ray"
+Mary Savage,Lisa Hart,Arthritis,Ibuprofen,Horton-Hines
+Cheryl Foster,Jay Wagner,Obesity,Penicillin,"and Lewis, Hardy Cooper"
+Mr. David Bowen,Justin Joyce,Cancer,Aspirin,Moore Group
+Christopher Wilson,Nicole Craig,Hypertension,Ibuprofen,Nelson-Hawkins
+Matthew Shannon,Taylor Gregory,Asthma,Paracetamol,LLC Martinez
+Jill Cunningham,Mark Potts,Arthritis,Penicillin,Ross LLC
+Christina Brown,Raven Turner,Cancer,Ibuprofen,Graves LLC
+Connie Page,Jeremy Johnson,Cancer,Ibuprofen,"Cowan Cardenas Allen, and"
+David Lopez,Lisa Adams,Arthritis,Aspirin,PLC Mann
+James Williams,Paul Hale,Arthritis,Penicillin,Inc Lopez
+Andrew Yang,Laura Morrow,Arthritis,Ibuprofen,LLC Gonzalez
+Maureen Dunn,Angela Brown,Asthma,Aspirin,Lee-White
+Andrew Arnold,Amber Martinez,Arthritis,Paracetamol,Rodriguez-Beck
+Mrs. Courtney Moore Md,George Gilbert,Diabetes,Penicillin,King-Garza
+Raymond Bruce,Amy Murillo,Diabetes,Lipitor,"and Nelson Blake, Gutierrez"
+Samantha Bates,Richard Martin,Hypertension,Aspirin,Willis-Dixon
+Matthew Burnett,Nicole Cunningham,Diabetes,Lipitor,"Arnold, Steele Scott and"
+Linda Butler,Michael Owens,Diabetes,Lipitor,Sharp-Greer
+Angela Wiley,Sharon Jones,Diabetes,Aspirin,"Jones, Valentine Pacheco and"
+Deborah Garner,Brianna Powers,Diabetes,Penicillin,"Floyd and Williams Stephenson,"
+Eric Smith,Mr. Brendan Young,Obesity,Ibuprofen,"Smith, Singh and Gonzales"
+Carrie Whitehead,Pedro Stewart,Hypertension,Ibuprofen,Smith-Smith
+Dominique Maldonado,Shelley Miller,Arthritis,Paracetamol,"Jenkins, Jenkins and Patterson"
+Jorge Singh,Christopher Harris,Diabetes,Penicillin,"Duran Mendoza and Scott,"
+Jill Lane,Kenneth Brown,Obesity,Paracetamol,Frye Group
+James Nguyen,Travis Johnson,Diabetes,Lipitor,Harding-Adams
+Debbie Shaw,Michael Mcdowell,Arthritis,Aspirin,Lopez Group
+Emily Valdez,Kathy Murray,Cancer,Aspirin,Powell Inc
+Alejandro Pierce,Alexander Williams,Cancer,Lipitor,Duran-Scott
+Omar Lopez,Rachel Duran,Diabetes,Penicillin,LLC Fletcher
+Marilyn Figueroa,Alexandra Howard,Hypertension,Penicillin,Smith-Hicks
+Sara Green,Denise Rivera,Asthma,Lipitor,LLC Dickerson
+Jessica Miller,Matthew Lopez,Hypertension,Ibuprofen,Guerrero Group
+Jonathan Garcia,Jason Williams,Hypertension,Penicillin,"and Gardner Torres, Rosario"
+John Thompson,Thomas Schwartz,Diabetes,Paracetamol,Wilson Sons and
+Clifford Bell,Thomas Newton,Arthritis,Paracetamol,PLC Rivera
+Charles Finley,Pamela Harris,Diabetes,Ibuprofen,PLC Holmes
+Mrs. Monica Craig,Sherri Hill,Obesity,Aspirin,"Taylor Mcintosh and Ross,"
+Heidi Evans,Joseph Cole,Hypertension,Lipitor,Anderson-Miller
+Mr. Timothy Howard,Michelle Wheeler,Asthma,Penicillin,Martin-Terry
+Mario Cox,Amy Kennedy,Cancer,Aspirin,Inc Meyer
+Luis Barnes,Dustin Mcdaniel,Diabetes,Penicillin,PLC Phillips
+Sydney Tucker,Angela Melton,Hypertension,Ibuprofen,"Schneider and Hopkins Oconnor,"
+Andre Harvey,Kathleen Davis,Arthritis,Lipitor,Bauer Inc
+Kimberly Vasquez,Jennifer Bennett,Obesity,Penicillin,Cowan Inc
+Benjamin Kerr,John Bush,Asthma,Lipitor,Burns-Callahan
+Alexis Simmons,Sheila Schwartz,Obesity,Aspirin,Moore-Smith
+David Hensley,Mrs. Stephanie Miller,Hypertension,Ibuprofen,"Taylor Johnson, Beasley and"
+Christine Dyer,Mike Carter,Hypertension,Paracetamol,"Young Wright Davis, and"
+Shari Williams,Eric Haynes,Diabetes,Ibuprofen,"Wood and Murphy Jones,"
+Tammy Jackson,Victoria Cox,Hypertension,Paracetamol,"Gonzalez and Stevens Ruiz,"
+Kimberly Crawford,Kimberly Bernard,Hypertension,Paracetamol,Willis-Mcgee
+Taylor Petersen,Ryan Porter,Obesity,Lipitor,"King Weiss, and West"
+Chris Stevenson,Deborah Mccarthy,Diabetes,Aspirin,Benson PLC
+Leslie Collins,Gail Armstrong,Hypertension,Penicillin,"Morgan and Wilcox Barnett,"
+Deborah Moore,Angela Massey,Asthma,Paracetamol,Rubio LLC
+James Horton,Ana Thomas,Hypertension,Penicillin,"Lee Chambers, and Foley"
+Karla Crawford,Ian Davenport,Asthma,Paracetamol,Hurley Ltd
+Peter Spencer,Michelle Clark,Arthritis,Lipitor,PLC Trujillo
+Lisa Mcclure,James Chen,Arthritis,Paracetamol,Henson-Harmon
+Marilyn Tran,Vanessa Mclaughlin,Hypertension,Ibuprofen,Jacobs-Howell
+Nicole Harrison,Allen Mcintosh,Arthritis,Aspirin,Williams PLC
+Chad Maldonado,Briana Pittman,Cancer,Paracetamol,Martin PLC
+Ariana Brown,Ronald Crawford,Hypertension,Lipitor,"Mata Norman, Holmes and"
+Robert Dunn,David Taylor,Arthritis,Paracetamol,Brown LLC
+Teresa Harrison,Brandon Crawford,Asthma,Penicillin,Ward-Crosby
+Thomas Arnold,Jordan Martinez,Cancer,Penicillin,Wong-Booth
+Crystal Simpson,Sara Simmons,Cancer,Paracetamol,"and Valencia Flores, Byrd"
+George Phillips,Timothy Guerra,Asthma,Aspirin,Collins-Gutierrez
+Jeffrey Gutierrez,Sara Thomas,Diabetes,Aspirin,"Cameron Black Davis, and"
+Paul Mack,Brian Holmes,Obesity,Penicillin,Group Rivera
+Kimberly Ramirez,Robert Wyatt,Obesity,Paracetamol,PLC Davis
+Sarah Villarreal,Jacob Deleon,Arthritis,Lipitor,Ltd Taylor
+Chloe Hunt,Craig Hunt,Asthma,Lipitor,"Anderson, Smith Smith and"
+Heidi Pope,Wanda Sanchez,Asthma,Ibuprofen,"and Walker Smith Cannon,"
+Megan Gray,Scott Kennedy,Asthma,Ibuprofen,Williams LLC
+Sandra Soto,Cynthia Sexton,Obesity,Paracetamol,Ayers-Alvarez
+Brenda Le,Julian Hernandez,Cancer,Penicillin,"Walsh Alexander, and Dennis"
+Lori Rivas,Robin Schwartz,Obesity,Ibuprofen,Nelson PLC
+Roger Hamilton,Luis Franklin,Arthritis,Lipitor,Group Kim
+Melissa Waller,Alejandro Pearson,Obesity,Aspirin,Hess Sons and
+Darryl Williams,Mary Jackson,Obesity,Ibuprofen,"Cardenas, and Fields Nichols"
+Monica Walker,Samantha Eaton,Asthma,Ibuprofen,"Fisher Kirk, and Becker"
+Teresa Campbell,Brian Hobbs,Obesity,Lipitor,Jenkins-Jackson
+Frederick Mcintosh,Chris May,Cancer,Ibuprofen,"Jackson Hammond and Garcia,"
+Debra Harris,Mary Richardson,Arthritis,Penicillin,Inc Miller
+Chad Green,David Moore,Hypertension,Aspirin,LLC Smith
+Terry Martin,Karen Oconnor,Hypertension,Ibuprofen,Schroeder-Walker
+Madison Palmer,Tasha Meyer,Arthritis,Ibuprofen,"Mcguire and Wheeler, Morris"
+Michael Jones,Jose Smith,Asthma,Penicillin,Washington-Sanchez
+Michael Newman,Janet Elliott,Diabetes,Paracetamol,Dawson-Baker
+Lindsey Turner,Paul Harding,Cancer,Lipitor,LLC Perez
+Nicole Hall,Mr. Zachary Williams,Arthritis,Ibuprofen,Sons and Olson
+Leslie Roth,Troy Williams,Obesity,Penicillin,Bell-Thomas
+Robert Roberts,Dennis Cabrera,Cancer,Aspirin,Thompson-Thomas
+Eric Torres,Cassidy Thompson,Arthritis,Aspirin,"Kelly Johnson, Parker and"
+Rebecca Moore,Michelle Perez,Cancer,Lipitor,"Tanner Smith Miller, and"
+Steve Goodman,Joy Lewis,Asthma,Paracetamol,"Johnson and Doyle, Collins"
+Teresa Strong,Candice Cardenas,Hypertension,Aspirin,Inc Taylor
+Monica White,Theodore Ramos,Arthritis,Ibuprofen,King-Henry
+Sara Harris,Rodney Hall,Diabetes,Lipitor,"Cruz and Hahn, Gibbs"
+Kathleen Sandoval,Sonya Miller,Hypertension,Ibuprofen,"and Higgins Mckay, Cruz"
+Caroline Miller,Victoria Lara,Obesity,Aspirin,Johnson-Mitchell
+Jennifer Baker,Kelly Watson,Diabetes,Penicillin,"Vincent, Walker Parsons and"
+Kristina Payne,Kari Ramos,Diabetes,Penicillin,Collins-Mcdonald
+Stacy Jones,Sydney Robbins,Arthritis,Ibuprofen,Kelly-Tapia
+Michael Ramos,Bobby Becker,Asthma,Lipitor,Williams-Peterson
+Michael Meza,Daniel Watkins,Hypertension,Lipitor,LLC Merritt
+Randy Shaw,Karen Ramirez,Diabetes,Ibuprofen,Ryan-Miller
+Ann Sullivan,Craig Cooper,Obesity,Lipitor,Mcintosh-Cantu
+Amy White,Erin Oconnell,Hypertension,Lipitor,PLC Hill
+Nicholas Sullivan,Carlos Jennings,Cancer,Paracetamol,"and Perkins, Long Herring"
+Jennifer Johnson,Kimberly Freeman,Asthma,Aspirin,"Russell, and Barnett Williams"
+Jonathan Young,Mrs. Lisa Lucas DVM,Hypertension,Penicillin,Lambert-Richardson
+Glenn Rodriguez,Rachel Wallace,Hypertension,Lipitor,"Morgan, Stephenson and Frazier"
+Christopher Hurst,Laura Washington,Diabetes,Ibuprofen,"Taylor Reyes and Bowers,"
+Patrick Smith,Jamie Bright,Asthma,Paracetamol,PLC Gaines
+Mark Lane,Paul Chen,Hypertension,Paracetamol,"and Neal Vargas, Welch"
+Carrie Scott,Cheryl Maxwell,Arthritis,Lipitor,Becker LLC
+Dalton Tucker,Thomas Harding,Diabetes,Lipitor,Vargas-Walker
+Cynthia Williams,Jessica Lawrence,Obesity,Lipitor,Henderson-Cruz
+Steven Price,Jose Strickland,Hypertension,Paracetamol,Holt-Hale
+Anna Clements,Lee Richard,Arthritis,Paracetamol,"and Cohen Nelson, Davidson"
+Heidi Buchanan,Margaret Booker,Asthma,Paracetamol,Brooks PLC
+Annette Pruitt,Jimmy Savage,Obesity,Ibuprofen,and Sons Curry
+Kari Wells,Heather Fuller,Obesity,Ibuprofen,Group Owens
+Jay Galloway,Debra Everett,Asthma,Ibuprofen,Group Peters
+Clifford Lee,Walter Jacobs,Diabetes,Paracetamol,"Vang, and Cook Moore"
+Melissa Nguyen,Breanna Simmons,Hypertension,Lipitor,Sons and Lewis
+Judy Ruiz,Emily Molina,Obesity,Aspirin,Walker Sons and
+David Bowman,Pamela Williams,Arthritis,Ibuprofen,"and Leon Anderson, Arnold"
+Erica Stevens,Angela Garcia,Asthma,Penicillin,Santana-Thomas
+Jordan Warren,Amy Nguyen,Hypertension,Aspirin,Hayes Ltd
+Lee White,Kim Dean,Asthma,Ibuprofen,Baker-Gill
+Julie Gonzalez,Curtis Hopkins,Diabetes,Lipitor,Cook-Fischer
+Summer Herman,Tara Robinson DDS,Obesity,Aspirin,Garcia-Nichols
+Angela Cox,Kevin Green,Asthma,Penicillin,LLC Baker
+Steven Williams,Dr. Jennifer Weeks,Cancer,Penicillin,Gallegos Ltd
+Susan Lee,Joy Rojas,Diabetes,Aspirin,"Nash Stevenson and Martinez,"
+William Rodriguez,Leslie Cook,Cancer,Aspirin,Miller-Bell
+Mike Mcbride,Ashley Petersen,Asthma,Penicillin,"Gray and Harris, Oneal"
+Heather Carter,Daniel Barnes,Cancer,Aspirin,Ltd Carter
+Elizabeth Ibarra,Tara Smith,Asthma,Paracetamol,Sons Hodges and
+Grace Hawkins,Jennifer Taylor,Hypertension,Paracetamol,Henderson and Sons
+Kiara Clark,Martin Arnold,Cancer,Aspirin,"Frey and Leon Espinoza,"
+Kimberly Welch,Kerri Wright,Diabetes,Ibuprofen,Barnett LLC
+Jeffrey Bailey,Jonathan Fields,Hypertension,Paracetamol,Ramos-Simon
+John Fox,David Hayes,Hypertension,Paracetamol,Cook-Hurst
+Shaun Acosta,Juan Andrews,Cancer,Lipitor,Ramirez-Hebert
+Roger Soto,Clifford Fuller,Arthritis,Aspirin,"Frank Hernandez, Taylor and"
+Hannah Barton,Kimberly Anderson,Arthritis,Lipitor,Parker-Petersen
+Christopher Castillo,Nicholas Fuller,Cancer,Lipitor,"Medina, Wright and Shaffer"
+Larry Singleton,Ryan Hall,Diabetes,Ibuprofen,"and Grant Hamilton Edwards,"
+Thomas Donaldson,Keith Bates,Obesity,Ibuprofen,PLC Hunt
+Timothy Meadows,Brenda Ramsey,Cancer,Aspirin,"and Webb Robinson, Hicks"
+Daniel Brooks,Emma Kramer,Hypertension,Paracetamol,"Collins Woodward Martinez, and"
+Tim Davis,Adrienne Rodriguez,Hypertension,Penicillin,"Hale Garner, Schultz and"
+Theresa Wright,Maurice Cox,Asthma,Aspirin,Inc Anderson
+Brian Downs,Daniel Smith,Obesity,Penicillin,"Garcia Duncan Peters, and"
+Thomas Lee,Aaron Manning,Diabetes,Ibuprofen,"and English Sanders, Wilcox"
+Curtis Garcia,Donna Jones,Diabetes,Aspirin,Moore-Myers
+Tammy Rivers,Charles Daniel,Cancer,Paracetamol,and Reeves Sons
+Brandon Johnson,Christian Arnold,Asthma,Aspirin,"Walker, and Webb Morton"
+Peter Richardson,Christopher Zuniga,Hypertension,Paracetamol,"Thompson Ritter Austin, and"
+Mrs. Rachel Spencer,Jeffrey Carr,Arthritis,Penicillin,"and Moyer Powell, Padilla"
+Christopher Green,Sean White,Diabetes,Paracetamol,Nelson-Edwards
+William Sims,Kurt Scott,Arthritis,Ibuprofen,LLC English
+Lisa Booker,Robert Johnson,Arthritis,Aspirin,Jones-Lee
+Bonnie Buckley,Zachary Crawford,Asthma,Penicillin,Reed-Medina
+Elizabeth Michael,Jasmine Zimmerman,Asthma,Ibuprofen,Inc Stevens
+Jason Lynch,Christopher Stokes,Obesity,Aspirin,"Rodriguez and Becker Holmes,"
+Amber Ortiz,Charles Moore,Asthma,Ibuprofen,"Jacobs Owens Smith, and"
+Susan Lynch,Brenda White,Diabetes,Lipitor,Davis-Nguyen
+Andrew Walsh,Steven Mills,Arthritis,Paracetamol,"Moore Cooper, Wilson and"
+Mary Bell,Dorothy Simmons,Diabetes,Paracetamol,"and Salazar, Gonzales Jones"
+Monica James,Theresa Martin,Asthma,Paracetamol,Hunt Inc
+Amy Osborne,Steve Hood,Hypertension,Ibuprofen,PLC Cox
+Zachary Rice,Darlene Mills,Diabetes,Paracetamol,"Welch Carr and Kennedy,"
+Anthony Jones,Maria Morales,Cancer,Lipitor,Group Stein
+Christina Burns,John King,Asthma,Ibuprofen,Taylor Inc
+Katherine Bass,Nicole Parker,Arthritis,Penicillin,Kidd Inc
+Claudia Tyler,Adrienne Matthews,Obesity,Lipitor,"Hurst, Thompson and Walls"
+Robert Edwards,Thomas Miranda,Asthma,Ibuprofen,Black-Stevens
+Jill Serrano,Jill Nelson,Diabetes,Ibuprofen,"Collins and Murray Taylor,"
+Troy Gould,Kimberly Malone,Hypertension,Paracetamol,"Wilson Whitney Henderson, and"
+John Hobbs,Destiny Nichols,Cancer,Penicillin,"Vaughan, Adams and Garcia"
+Mark Hunter,Michael Johnson,Asthma,Paracetamol,Vazquez and Sons
+Andrea Torres,Michael Collins,Hypertension,Penicillin,Rivera-Norton
+Christian Washington Md,Angelica Chavez,Asthma,Paracetamol,"Williams, and Howard Meyer"
+Christopher Charles,Cassandra Knight,Arthritis,Lipitor,Robbins-Wiggins
+Sara Hall,Lisa Davenport,Diabetes,Ibuprofen,"and Hess, Nguyen Everett"
+Joshua Patel,Donna Brown,Cancer,Aspirin,Holland-Brown
+Brianna Moreno,Christopher Jones,Asthma,Aspirin,Santiago PLC
+Jenna Turner,Elizabeth Mccoy,Arthritis,Ibuprofen,Hensley-Shepard
+Jeffrey Long,Desiree Thornton,Obesity,Aspirin,Maldonado-White
+Alexander Bishop,Scott York,Diabetes,Ibuprofen,"Mcmahon, and Steele Rose"
+John Young,Lauren Mendoza,Diabetes,Penicillin,"Holmes, Vasquez Sanchez and"
+Heather Sanchez,Stephanie Brown,Cancer,Aspirin,Hall-Johnson
+Amanda White,Janet Pratt,Diabetes,Paracetamol,PLC Jacobs
+Bruce Cox,Sara Page,Obesity,Penicillin,Williams-Hill
+George Wolfe,Thomas Gonzalez,Cancer,Ibuprofen,Petty Ltd
+Shannon Williamson,John Potter,Arthritis,Penicillin,Lopez Inc
+Julie Rivas,Debbie Johnson,Diabetes,Aspirin,PLC Conway
+Roger Escobar,Brett Young,Obesity,Ibuprofen,"Thompson and Miller, Allen"
+Tammy Hall,Isaiah Foster,Asthma,Ibuprofen,Copeland LLC
+Tyler Campbell,Ryan Kim,Obesity,Lipitor,PLC Doyle
+Nicholas Garcia,Joseph Koch,Hypertension,Aspirin,"Day Myers, Mayer and"
+Desiree Frazier,Emma Costa,Asthma,Penicillin,Gutierrez Inc
+Bianca Johnson,Brian Warren,Hypertension,Lipitor,"Thomas and Hogan Robertson,"
+Wendy Cain,Michelle Brown,Arthritis,Penicillin,Johnson-Taylor
+Veronica Meyer,Emily Aguilar,Hypertension,Aspirin,"Warren, Wood Miller and"
+Elizabeth Ramirez,Danielle Villanueva,Cancer,Ibuprofen,Fields Inc
+Brett Stevens,Curtis Gonzalez,Arthritis,Lipitor,Group Sellers
+Mario Haley,Chelsea Alvarado,Diabetes,Lipitor,Ltd Ortega
+Patrick Owens,Nancy Matthews,Hypertension,Lipitor,Williams LLC
+Karen Clark,Joseph Howell,Hypertension,Ibuprofen,"and Greer, Dalton Williams"
+Sarah Jensen,Heidi White,Arthritis,Aspirin,Ltd Thompson
+Christopher Marshall,Latasha Wiggins,Obesity,Aspirin,Bartlett LLC
+Brenda Davis,Eric Hudson,Cancer,Lipitor,Curtis PLC
+Angela Young Md,Gary Ramos,Hypertension,Ibuprofen,"Gomez, Tucker Collins and"
+Brian Smith,Stephanie Melendez,Obesity,Lipitor,Arroyo-Taylor
+Rebecca James,Stacie Andrade,Hypertension,Penicillin,Thompson-Brown
+Jacob Farmer,Michael Thomas,Hypertension,Lipitor,Johnson-Mckinney
+Daniel Flores,Derek Gonzalez,Cancer,Lipitor,Austin-Johnson
+Marcus Gillespie,Mary Henry,Hypertension,Lipitor,Jacobs-Thompson
+Susan Johnson,Michele Roy,Obesity,Ibuprofen,"and Johnson Morales, Smith"
+Marie Turner,Glenn Riggs,Obesity,Aspirin,Alvarado PLC
+Brian Larson,Teresa May MD,Arthritis,Aspirin,Glass Sons and
+Antonio Contreras,Audrey Fleming,Asthma,Ibuprofen,Lin-Alexander
+Melanie Morales,Andrea White,Obesity,Ibuprofen,"Jackson, Phillips and Dennis"
+Amanda Hebert,Corey Gallegos,Asthma,Lipitor,Hodges PLC
+James Ward,Angela Carlson,Asthma,Lipitor,Berg-Hanson
+Nicole Flynn,Gregory James,Cancer,Paracetamol,"Curry Miller and Padilla,"
+Thomas Sutton,Heather Williams,Arthritis,Lipitor,Warner-James
+Brandi Woodard,Blake Thomas,Hypertension,Aspirin,"Cross Johnson, and Foster"
+Jacob Cunningham,David Sanchez,Diabetes,Lipitor,Odom-Oneal
+Mark Armstrong,Clarence Hamilton,Diabetes,Penicillin,PLC Jones
+Mark Rodriguez,Mary Jacobs,Diabetes,Ibuprofen,"Doyle Mccullough Reyes, and"
+Jimmy Jones,John Carrillo,Asthma,Penicillin,Ltd Davis
+David Howard,Laurie Johnson,Obesity,Paracetamol,and Sons Lewis
+Amanda Mills,Tina Francis,Hypertension,Lipitor,Pineda-Daniels
+Daniel Moore,Jamie Green,Cancer,Ibuprofen,Murphy PLC
+Michael Bruce,Willie Bonilla,Cancer,Ibuprofen,"Zamora, Glass Brooks and"
+Timothy Bennett,Steven Moore,Diabetes,Penicillin,"Walker, Wallace and Ware"
+Carlos Burton,Karen White,Obesity,Ibuprofen,Fischer-Powers
+Nicole Nguyen,Andrew Bryant,Hypertension,Lipitor,Jones LLC
+Matthew Harper,John Cox,Cancer,Paracetamol,Mccann-Smith
+Jamie Price,Mitchell Ayala,Asthma,Aspirin,"Williams Thomas and Hernandez,"
+Thomas Hicks,Krista Brown,Diabetes,Lipitor,Burke-Dominguez
+Michelle Hughes,Amy Melendez,Diabetes,Penicillin,"Riley Erickson and Cunningham,"
+Cassie Nelson,Jennifer Watson,Hypertension,Paracetamol,"Williams and Frye Castaneda,"
+Eric Turner,Ryan Collins,Asthma,Ibuprofen,"Merritt, and Young King"
+Sharon Smith,Stephen Woods,Cancer,Ibuprofen,"Duncan Harmon, and Joseph"
+Nancy May,Scott Costa,Hypertension,Ibuprofen,"Johnson Smith Carey, and"
+Elizabeth Flores,Kimberly Johnson,Obesity,Aspirin,"Smith Harris, Smith and"
+David Flores,Christopher Thompson,Cancer,Ibuprofen,Swanson PLC
+Joseph Cohen Jr.,Melissa Miller,Cancer,Lipitor,Perez-Sheppard
+Richard Hammond,Mariah Wall,Asthma,Lipitor,Miller-Cervantes
+Richard Hines,Marvin Wolfe,Hypertension,Paracetamol,"Chaney Gaines White, and"
+Justin Bryant,Sean Soto DVM,Asthma,Aspirin,Baldwin LLC
+Ernest Taylor,Bethany Smith,Cancer,Aspirin,Garrison-Rodriguez
+Tyrone Newman,Shawn Russell,Cancer,Penicillin,Inc Gonzalez
+Nicole Thornton,Molly Russell,Arthritis,Lipitor,"Pollard, Logan Mckee and"
+Dawn Thomas,Allen Estes,Obesity,Ibuprofen,"Thomas, Bauer and Moore"
+Jessica Booth,Anthony Daniels,Hypertension,Aspirin,Stark-Walker
+Douglas Myers,Robert Bailey,Asthma,Aspirin,"and Lee Nguyen Gonzalez,"
+Kendra Walker,Donald Hendrix,Hypertension,Aspirin,Collins-Gilbert
+Chris Nunez,William Roberts,Obesity,Paracetamol,Gonzales Sons and
+Thomas Martin,Teresa Olson,Arthritis,Ibuprofen,Group Jacobs
+Jesse Sutton,Audrey Williams,Cancer,Paracetamol,Williams-Combs
+Linda Kennedy,Gina Coffey,Obesity,Paracetamol,Wright PLC
+Allison Price,Jennifer Johnson,Asthma,Penicillin,Munoz-Swanson
+Fred Snyder,William Waters,Asthma,Paracetamol,Sons and Madden
+Jorge Richard,Julia Dominguez,Hypertension,Paracetamol,Lee-Casey
+Jason Martinez,Veronica Smith,Diabetes,Lipitor,"Juarez Sims, Henry and"
+Samantha Garza,David Kelley,Diabetes,Ibuprofen,Gibson LLC
+Robert Nichols,Aaron Fox,Cancer,Aspirin,"Clark, and Cobb Parsons"
+Brett Marshall,Robert Hartman,Asthma,Penicillin,PLC Garner
+Brianna Lee,Dorothy Gonzalez,Hypertension,Penicillin,Holden Inc
+Chase Good,Jordan Gordon,Asthma,Lipitor,Ltd Houston
+Barbara Young,Robert Carter,Hypertension,Penicillin,Hayes-Walton
+Michael Christian,Marcus Warren,Diabetes,Paracetamol,Ltd Austin
+Sean Gray,William Hunter,Obesity,Ibuprofen,Nguyen-Hart
+Michael Hill,Randy Sexton,Diabetes,Penicillin,"and Johns Spencer, George"
+Briana Bowen,Rita Sandoval,Obesity,Paracetamol,Stevens-Howard
+Jeff Moss,Crystal Smith,Obesity,Paracetamol,"and Cooper Potter, Landry"
+Ronald Park,Sarah Hernandez,Asthma,Penicillin,Brown-Hughes
+Matthew Rivera,Christopher Barnett DDS,Cancer,Lipitor,"Bell Peterson and Hall,"
+Kimberly Singleton,Laura Taylor,Arthritis,Ibuprofen,Flores-Franco
+Sabrina Gonzalez,Patricia Hart,Diabetes,Aspirin,"and Mcknight, Wilson Acevedo"
+Steven Thompson,Michelle Evans,Hypertension,Ibuprofen,"Mendez, Rodriguez and Smith"
+Lauren Cuevas,Paula Gray,Obesity,Paracetamol,Williams Inc
+Michael Gomez,Clayton Thomas,Diabetes,Ibuprofen,Davis-Sanchez
+Denise Ramirez,Amy Garcia,Arthritis,Ibuprofen,Ryan-Moore
+Jordan Brown,Amanda Obrien,Diabetes,Penicillin,Wood Group
+Dr. Dana Leonard,Crystal Faulkner,Obesity,Aspirin,"Carter, Carter Evans and"
+Eric Fernandez,Trevor Farrell,Hypertension,Penicillin,"Richards and Campbell, Lee"
+Scott Andersen,Hannah Barrett,Obesity,Penicillin,"Fuller, and Rios Murphy"
+Dave Kennedy,Caitlin Davis,Diabetes,Lipitor,"and Underwood, Benjamin Baker"
+Robert Burton,Nicole Perez,Obesity,Aspirin,Patterson-Barber
+Stephanie Gibson,David Morales,Asthma,Aspirin,Shepard Ltd
+Bryan Harper,Ann Alvarez,Diabetes,Penicillin,Carter-Bell
+Diana Bennett,Linda Lutz,Arthritis,Penicillin,"Wood and Cummings Blankenship,"
+Maria Carter,Mike Moore,Arthritis,Aspirin,"Bates Gomez, and Larson"
+Charles Johnson,Mrs. Hannah Davis MD,Arthritis,Paracetamol,Baker-Duffy
+Deanna Ferrell,Natalie Bauer,Diabetes,Ibuprofen,"Moore, Jenkins and Bolton"
+Jerry Cruz Dds,Darlene Carr,Hypertension,Paracetamol,Ltd Orozco
+Krista Caldwell,Jerry Ward,Obesity,Paracetamol,Humphrey-Burton
+Kimberly Mejia,Christina Baker,Asthma,Ibuprofen,Floyd Group
+Barbara Clark,Robert May,Obesity,Aspirin,Hayes LLC
+Joel Bowen,Pamela Bauer,Diabetes,Lipitor,Mullins PLC
+Scott Martin,Evelyn Hinton,Cancer,Ibuprofen,Bell-Santana
+Shawn King,Erin Ross,Hypertension,Penicillin,Gardner-Ross
+Edwin Castillo,Shawn Miller,Hypertension,Paracetamol,Inc Herrera
+Robert Robbins,John Woodard,Diabetes,Ibuprofen,"Fuller Perez Scott, and"
+Linda Wilson,Allison Smith,Obesity,Aspirin,"Wright, Holmes and Mason"
+James White,Haley Williams,Cancer,Ibuprofen,"Moyer Mcbride Cole, and"
+Alyssa Gonzalez,Jaclyn Coleman,Obesity,Paracetamol,Pearson PLC
+James Hudson,Cynthia Williams,Diabetes,Penicillin,Wagner-Herrera
+Isabella Daniel,James Webb,Asthma,Paracetamol,Malone Group
+Andrew Johnson,Kyle Brown,Hypertension,Lipitor,Patel-Hanna
+Becky Rivera,Jared Schmitt,Hypertension,Ibuprofen,Smith-Parker
+Donna Bernard,Jasmine Lawrence,Arthritis,Lipitor,Inc Butler
+Vickie Martinez,Sarah Wade,Arthritis,Paracetamol,"Gross and Meyer, Smith"
+Stephanie Nielsen,Angela Price,Diabetes,Penicillin,Gray-Howard
+Taylor Hunter,Kathleen Humphrey,Hypertension,Ibuprofen,Norton-Phillips
+Kelly Zamora,Jacob Marshall,Asthma,Lipitor,Ltd Larson
+Kara Herring,David Harding,Obesity,Ibuprofen,"Brown, and Smith Hebert"
+Richard Hall,Luke Santiago,Obesity,Paracetamol,and Sons Bruce
+Gregory Olson,Elizabeth Boone,Diabetes,Penicillin,"Hull Davidson Garcia, and"
+Maria Kramer,Patricia Poole,Obesity,Lipitor,"Taylor, Ross and Jones"
+Kenneth Clark,Courtney Gonzalez,Hypertension,Aspirin,Ellison and Sons
+Shannon Edwards,Amy Miles,Cancer,Penicillin,"Leonard, Jacobson Schmidt and"
+Ruth Adams,Troy Lyons,Diabetes,Penicillin,Wallace PLC
+Calvin Barry,Tiffany Myers,Hypertension,Penicillin,King-Anderson
+Pamela Lopez,Alex Herrera,Cancer,Ibuprofen,Johnson-Dodson
+Catherine Thompson Dds,Stacey Oconnell,Arthritis,Lipitor,LLC Stone
+Tracy Martin,Shannon Rocha,Diabetes,Aspirin,Evans Inc
+Christina Barber,Nicholas Reed,Obesity,Aspirin,Long-Santos
+Brandy Friedman Md,David Schmidt,Diabetes,Aspirin,Mitchell and Sons
+Adam Smith,Michael Middleton,Hypertension,Lipitor,"Hernandez and Martin Blackwell,"
+Curtis Harding,Tracy Johnson DDS,Obesity,Penicillin,"Perry Bryant, Byrd and"
+Alexander Smith,Todd Cox,Obesity,Penicillin,"and Browning Merritt, Gonzalez"
+Mary Walker,Deanna Gonzalez,Arthritis,Paracetamol,Harper-Hicks
+Jessica Wood,Scott Turner,Arthritis,Paracetamol,Davis Inc
+Paula Vega,Brianna Allen,Cancer,Lipitor,"Curry and Gonzales, Thompson"
+Amanda Johnson,Cindy Herrera,Asthma,Aspirin,Sons and Nguyen
+Matthew Bentley,Christopher Anderson,Obesity,Penicillin,"Hill, Fernandez and Sullivan"
+Cathy Robinson,Andrew Garcia,Obesity,Lipitor,Newton-Jones
+Caitlin Hill,Robert Moore,Arthritis,Lipitor,"Boyd, and Brown Guerrero"
+Pam Powell,Yvonne Decker,Diabetes,Ibuprofen,"Patterson, and Lawrence Leblanc"
+Nancy Davis,Tiffany Moody,Arthritis,Penicillin,Campos-Martinez
+Jonathan Miller,Laura Hunt,Cancer,Ibuprofen,"Heath Moore Jones, and"
+Noah Moon,Brenda Rodriguez,Hypertension,Penicillin,"and Parker Jackson Gilbert,"
+Jose Anderson,Victoria Gallagher,Cancer,Lipitor,Scott-Sexton
+Craig Chavez,Jason Allen,Arthritis,Paracetamol,Massey-Mitchell
+Nicholas Doyle,Richard Nelson,Obesity,Paracetamol,Parker-Hodges
+Amber Schneider,Joseph Good,Cancer,Lipitor,"and Jackson Mccall, Kelly"
+Eric Carrillo,Ian Tyler,Diabetes,Aspirin,Molina Group
+Christopher Bowers,Cameron Johnson,Cancer,Lipitor,Williams Inc
+Krystal Rodriguez,Marie Case,Obesity,Aspirin,Ltd Ward
+Kelsey Bailey,Danielle Henderson,Asthma,Ibuprofen,"Montgomery and Howe Perez,"
+Kelly Barnes,Jeremy Wells,Asthma,Penicillin,"Gutierrez, Martinez and Johnson"
+John Barker,Karen Eaton,Asthma,Ibuprofen,"Robinson, Weaver Taylor and"
+Madison Myers,Charlene Lewis,Cancer,Lipitor,Ltd Phillips
+Lisa Downs Dds,Connor Simmons,Diabetes,Paracetamol,"Padilla Lewis, Anderson and"
+Alexander Hopkins,Jeffrey Salazar,Hypertension,Penicillin,LLC Castillo
+Jesse Ewing,Sara Campbell,Obesity,Lipitor,Smith PLC
+Kayla Thomas,James Booker,Hypertension,Ibuprofen,"Allen, Chaney Rice and"
+Marcus Jones,Elizabeth Herrera,Cancer,Ibuprofen,"Moore, Munoz and Dunlap"
+Jacqueline Swanson,Michael Johnson,Asthma,Ibuprofen,Inc Travis
+Mark Walker,Reginald Jimenez,Obesity,Ibuprofen,"Pearson Escobar, and Harper"
+Mr. Ryan Williams,Lacey Russell,Arthritis,Penicillin,Singh-Hebert
+Nicole Bartlett,Joe Bennett,Diabetes,Lipitor,"Barton, and Howe Rivera"
+Emily Buckley,Julia Melendez,Asthma,Penicillin,Patterson-Sexton
+Michael Harvey,Brett Schaefer,Hypertension,Penicillin,Freeman-Simon
+Becky Robinson,Allison Campbell,Hypertension,Lipitor,"Adkins Knapp and Richards,"
+Timothy Ramirez,Lydia Gallegos,Asthma,Ibuprofen,"and Pineda Allen, Jackson"
+Bonnie Bradford,Paul Woodard,Obesity,Paracetamol,Ltd Martinez
+Tammy Alvarez,Scott Porter,Diabetes,Aspirin,Ltd Brown
+Mariah Barton,Brittany Hunt,Asthma,Penicillin,"Smith and Mann Spencer,"
+Tonya Shah,Corey Webb,Obesity,Ibuprofen,Moss-Mathews
+Kristi Harris,Pamela Anderson,Obesity,Aspirin,Blanchard-Adams
+Mark Todd,Danielle Wagner,Cancer,Penicillin,Sheppard-Rivera
+Ruth Rhodes,Jesse Waters,Diabetes,Ibuprofen,Smith PLC
+Logan Torres,Kaitlyn Bates,Diabetes,Penicillin,Klein Inc
+Rachel Evans,Alexis Brown,Cancer,Ibuprofen,Group Graham
+Rebecca Perez,Eric Mendoza,Obesity,Aspirin,Potter-Fernandez
+Ashley Ryan,Debbie Fernandez,Cancer,Paracetamol,Green PLC
+William Glenn,Paul Key,Cancer,Penicillin,Andrews PLC
+Cynthia Frye,Aaron Walker,Cancer,Aspirin,Sons Lam and
+Stephen Weiss,Joan Washington,Hypertension,Ibuprofen,"and Foster, Allen Valdez"
+Brad Farley,Matthew Kane,Obesity,Ibuprofen,"Welch Bryan Rodriguez, and"
+Felicia Bender,Melissa Holland,Arthritis,Paracetamol,Lewis-James
+Leah Stuart,Sarah Jackson,Obesity,Lipitor,Johnson-Hines
+Heidi Carlson,John Johnson,Cancer,Penicillin,"Delgado, and Mcdonald Berry"
+Douglas Lee,Jeff Lin,Arthritis,Aspirin,"Brooks, Nguyen Sellers and"
+Mary Riley,Anna Buckley,Hypertension,Aspirin,"and Thompson Moore, Torres"
+Amy Reyes,Morgan Rasmussen,Arthritis,Aspirin,Hardy PLC
+Monica Sampson,Robin Brown,Diabetes,Penicillin,"Gregory, Rosario and Bruce"
+Tony Owen,John Sanders,Asthma,Penicillin,Sons Cox and
+Clayton Brown,Christina Perry,Cancer,Aspirin,"Jones, and Moore Carter"
+James Vance,Michael Johnson,Hypertension,Paracetamol,PLC Hodge
+Jason Torres,Amber Valdez,Cancer,Penicillin,Moore-Pierce
+Daniel Green,Richard Davis,Diabetes,Penicillin,PLC Santana
+Natalie Knight,Jeremiah Bender,Diabetes,Ibuprofen,LLC Smith
+Rebecca Hayes,David Navarro,Diabetes,Aspirin,Gomez and Sons
+Tara York,James Payne,Hypertension,Penicillin,Martinez-Farley
+Elizabeth Tyler,Mark Lee,Obesity,Ibuprofen,Macdonald Group
+Ashley Kim,Ashley Thomas,Diabetes,Aspirin,and Ochoa Sons
+Brandi Lopez,Kimberly Decker,Cancer,Aspirin,Johnson-Lopez
+Tamara Castillo,Brian Elliott,Arthritis,Ibuprofen,Howard-Pitts
+Claire Alvarez,George Hartman,Cancer,Aspirin,and Sons Trujillo
+Joseph Wheeler,Jonathan Austin,Asthma,Lipitor,"and Delgado Allen, Wilson"
+Rachel Martinez,Angel Smith,Asthma,Ibuprofen,Moody-Lee
+John Walker,Ashley English,Hypertension,Aspirin,"Gonzalez Burch, and Diaz"
+Amanda Hill,Stephanie Diaz,Obesity,Aspirin,"Valencia Molina, Lopez and"
+Christopher Jimenez,Mary Mathis,Cancer,Penicillin,Cruz-Jimenez
+Nancy Stevens,Yolanda Harris,Diabetes,Lipitor,Banks-Martin
+Christina Medina,Dylan Hernandez,Diabetes,Paracetamol,"Eaton and Ryan, Allen"
+Donald Morrison,Matthew Johnson,Obesity,Aspirin,and Sons Powell
+Brian Butler,Arthur Barker,Asthma,Paracetamol,"Lopez Carter and Campos,"
+Elizabeth Bridges,Laura Russo,Hypertension,Lipitor,James-Mcintyre
+Matthew Barnes,Adam May,Hypertension,Ibuprofen,LLC Cole
+Dr. Lisa Dunn Md,Jeff Perez,Obesity,Ibuprofen,Allen-Ortiz
+Anthony Gonzalez,Alejandra Clark,Hypertension,Paracetamol,Friedman LLC
+Jason Haney,Dawn Harding,Asthma,Lipitor,Rogers-Smith
+Larry Finley,Robert Day,Arthritis,Lipitor,"and Smith Wang, Pham"
+Lindsay Sparks,Alexander Stewart,Hypertension,Lipitor,Terrell-Powell
+Dale Reyes,Christopher Bentley,Diabetes,Ibuprofen,LLC Brown
+Jessica Williams,Juan Barnett,Obesity,Paracetamol,Williams-Maldonado
+Jack Cox,Ryan Johnson,Diabetes,Penicillin,Saunders-Thomas
+Sheena Zuniga,Christopher Fitzpatrick,Hypertension,Paracetamol,Williams Group
+Raymond Chandler,Sarah Hill,Obesity,Ibuprofen,Bradley PLC
+Robin White,John Martin,Obesity,Ibuprofen,"Tucker, and Ramirez Patterson"
+Elizabeth Jones,Jacqueline Phelps,Cancer,Aspirin,"Rodriguez, Taylor Conway and"
+Jacob Carter,Matthew Nguyen,Cancer,Aspirin,"Hudson Harrison, Cooper and"
+Stephen Moore,Melissa Reyes,Diabetes,Aspirin,PLC Adams
+Jacqueline Walker,Marcus Turner,Asthma,Penicillin,"Gill, and Casey Martinez"
+Nicole Smith,Robert Gill,Obesity,Penicillin,Blevins-Douglas
+Brett Davenport,Patrick Parrish,Arthritis,Penicillin,"and Campbell, Wiley Cook"
+Jennifer Benson,Maureen Salazar,Hypertension,Ibuprofen,Tucker-Brown
+Hayley Craig,Jeffrey Taylor,Hypertension,Penicillin,"Hicks Kidd and Allen,"
+Ann Graham,Sherry Torres,Cancer,Lipitor,Williams-Howell
+Jaime Thompson,Sara Crawford,Arthritis,Penicillin,Washington and Sons
+Maria Johnson,Kimberly Tucker,Obesity,Penicillin,Moss Group
+Julie Matthews,Nancy Watson,Obesity,Paracetamol,Richardson-Powell
+Mary Miller,Mary Miller,Hypertension,Paracetamol,"Reese Adams, Lara and"
+Michael Howe,Brenda Torres MD,Hypertension,Lipitor,Inc Huynh
+Dominique Martinez,Daniel Pennington,Arthritis,Lipitor,Lopez Group
+Monique Cantu,James Osborn,Hypertension,Penicillin,Group Turner
+Kelsey Allen,Lauren Brown,Obesity,Lipitor,Graham Group
+Jimmy Johnson,Stacey Armstrong,Obesity,Lipitor,Calhoun LLC
+Jacob Pena,Benjamin Thomas,Cancer,Penicillin,Ward-Jordan
+Dwayne Cole,John Day,Obesity,Penicillin,Roberts-Sexton
+Stephanie Tapia,Steven Ortiz,Cancer,Paracetamol,Group Powell
+Joshua Doyle,Dawn Rodriguez,Obesity,Ibuprofen,Rogers LLC
+Gregory Thomas,Lauren Lowe,Cancer,Ibuprofen,"Davis Maddox Harris, and"
+Jennifer West,Scott Meyer,Asthma,Ibuprofen,Wright-Walker
+Shannon Key,Evan George,Hypertension,Aspirin,"Thomas and Lambert, Young"
+Kathy White,James Bray,Arthritis,Ibuprofen,Smith-Ewing
+Amanda Vaughn,Eric Bowen,Cancer,Ibuprofen,LLC Hayes
+Michele Fernandez,Christine Hines,Cancer,Penicillin,Gonzalez Ltd
+Philip Bailey,Michael Miller,Asthma,Ibuprofen,Travis-Watkins
+Ryan White,Adrian Jacobs PhD,Hypertension,Paracetamol,"and Pittman Thomas, Stein"
+Stephanie Harris,Allison Roberson,Arthritis,Aspirin,"Lopez, Rodriguez Hodges and"
+Erika Irwin,Susan Reid,Cancer,Ibuprofen,Bentley Ltd
+Charles Daniels,Patrick Morales,Obesity,Paracetamol,"Pratt and Keller, Davis"
+Daniel Howard,Michael Burns,Asthma,Aspirin,Buck PLC
+Mark Brown,Mark Lawson,Asthma,Lipitor,"Williams Evans Myers, and"
+Keith White,Cynthia Martin,Diabetes,Ibuprofen,Riddle LLC
+Michelle Johnson,Lynn Miller,Obesity,Ibuprofen,Medina-Hubbard
+Bradley Jordan,Julie Jones,Obesity,Paracetamol,Jenkins PLC
+Holly Stuart,Amanda Fowler,Diabetes,Aspirin,"and Yates Serrano, Henderson"
+Christopher Frye,Russell Serrano,Diabetes,Penicillin,Murillo-Warner
+Jeremiah Riley,Thomas White,Hypertension,Lipitor,"and Fitzgerald, Sharp Cooke"
+Brenda Bell,Dr. Matthew Hamilton MD,Arthritis,Aspirin,Smith-Carter
+Brian Bernard,Daniel Flowers,Obesity,Ibuprofen,Hernandez-Patton
+William Baker,John Gaines,Cancer,Ibuprofen,Evans-Torres
+Kenneth Reyes,Jennifer Gray,Asthma,Aspirin,"and Neal Barrett, Bailey"
+Holly Bishop,Erik Woods,Diabetes,Aspirin,Hernandez-Valdez
+Dennis Gonzalez,Carol Moore,Obesity,Ibuprofen,Smith-Nguyen
+Zachary Lyons,Hailey Jackson,Arthritis,Aspirin,Wilson-Torres
+Carrie Black,Joseph Miranda,Hypertension,Ibuprofen,"Burton and Curry, Parker"
+Miguel Nguyen,Jason Wallace,Cancer,Ibuprofen,"Patterson Mann, Williamson and"
+Alexis Hicks,James Thomas,Diabetes,Ibuprofen,"Velasquez, Bullock and Maldonado"
+Jillian Velasquez,Amanda Allen,Diabetes,Aspirin,Spence Sons and
+Laura Wu,Frank Stephens,Cancer,Penicillin,Sparks-Smith
+Terri Murphy,David Walker,Diabetes,Penicillin,"Brown, and Stone Perez"
+Vanessa King,Karen Rodriguez MD,Asthma,Ibuprofen,Inc Banks
+Adam Martinez,Christine Singleton,Diabetes,Ibuprofen,PLC Reese
+Claire Ramirez,Sarah Lawrence,Hypertension,Lipitor,"Porter, Woods Miller and"
+Scott Walker,Allison Ruiz,Asthma,Aspirin,Wagner-Sanchez
+Victoria Crawford,Phillip Green,Obesity,Paracetamol,"Wilson and Hood, Robinson"
+Jeffery Nelson,Richard Hernandez,Hypertension,Lipitor,"Smith Holland, and Hogan"
+Brian Long,Ryan Lewis,Diabetes,Ibuprofen,Simpson-Jennings
+Kathryn Fernandez,Kyle Johnson,Diabetes,Ibuprofen,Owens-Cole
+Michelle Wilson,Carly Johnston,Diabetes,Lipitor,"and Weaver, Lee Baxter"
+Michelle Smith,Kevin Harris,Hypertension,Ibuprofen,Walker Ltd
+Cynthia Caldwell,John Moody,Diabetes,Lipitor,"Edwards, Daniels Garcia and"
+Elizabeth Phelps,Peggy Underwood,Hypertension,Lipitor,Hernandez-Wood
+Connie Gomez,Elizabeth Fields,Cancer,Lipitor,Inc Santos
+Kristy Walker,Michael Stone,Cancer,Ibuprofen,Group Greer
+Karen Mooney,Daniel Ball,Diabetes,Penicillin,Gonzales-Snyder
+Patricia Chambers,Vanessa Whitaker,Diabetes,Ibuprofen,Beard-Michael
+John Flores,Emily Roberson,Obesity,Paracetamol,"Leon Mcfarland Wise, and"
+Mr. Nicholas Hall,Angel Hawkins,Obesity,Ibuprofen,and Sons Bryan
+Shirley Smith,Megan Wright,Obesity,Lipitor,"Coleman, and Berry Davis"
+Kimberly Armstrong,Kimberly Hawkins,Cancer,Penicillin,Reed-Gibson
+Heather Hopkins,Jamie Ortega,Arthritis,Lipitor,Rios Group
+Brenda Burgess,Diane Hood,Asthma,Lipitor,Inc Duran
+Robert Bell,Denise Hernandez,Arthritis,Aspirin,"and Patel Owens Dominguez,"
+Robert Jones,Wendy Castillo,Asthma,Paracetamol,PLC Lewis
+Vanessa Mcintosh,Kathryn Guerra,Diabetes,Aspirin,"Berry and Clark Shaw,"
+Jennifer Dixon,Melissa Weeks,Cancer,Paracetamol,"Allen Parker and Estes,"
+Valerie Rodriguez,Scott Reed,Hypertension,Ibuprofen,"Hogan Malone, and Gray"
+Tara West,Alejandro Cole,Obesity,Penicillin,Ltd Martin
+Kenneth Williams,John White,Cancer,Aspirin,"Contreras Myers and Young,"
+George Ross,Noah Moore,Diabetes,Penicillin,Inc Valenzuela
+Lucas Wilson,Frank Quinn DVM,Asthma,Paracetamol,Knox-Esparza
+Ronald Brown,Thomas Jones,Arthritis,Paracetamol,"Rodriguez and Sanders, Luna"
+Charles Barajas,John Long,Cancer,Penicillin,"Miller Bailey, and Anderson"
+Lauren Sanford,Stephanie Farmer,Cancer,Penicillin,Hancock-Galloway
+Peter Conway,Tammy Cisneros,Diabetes,Ibuprofen,Vasquez-Carr
+Mary Baldwin,Benjamin Taylor,Arthritis,Lipitor,Gomez-Spencer
+William Mathis,Nichole Rodriguez,Arthritis,Lipitor,Sweeney LLC
+Michelle Whitaker,Vincent Young,Asthma,Aspirin,and Patton Sons
+Gary Reeves,Roger Serrano,Diabetes,Paracetamol,Lewis-Henry
+Kristie Vasquez,Jared Prince,Arthritis,Lipitor,"Rowe, Stone and Patterson"
+Anthony Lopez,Emily Joseph,Cancer,Ibuprofen,Bell-Morgan
+Rachel Bowman,Toni Parker,Hypertension,Lipitor,Alvarado-Martin
+Mrs. Jillian Sosa,Jenna Larson,Diabetes,Penicillin,Thomas-Adams
+Amber Lawson,Joseph Dixon,Cancer,Penicillin,Cortez-Cannon
+Jill Cohen,Adam Richard,Diabetes,Aspirin,Burch-Hernandez
+Molly Alvarado,Julie Taylor,Obesity,Penicillin,Cochran-Hart
+Barbara May,Derrick Martinez,Hypertension,Aspirin,Wood Ltd
+Angela Brown,Maurice Dunn,Hypertension,Aspirin,White Group
+Darrell Johnston,Jesus Mitchell,Hypertension,Penicillin,Jackson-Brennan
+Gary Santos,Gerald Chase,Obesity,Lipitor,Smith Sons and
+Tracy Garcia,Dr. Joseph Mitchell,Cancer,Lipitor,"and Walsh, Floyd Owens"
+Kristen Rowland,Denise Chase,Hypertension,Penicillin,Howard-Bates
+Joseph Figueroa,Edward Burgess,Hypertension,Aspirin,"and Perez, Graham Herrera"
+Taylor Jones,Pamela Clayton,Arthritis,Aspirin,Medina-Palmer
+David Lewis,Heather Miller,Diabetes,Ibuprofen,and Nelson Sons
+Ryan Howard,Sharon Perez,Diabetes,Lipitor,"Patterson Jones and Hernandez,"
+Laura Harper,Gail Roman,Diabetes,Penicillin,Jackson Inc
+Patrick Rodriguez,Mary King,Diabetes,Penicillin,"Woodard, and Martin Baker"
+Lisa Fisher,Jennifer Jones,Diabetes,Aspirin,"Ramsey and Malone Sanford,"
+Brittney Chen,Christian Dawson,Hypertension,Paracetamol,"and Perry Leach, Alexander"
+David Graham,Sarah Lopez,Cancer,Paracetamol,Sons and Bowman
+Desiree Roy,Angela Ramirez,Hypertension,Penicillin,"and Garza Martin Holloway,"
+Valerie Chavez,James Barnes,Arthritis,Paracetamol,"Holland Brown, and York"
+Toni Collins,Melvin Montgomery,Asthma,Penicillin,Ltd Weber
+Elizabeth Baker,Caroline Castillo,Arthritis,Lipitor,"Tran Wright and Vasquez,"
+Morgan Pace,Cheryl Lane,Asthma,Aspirin,Atkinson Ltd
+Anthony Erickson,Brittany Harding,Asthma,Penicillin,and Brown Sons
+Priscilla Sanders,Daniel Contreras,Obesity,Paracetamol,Simpson Inc
+Cynthia Hill,Jacob Garcia,Hypertension,Aspirin,Edwards PLC
+Timothy Elliott,Tara Ruiz,Obesity,Ibuprofen,Ltd Curry
+Taylor Mason,Mitchell Franklin,Obesity,Aspirin,Group Young
+Morgan Perry Dds,Alexander Moore,Diabetes,Aspirin,"Edwards, Fry and Lopez"
+Roger Bartlett,Bailey Foster,Arthritis,Lipitor,Ferguson-Cole
+Thomas Crawford,Anthony Allen,Diabetes,Lipitor,"Santos and Blake Wood,"
+Courtney Schroeder,Amy Roberts,Asthma,Ibuprofen,Inc Robinson
+Amber Nguyen,Susan Brown,Obesity,Penicillin,Matthews-Mcbride
+Tiffany Cooper,Alexandra Pena,Cancer,Aspirin,Wright Sons and
+Scott Perry,Andrew Alvarez,Asthma,Lipitor,Owens-Douglas
+Caitlin Lam,Eric Shields,Cancer,Aspirin,Sons Miller and
+Joseph Dudley,Melanie Watson,Asthma,Lipitor,Frost Inc
+Shane Gardner,Russell Cox,Asthma,Aspirin,"and Baird, Simmons Peters"
+Thomas Cruz,Brenda Chavez,Diabetes,Aspirin,Higgins Inc
+Mario Dalton,Ryan Hamilton,Diabetes,Ibuprofen,"Gates Underwood, Coleman and"
+John Powell,Justin Harris,Asthma,Lipitor,"Hobbs Schneider, and Walter"
+Andrew Martinez,Michelle Mcdonald,Obesity,Penicillin,Miller-Wilson
+Mary Collins,Pamela Williams,Asthma,Lipitor,Brown LLC
+Michael Obrien,Angela Sweeney,Arthritis,Paracetamol,Benitez-Nguyen
+Valerie Nelson,Cheryl Hamilton,Hypertension,Aspirin,Terry Ltd
+Gary Jensen,Wendy Montgomery,Hypertension,Aspirin,"Foley Nelson, and Thompson"
+Lisa Valencia,Maurice Ramos,Hypertension,Penicillin,Long-Golden
+Jeffrey Livingston Dds,Kenneth Robbins,Arthritis,Penicillin,Inc Edwards
+Sara Bush,Curtis Evans,Cancer,Ibuprofen,Johnson-Stewart
+Autumn Sutton,Aaron Pace,Diabetes,Ibuprofen,Clark-Rivers
+William Blair,Jonathan White,Cancer,Aspirin,Mccoy-Luna
+Heather Wang,Joe Jacobs DVM,Hypertension,Ibuprofen,"and Mahoney Johnson Vasquez,"
+Alex White,Laura Sweeney,Cancer,Paracetamol,Smith Inc
+Amy Oconnor,Anita Johnson,Cancer,Penicillin,"and Swanson Proctor Daniels,"
+Justin Eaton,Collin Gaines,Obesity,Ibuprofen,Inc Jones
+Joseph Berger,Amy Pearson,Cancer,Lipitor,Austin-Galvan
+Brent Mccarthy,Mary Moore,Obesity,Lipitor,"and Meadows, Thomas Vaughn"
+Cody Cummings,Audrey Luna,Obesity,Ibuprofen,"Brown, and Perez Osborne"
+Lisa Gilmore,Justin Perry,Arthritis,Paracetamol,Larson-Townsend
+Charles Mcdowell,Katie Silva,Cancer,Aspirin,"and Green Garza Ware,"
+Sonya Erickson,Paige Carpenter,Cancer,Lipitor,May-Rodriguez
+Emily Owens,Lisa Burns,Diabetes,Lipitor,Hahn-Rollins
+Ann Miller,Cody Galvan,Obesity,Aspirin,Anderson-Oconnor
+Zachary Bautista,Scott Bell,Cancer,Aspirin,Rodgers Inc
+Tara Adams,Karen Lee,Obesity,Paracetamol,Terrell-Stewart
+Melissa Morgan,Julia Reyes,Diabetes,Paracetamol,"Thompson, and Ruiz Vance"
+Joshua Smith,Maria Parker,Hypertension,Paracetamol,Clark-Leon
+Nicole Hicks,Yvonne Santana,Obesity,Penicillin,Burton-Hernandez
+Brenda Collins,Ashley Johnson,Obesity,Paracetamol,Wilson Ltd
+Michael Riley,Timothy Gomez,Hypertension,Lipitor,and Brewer Sons
+Dr. Robert Todd,James Bryan,Obesity,Ibuprofen,Randall-Castaneda
+Eric Blackburn,Amy Mcdonald,Arthritis,Lipitor,Inc Griffin
+Thomas Gonzales,Destiny Hooper,Diabetes,Penicillin,"Lopez Stanley, and Perez"
+Julie Brown,Ricky Mccormick,Asthma,Ibuprofen,Fry LLC
+Joshua Lawson,William Gonzalez,Diabetes,Penicillin,Henry Inc
+Brenda Baird,Brandon Mejia,Obesity,Aspirin,Williams Ltd
+Willie Cox,Meagan Jordan,Cancer,Paracetamol,"Wilson and Kelley, Fitzgerald"
+Amanda Gonzalez,Melinda Smith,Arthritis,Lipitor,Vang Group
+Megan Rocha,Meghan Hardin,Arthritis,Aspirin,Group Alexander
+Paige Mueller,Alyssa Rivas,Obesity,Penicillin,Wilson-Smith
+Kari Ibarra,Jennifer Miller,Cancer,Ibuprofen,Inc Cannon
+Susan Rodriguez,Steven Parrish,Arthritis,Penicillin,"Collins Cooper Thompson, and"
+Monica Thompson Md,Kaylee Smith,Obesity,Aspirin,"Williams, Rice Barnes and"
+David Johnson,David Hubbard,Asthma,Ibuprofen,Lee-Brennan
+Robert Grant,Sandra Gonzales,Diabetes,Ibuprofen,Greene-Barnett
+Michael Garcia,Lisa Williams,Arthritis,Penicillin,Howard-Meyer
+Andrew Sanchez,Patrick Robbins,Asthma,Ibuprofen,Brown LLC
+Hannah Everett,Brandon Mercado,Asthma,Aspirin,"Jones Lopez, and Ali"
+Jonathan Mcgrath,Roberta Garcia,Cancer,Penicillin,PLC Williams
+Michael Wilkins,Kevin Oliver,Obesity,Paracetamol,PLC Smith
+Robin Castillo,Sydney Mcbride,Hypertension,Lipitor,Stone Ltd
+James Bradley,Maria Brown PhD,Asthma,Penicillin,"Washington, Moran and Le"
+Kenneth Perkins,Darren Walters,Cancer,Penicillin,Fernandez-Mahoney
+Jonathan Cook,Shane Gates,Cancer,Penicillin,LLC Cooley
+Courtney Anderson,Alex Thomas,Cancer,Penicillin,Gonzalez Sons and
+Rachel Ware,Heather Taylor,Hypertension,Ibuprofen,Group Beck
+Scott Anderson,Samantha Banks,Asthma,Penicillin,Lowe-Bruce
+Chloe Cruz,Patricia Wagner,Obesity,Lipitor,Best-Ramsey
+Matthew Bryant,Kathleen Lawrence,Obesity,Penicillin,"Smith, Miller Rosario and"
+Angelica Martinez,Savannah Herrera,Obesity,Paracetamol,PLC Mendez
+Steven Duncan,Erin Martinez,Diabetes,Aspirin,LLC Lee
+Brittany Sanchez,Seth Kennedy,Cancer,Lipitor,Bowman-Young
+Angela Walker,Brandon Dixon,Obesity,Penicillin,and Sons Holmes
+Erin Mason,Elizabeth Nixon,Obesity,Lipitor,Shaw Inc
+Howard Morris,Jordan Bruce,Cancer,Aspirin,Floyd LLC
+Dr. Kevin Hayden,Amber Bailey,Diabetes,Paracetamol,Morris-Rowe
+Kenneth Davidson,Sheena Weaver,Cancer,Ibuprofen,LLC Wood
+Dennis Russell,Preston Lewis,Hypertension,Lipitor,Sims-Mullins
+Evan Kim,Brady Johnson,Arthritis,Penicillin,Barker and Sons
+Dr. Sierra Mueller,Kyle Lucas,Asthma,Ibuprofen,Ltd Wright
+Justin Edwards,Blake Pope,Arthritis,Ibuprofen,"Jimenez, Green and Wright"
+Timothy George,Ashley Walters,Diabetes,Paracetamol,"Rice, Thompson Williams and"
+Michelle Robinson Md,Brian Taylor,Arthritis,Penicillin,Barnes-Norris
+Stephanie Cruz,Christopher Green,Diabetes,Aspirin,Lee-Edwards
+Kristen Duarte,Tonya Cobb,Cancer,Paracetamol,Medina-Campos
+Jeffrey Heath,Scott Smith,Arthritis,Aspirin,Smith Group
+Robert Hubbard,Heather Church,Asthma,Ibuprofen,Davis-Freeman
+Scott Bowen,Jacqueline Bowman,Cancer,Ibuprofen,Price-Keller
+William Richards,Mrs. Victoria Sanchez MD,Obesity,Aspirin,LLC Wilson
+Chelsea Cook,Linda Peterson,Hypertension,Ibuprofen,Fox-Campos
+Charlotte Thomas,Julie Nelson,Diabetes,Lipitor,Jones-George
+Patricia Hernandez,Christopher Page,Diabetes,Penicillin,Hall Group
+Brianna Bell,Kevin Paul,Obesity,Paracetamol,"and Merritt Turner, Sanders"
+Alicia Fields,Madeline Lewis,Diabetes,Paracetamol,Bennett Group
+Hannah Sanchez,Cassandra Cain,Arthritis,Paracetamol,Johnson LLC
+Keith Allen,David Simmons,Arthritis,Paracetamol,"Hebert and Morgan, Wilson"
+Zachary Hernandez,Dennis Gutierrez,Arthritis,Aspirin,"Wright Miller Gonzalez, and"
+Anna Miller,Jack Reilly,Hypertension,Penicillin,"and Mayo Chen, Murray"
+Hector Clay,Curtis Li,Arthritis,Ibuprofen,Bailey-Buckley
+Brian Reyes,Joseph Young,Obesity,Ibuprofen,Peters-Bentley
+Shane Medina,Danielle Robinson,Diabetes,Penicillin,"Martinez, Sullivan Bowers and"
+Monica Lucero,Melvin Harmon,Cancer,Lipitor,Wright-Schmidt
+Rebecca Flores,Tracy Bowman,Arthritis,Paracetamol,Sons and Patton
+Alyssa Little,Leah Guerra,Arthritis,Paracetamol,Jennings Group
+Nicole Santiago,Adam Perez,Cancer,Aspirin,"Sandoval Cook and Gutierrez,"
+Heather Scott,Justin Cameron,Obesity,Penicillin,Mason-Moore
+Rhonda Wilson,Eric Simpson,Cancer,Aspirin,"Parker, and Parker Macdonald"
+Nicole Herman,Joseph Price,Arthritis,Aspirin,Inc Jensen
+Kimberly Lee,Debra Johnson,Asthma,Penicillin,Ltd Potts
+Cody Gardner,Catherine Joseph,Cancer,Penicillin,Smith-Miller
+Jason Melendez,Amanda Miller,Cancer,Ibuprofen,"and Allen Anderson, Rivera"
+Thomas Lopez,Dr. Rachel Hudson,Hypertension,Penicillin,"Logan Smith Vaughn, and"
+Brittany Gutierrez,Christopher Scott,Arthritis,Aspirin,"Harris Jackson Pearson, and"
+Johnathan Dixon,Pamela Harris,Obesity,Penicillin,Bell-Hernandez
+Cody Moore,Krystal Bowman,Arthritis,Aspirin,Chavez-Chapman
+Paul Bradford,Michelle Simmons,Hypertension,Lipitor,Stephens Group
+Juan Burgess,Jeffrey Haley,Obesity,Aspirin,Bush-Rodgers
+Matthew Shaw,Joshua Jones,Diabetes,Paracetamol,"Wade Savage, Harrington and"
+Patrick Murphy,Daryl Oconnor,Cancer,Penicillin,"Butler Mathis and Mooney,"
+Kevin Gallagher,Tyler Pearson,Obesity,Lipitor,Burns-Smith
+Jordan Jackson,Katrina Martin,Cancer,Penicillin,"Cook and Craig, Herrera"
+Catherine Wall,Sharon Morris,Arthritis,Lipitor,Serrano Group
+Luis Patterson,Erika Gordon,Cancer,Penicillin,"and Gentry Rich, King"
+Julie Tanner,Mike Riley,Hypertension,Lipitor,Davila-Harding
+Leroy Price,David Sims,Arthritis,Paracetamol,"Ortega, Taylor Berry and"
+Rebecca Castaneda,Joseph Smith,Diabetes,Aspirin,"Cabrera Barnes, Harper and"
+Andrea Kirk Dds,Sandra Key,Arthritis,Aspirin,Williams Inc
+Holly Nelson,Jessica Perez,Hypertension,Paracetamol,Chen-Garrett
+Kathy Waller,Maria Jones,Obesity,Ibuprofen,Johnson PLC
+Matthew Glover,Brianna Mccoy,Cancer,Aspirin,Mitchell-Ryan
+Tina Frey,Robert Hampton,Hypertension,Lipitor,Ltd Todd
+Mark Cox,Michelle James,Diabetes,Ibuprofen,Johnson-Nichols
+Bryan Jones,Brandon Sutton,Diabetes,Aspirin,Dean-Smith
+Kelly Williams,Wendy Oliver,Obesity,Paracetamol,"Shaw Taylor, and Khan"
+Aaron Wilson,Victor Dixon,Obesity,Aspirin,Mercado-Brown
+Samuel Phillips,Rebecca Herring,Hypertension,Lipitor,Powell-Nelson
+Steven Sullivan,Bill Clark,Diabetes,Lipitor,Nelson-Wilson
+Kelly Harris,Anthony Smith,Hypertension,Ibuprofen,Cooley-Howell
+Eugene Hoffman,Justin Tapia,Cancer,Aspirin,PLC Wright
+Chelsea Mendoza,Robyn Howard,Cancer,Aspirin,Willis PLC
+Phillip Wallace,William Taylor,Hypertension,Ibuprofen,"and Edwards Brown Murphy,"
+Brett Griffin,David Perry,Asthma,Paracetamol,Nelson-Drake
+Antonio Barnes,Sarah Becker,Obesity,Aspirin,Stewart-Daniel
+James Benson,Jennifer Webster,Arthritis,Paracetamol,Ltd Simmons
+Frederick Mcfarland,Carrie Li,Asthma,Paracetamol,"and Simmons Lopez Chavez,"
+Justin Long,Jay Moore,Asthma,Ibuprofen,Ltd Carson
+Abigail Tucker,Christopher Avery,Cancer,Paracetamol,Perry and Sons
+Amy Powers,Dr. Michael Patrick,Hypertension,Ibuprofen,Kelly LLC
+Michael Gonzalez,Gregory Jenkins,Cancer,Ibuprofen,Morris-Fox
+Michael Williams,Kenneth Vargas,Cancer,Lipitor,"Richmond, and Williams Cabrera"
+Donna Melendez,Michelle Anderson,Hypertension,Aspirin,Ltd George
+Ann Fitzgerald,Amber Schaefer,Cancer,Penicillin,"Ramirez, Owens and Evans"

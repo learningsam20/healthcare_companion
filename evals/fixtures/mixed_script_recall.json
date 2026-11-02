@@ -1,0 +1,55 @@
+{
+  "dataset": "mixed_script_recall",
+  "schema_version": 2,
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "ms-01",
+      "language": "en-IN",
+      "query": "metformin dose for type 2 diabetes",
+      "relevant_terms": ["metformin", "diabetes"],
+      "relevant_chunk_ids": ["chunk-metformin-en"],
+      "retrieved_chunk_ids": ["chunk-metformin-en", "chunk-other"]
+    },
+    {
+      "id": "ms-02",
+      "language": "hi-IN",
+      "query": "मधुमेह की दवा metformin",
+      "relevant_terms": ["metformin", "मधुमेह"],
+      "relevant_chunk_ids": ["chunk-metformin-en", "chunk-metformin-hi"],
+      "retrieved_chunk_ids": ["chunk-metformin-hi", "chunk-metformin-en"]
+    },
+    {
+      "id": "ms-03",
+      "language": "en-IN",
+      "query": "paracetamol for fever",
+      "relevant_terms": ["paracetamol", "fever"],
+      "relevant_chunk_ids": ["chunk-pcm"],
+      "retrieved_chunk_ids": ["chunk-pcm", "chunk-ibuprofen"]
+    },
+    {
+      "id": "ms-04",
+      "language": "mr-IN",
+      "query": "तापासाठी पॅरासिटामॉल",
+      "relevant_terms": ["पॅरासिटामॉल", "ताप"],
+      "relevant_chunk_ids": ["chunk-pcm"],
+      "retrieved_chunk_ids": ["chunk-pcm"]
+    },
+    {
+      "id": "ms-05",
+      "language": "en-IN",
+      "query": "cardiology clinic hours",
+      "relevant_terms": ["cardiology", "clinic"],
+      "relevant_chunk_ids": ["chunk-cardio-hours"],
+      "retrieved_chunk_ids": ["chunk-cardio-hours", "chunk-ortho"]
+    },
+    {
+      "id": "ms-06",
+      "language": "hi-IN",
+      "query": "हृदय रोग विशेषज्ञ समय",
+      "relevant_terms": ["हृदय", "समय"],
+      "relevant_chunk_ids": ["chunk-cardio-hours"],
+      "retrieved_chunk_ids": ["chunk-cardio-hours"]
+    }
+  ]
+}

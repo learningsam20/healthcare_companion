@@ -1,0 +1,30 @@
+# External MCP product contract (G-14 / ADR-19 / roadmap X-03).
+#
+# Read by services/mcp-external. This file defines versioning and quota limits only;
+# it does NOT enable anything. The kill switch is EXTERNAL_MCP_ENABLED on the
+# mcp-external container (default false) plus the startup feature flag `external_mcp`
+# (FEATURE_EXTERNAL_MCP) reported by /api/v1/meta. Keep both aligned.
+#
+# Honest status: there is no named third-party consumer, no per-consumer credential
+# issuance and no certification. `consumers` is intentionally empty; limits below are
+# defaults applied per signed-context actor. Quotas are enforced in-process per replica
+# (sliding window), so N replicas allow up to N x the configured rate.
+version: 1
+api_version: v1
+supported_versions: [v1]
+quota:
+  default:
+    requests_per_minute: 30
+  # Per-consumer overrides keyed by the signed context actor_subject, e.g.
+  #   partner:acme: {requests_per_minute: 10}
+  consumers: {}
+tools:
+  ping:
+    version: 1.0.0
+    read_only: true
+  search_doctors:
+    version: 1.0.0
+    read_only: true
+  get_stock_status:
+    version: 1.0.0
+    read_only: true

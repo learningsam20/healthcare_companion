@@ -1,0 +1,6 @@
+patients|9
+appointments|5040
+documents|12
+document_chunks|10
+stock_items|15010
+docs_indexed|10

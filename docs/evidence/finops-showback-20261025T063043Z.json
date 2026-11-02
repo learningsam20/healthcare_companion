@@ -1,0 +1,40 @@
+{
+  "as_of": "2026-10-25T06:30:43.450745+00:00",
+  "by_purpose": [
+    {
+      "calls": 2,
+      "completion_tokens": 84,
+      "cost_usd": 0.0,
+      "model_alias": "local_small",
+      "prompt_tokens": 370,
+      "purpose": "conversation"
+    },
+    {
+      "calls": 2,
+      "completion_tokens": 160,
+      "cost_usd": 0.0,
+      "model_alias": "local_main",
+      "prompt_tokens": 756,
+      "purpose": "rag_answer"
+    }
+  ],
+  "finops_model_version": "2026-10-25.1",
+  "fx_usd_inr": 88,
+  "monthly_run_rate_usd": 0.0,
+  "observed": {
+    "calls": 4,
+    "completion_tokens": 244,
+    "cost_usd": 0.0,
+    "prompt_tokens": 1126
+  },
+  "period_end": "2026-10-25T06:30:43.450745+00:00",
+  "period_start": "2026-10-24T06:30:43.450745+00:00",
+  "price_basis_date": "2026-10-25",
+  "price_version": 1,
+  "reconciliation": {
+    "note": "LiteLLM spend reconciliation is not wired in this build; observed cost comes from app usage records.",
+    "status": "unavailable"
+  },
+  "status": "observed",
+  "traffic_class": "real"
+}

@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-10-31T17:45:09.113009+00:00",
+  "gap": "G-30",
+  "status": "passed",
+  "archive": "/private/tmp/sahyog-bak-20261031T174428Z.tar.gz.age",
+  "bytes": 1214680,
+  "sha256": "eaa0546c676e65c8a22d9da206177b602599be29431d85cfcda023251d9b3a97",
+  "encrypt_tool": "age",
+  "decrypt_verified": true,
+  "skipped": [
+    "objects",
+    "keycloak"
+  ],
+  "note": "Encrypted DB+config backup with age; identity kept outside repo. Not a full DR restore drill (G-11)."
+}

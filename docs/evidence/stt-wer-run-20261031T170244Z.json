@@ -1,0 +1,17 @@
+{
+  "synthetic": false,
+  "source": "scripts/stt_wer_live.sh",
+  "mcp_status": "ok",
+  "engine": "faster-whisper",
+  "adapter": "local",
+  "audio_url": "http://wer-audio-fixture/2830-3980-0043.wav",
+  "cases": [
+    {
+      "id": "librispeech-2830-3980-0043",
+      "reference": "experience proves this",
+      "hypothesis": "Experience proves this.",
+      "modality": "stt",
+      "language": "en"
+    }
+  ]
+}

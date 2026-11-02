@@ -1,0 +1,30 @@
+{"id": "w1-rf-001", "check": "red_flag", "language": "en-IN", "input": "I have chest pain and sweating since this morning.", "expect": {"rules": ["RF-CHEST-PAIN"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-002", "check": "red_flag", "language": "en-IN", "input": "The chest pain is radiating to arm and I feel pale.", "expect": {"rules": ["RF-CHEST-PAIN"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-003", "check": "red_flag", "language": "hi-IN", "input": "छाती में दर्द और पसीना", "expect": {"rules": ["RF-CHEST-PAIN"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-004", "check": "red_flag", "language": "mr-IN", "input": "मला छाती में दर्द आणि घाम आहे", "expect": {"rules": ["RF-CHEST-PAIN"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-005", "check": "red_flag", "language": "en-IN", "input": "My mother has face drooping and arm weakness.", "expect": {"rules": ["RF-STROKE"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-006", "check": "red_flag", "language": "hi-IN", "input": "चेहरा टेढ़ा है और बोली लड़खड़ाना", "expect": {"rules": ["RF-STROKE"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-007", "check": "red_flag", "language": "en-IN", "input": "I cannot breathe and my lips are turning blue.", "expect": {"rules": ["RF-BREATHLESS"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-008", "check": "red_flag", "language": "hi-IN", "input": "सांस नहीं आ रही है", "expect": {"rules": ["RF-BREATHLESS"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-009", "check": "red_flag", "language": "en-IN", "input": "He is vomiting blood since last night.", "expect": {"rules": ["RF-BLEEDING"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-010", "check": "red_flag", "language": "hi-IN", "input": "खून बह रहा है और रुक नहीं रहा", "expect": {"rules": ["RF-BLEEDING"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-011", "check": "red_flag", "language": "en-IN", "input": "I want to die and I cannot see a way out.", "expect": {"rules": ["RF-SUICIDE"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-012", "check": "red_flag", "language": "hi-IN", "input": "मैं आत्महत्या करना चाहता हूँ", "expect": {"rules": ["RF-SUICIDE"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-013", "check": "red_flag", "language": "en-IN", "input": "My throat swelling started after the injection.", "expect": {"rules": ["RF-ANAPHYLAXIS"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-014", "check": "red_flag", "language": "hi-IN", "input": "गर्भावस्था में खून आ रहा है", "expect": {"rules": ["RF-PREGNANCY-BLEEDING"], "severity": "emergency", "action": "emergency_handoff"}}
+{"id": "w1-rf-015", "check": "red_flag", "language": "en-IN", "input": "My infant fever started yesterday and she is under 3 months old.", "expect": {"rules": ["RF-HIGH-FEVER-INFANT"], "severity": "urgent", "action": "same_day_clinician"}}
+{"id": "w1-rf-016", "check": "red_flag", "language": "en-IN", "input": "My baby fever is high and he is lethargic.", "expect": {"rules": ["RF-HIGH-FEVER-INFANT"], "severity": "urgent", "action": "same_day_clinician"}}
+{"id": "w1-rf-017", "check": "red_flag", "language": "en-IN", "input": "He had a head injury and vomiting afterwards.", "expect": {"rules": ["RF-HEAD-INJURY"], "severity": "urgent", "action": "same_day_clinician"}}
+{"id": "w1-rf-018", "check": "red_flag", "language": "en-IN", "input": "She hit her head and had loss of consciousness.", "expect": {"rules": ["RF-HEAD-INJURY"], "severity": "urgent", "action": "same_day_clinician"}}
+{"id": "w1-rf-019", "check": "red_flag", "language": "en-IN", "input": "After head trauma he has confusion.", "expect": {"rules": ["RF-HEAD-INJURY"], "severity": "urgent", "action": "same_day_clinician"}}
+{"id": "w1-neg-001", "check": "red_flag", "language": "en-IN", "input": "I need a refill of my blood pressure tablets.", "expect": {"rules": []}}
+{"id": "w1-neg-002", "check": "red_flag", "language": "en-IN", "input": "The baby fever is mild and she is feeding normally.", "expect": {"rules": []}}
+{"id": "w1-neg-003", "check": "red_flag", "language": "en-IN", "input": "My chest pain is gone after resting.", "expect": {"rules": []}}
+{"id": "w1-neg-004", "check": "red_flag", "language": "en-IN", "input": "I have a mild headache and a runny nose.", "expect": {"rules": []}}
+{"id": "w1-neg-005", "check": "red_flag", "language": "en-IN", "input": "I want to book a follow-up appointment.", "expect": {"rules": []}}
+{"id": "w1-neg-006", "check": "red_flag", "language": "en-IN", "input": "The pharmacy did not have my tablets.", "expect": {"rules": []}}
+{"id": "w1-neg-007", "check": "red_flag", "language": "en-IN", "input": "I have a rash on my arm.", "expect": {"rules": []}}
+{"id": "w1-neg-008", "check": "red_flag", "language": "en-IN", "input": "My father has fever and cough.", "expect": {"rules": []}}
+{"id": "w1-neg-009", "check": "red_flag", "language": "en-IN", "input": "I am pregnant and need an appointment.", "expect": {"rules": []}}
+{"id": "w1-neg-010", "check": "red_flag", "language": "en-IN", "input": "He bumped his head on the cupboard and feels fine.", "expect": {"rules": []}}
+{"id": "w1-neg-011", "check": "red_flag", "language": "en-IN", "input": "I have a sore throat and mild cough.", "expect": {"rules": []}}

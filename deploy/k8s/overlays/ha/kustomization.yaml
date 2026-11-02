@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# App-tier HA posture only: shared Postgres backs the required graph checkpointer.
+# The bundled Postgres, Redis and MinIO data plane remains single-instance.
+namespace: sahyog
+
+resources:
+  - ../production
+
+configMapGenerator:
+  - name: sahyog-config
+    behavior: merge
+    literals:
+      - HA_MODE=true
+      - CHECKPOINTER_REQUIRED=true

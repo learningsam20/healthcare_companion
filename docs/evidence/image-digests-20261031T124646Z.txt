@@ -1,0 +1,24 @@
+# Image digests captured 2026-10-31T12:46:46Z
+# Source: docker compose images / docker inspect
+
+axllent/mailpit:v1.32.0  axllent/mailpit@sha256:0790692be935ea4420d085694f7985b1f692ca6a8771ab0e0bd8ba75ac180498
+bitnamilegacy/minio-client:2025.7.21-debian-12-r3  bitnamilegacy/minio-client@sha256:73bd39f7899a0cef12b8dd5df13aa93a3ed1aaa44236542442e9ac76819ac158
+bitnamilegacy/minio:2025.7.23-debian-12-r2  bitnamilegacy/minio@sha256:a70e90bb70f4732221901de53502334cef58665c6c4275a014d47adad10e1883
+clamav/clamav-debian:1.4.6_base  clamav/clamav-debian@sha256:28862c4a72217988313a099f0b53a4bc322597947b51cf525c183b52417107a9
+ghcr.io/berriai/litellm:v1.106.3  ghcr.io/berriai/litellm@sha256:74d0696a9f0afcc993c7659d246f0c542f003368298633e852228250779f1032
+ghcr.io/ggerganov/llama.cpp:server  (digest unavailable — pull first)
+grafana/grafana:12.2.0  grafana/grafana@sha256:74144189b38447facf737dfd0f3906e42e0776212bf575dc3334c3609183adf7
+grafana/k6:1.3.0  grafana/k6@sha256:3ddc8b1a33a2c3d8edc6e99b6a762ae36cba08788463458f5e6a7703e14eb77d
+langfuse/langfuse-worker:2.95.0  langfuse/langfuse-worker@sha256:f07dea8342821c927195de4dfe0b038903a7e29925c1f47118dd7782a9e95241
+langfuse/langfuse:2.95.0  langfuse/langfuse@sha256:4ba90fe9e69674c094deca11d72a4cb745ffe5fdd8519176afd1a2edf82c7b41
+neo4j:5.26.4  (digest unavailable — pull first)
+otel/opentelemetry-collector-contrib:0.163.2  otel/opentelemetry-collector-contrib@sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849
+pgvector/pgvector:pg16  pgvector/pgvector@sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
+prom/alertmanager:v0.28.1  (digest unavailable — pull first)
+prom/prometheus:v3.7.3  prom/prometheus@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
+quay.io/keycloak/keycloak:26.8.1  quay.io/keycloak/keycloak@sha256:a78d6b79572168cb25886b80a8b5b8d4ed4390743e3eecb810538683e209dd6b
+redis:7.4.11-alpine  redis@sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
+sahyog-api:local  sahyog-api@sha256:8376f75e8a3f3e49dbc7a8d4e2a2f61c65f32fe435b1651f72857b3358b09b3b
+sahyog-mem0:local  (digest unavailable — pull first)
+sahyog-web  sahyog-web@sha256:5044adb8e6a8b21d39728dd6c79c072dac952d3a841caece564a127cb362af41
+ubuntu/squid:latest  ubuntu/squid@sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029

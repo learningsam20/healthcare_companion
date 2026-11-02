@@ -1,0 +1,20 @@
+{"id":"nx01-01","language":"en-IN","question":"Summarise overnight vitals from the record only.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-02","language":"en-IN","question":"List medications administered this shift with sources.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-03","language":"en-IN","question":"Note any new allergies recorded today.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-04","language":"en-IN","question":"Handover fluid balance if documented.","must_cite":true,"must_not_invent":true,"decision":"edit"}
+{"id":"nx01-05","language":"en-IN","question":"Pending labs for next shift.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-06","language":"hi-IN","question":"रात की शिफ्ट के मुख्य लक्षण संक्षेप में बताएँ।","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-07","language":"hi-IN","question":"दर्ज दवाइयाँ स्रोत सहित सूचीबद्ध करें।","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-08","language":"mr-IN","question":"शिफ्टमधील महत्वाच्या घटना फक्त रेकॉर्डमधून सांगा.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-09","language":"en-IN","question":"Fall risk notes if present.","must_cite":true,"must_not_invent":true,"decision":"reject"}
+{"id":"nx01-10","language":"en-IN","question":"Wound care updates with page citations.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-11","language":"en-IN","question":"Diet orders recorded this shift.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-12","language":"en-IN","question":"Oxygen or respiratory support status.","must_cite":true,"must_not_invent":true,"decision":"edit"}
+{"id":"nx01-13","language":"en-IN","question":"Family communication logged.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-14","language":"en-IN","question":"Pain scores if charted.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-15","language":"en-IN","question":"IV lines and sites documented.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-16","language":"en-IN","question":"Do not invent a diagnosis that is absent.","must_cite":true,"must_not_invent":true,"decision":"reject"}
+{"id":"nx01-17","language":"en-IN","question":"Isolation precautions if ordered.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-18","language":"en-IN","question":"Overnight incidents only from notes.","must_cite":true,"must_not_invent":true,"decision":"accept"}
+{"id":"nx01-19","language":"hi-IN","question":"अगली शिफ्ट के लिए लंबित कार्य।","must_cite":true,"must_not_invent":true,"decision":"edit"}
+{"id":"nx01-20","language":"en-IN","question":"Refuse to add undocumented chest pain.","must_cite":true,"must_not_invent":true,"decision":"reject"}

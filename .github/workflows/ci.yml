@@ -1,0 +1,238 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python lint, types, boundaries and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install workspace
+        run: uv sync --frozen
+      - name: Ruff check
+        run: uv run ruff check .
+      - name: Ruff format
+        run: uv run ruff format --check .
+      - name: Strict types
+        run: >-
+          uv run mypy apps/api/app packages/py-common/sahyog_common
+          scripts/validate_config.py scripts/validate_data.py scripts/flags_report.py
+      - name: Import boundaries
+        run: uv run lint-imports
+      - name: Tests
+        run: uv run pytest
+      - name: External MCP conformance (G-14)
+        run: uv run pytest services/mcp-external -q
+      - name: Nursing X-01 harness (G-13, no model call)
+        run: uv run pytest evals/tests/test_nursing_x01_runner.py evals/tests/test_nursing_x01_live_grades.py -q
+      - name: OpenAPI contract
+        run: uv run python scripts/contract_check.py
+      - name: Locale coverage
+        run: uv run python scripts/i18n_check.py
+      - name: Shell syntax
+        run: |
+          find scripts -name '*.sh' -print0 | xargs -0 -n1 bash -n
+          bash -n docker/postgres/init.sh docker/minio/init.sh
+      - name: Feature registry
+        run: uv run python -c "import sys; sys.path[:0] = ['apps/api','packages/py-common']; from app.core.config import Settings; from app.core.features import FeatureStore; FeatureStore.from_settings(Settings())"
+
+  web:
+    name: Web typecheck and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Production dependency audit
+        run: npm audit --omit=dev --audit-level=high
+
+  postgres:
+    name: Live Postgres migration and integration
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: sahyog
+          POSTGRES_PASSWORD: ci-placeholder
+          POSTGRES_DB: sahyog
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U sahyog -d sahyog"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 24
+    env:
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: sahyog
+      POSTGRES_PASSWORD: ci-placeholder
+      POSTGRES_DB: sahyog
+      DATABASE_URL: postgresql+asyncpg://sahyog:ci-placeholder@127.0.0.1:5432/sahyog
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install workspace
+        run: uv sync --frozen
+      - name: Migrate an empty database
+        working-directory: apps/api
+        run: uv run alembic upgrade head
+      - name: Re-run migrations for idempotence
+        working-directory: apps/api
+        run: uv run alembic upgrade head
+      - name: Integration tests on live Postgres
+        run: uv run pytest -m integration -q
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install workspace
+        run: uv sync --frozen
+      # Advisory until the transitive advisories recorded in G-37 are upgraded;
+      # the job writes the report without blocking the build.
+      - name: Python dependency audit (advisory)
+        continue-on-error: true
+        run: uv run --with pip-audit pip-audit --progress-spinner off
+
+  compose:
+    name: Compose profiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate every cumulative profile
+        run: |
+          cat > "$RUNNER_TEMP/ci.env" <<'EOF'
+          POSTGRES_PASSWORD=ci-placeholder
+          KEYCLOAK_ADMIN_PASSWORD=ci-placeholder
+          KEYCLOAK_DB_PASSWORD=ci-placeholder
+          LANGFUSE_DB_PASSWORD=ci-placeholder
+          LITELLM_DB_PASSWORD=ci-placeholder
+          LITELLM_MASTER_KEY=ci-placeholder
+          MCP_CONTEXT_SECRET=ci-placeholder-ci-placeholder
+          MCP_SERVICE_TOKEN=ci-placeholder
+          MINIO_ROOT_USER=ci-placeholder
+          MINIO_ROOT_PASSWORD=ci-placeholder
+          S3_ACCESS_KEY=ci-placeholder
+          S3_SECRET_KEY=ci-placeholder
+          EOF
+          for profile in minimal minimal,core minimal,core,full minimal,core,full,melt; do
+            COMPOSE_PROFILES="$profile" docker compose --env-file "$RUNNER_TEMP/ci.env" config --quiet
+            echo "profiles $profile: valid"
+          done
+
+  manifests:
+    name: Kubernetes manifests
+    runs-on: ubuntu-latest
+    env:
+      KUBECONFORM_VERSION: v0.6.7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: v1.31.0
+      - name: Install kubeconform
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -sSfL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" \
+            | tar -xz -C "$RUNNER_TEMP/bin" kubeconform
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Render and validate overlays
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/rendered"
+          for overlay in pilot production; do
+            kubectl kustomize "deploy/k8s/overlays/$overlay" > "$RUNNER_TEMP/rendered/$overlay.yaml"
+            kubeconform -strict -summary -ignore-missing-schemas \
+              -kubernetes-version 1.31.0 "$RUNNER_TEMP/rendered/$overlay.yaml"
+          done
+      - name: Seed overlay renders
+        run: kubectl kustomize deploy/k8s/components/seed > /dev/null
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  supply-chain:
+    name: Semgrep, Trivy FS, SBOM (G-27/G-37)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep (error severity)
+        uses: semgrep/semgrep-action@v1
+        continue-on-error: true
+        with:
+          config: p/ci
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.28.0
+        continue-on-error: true
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: CRITICAL,HIGH
+          exit-code: "0"
+          format: table
+      - name: CycloneDX SBOM (Python workspace)
+        continue-on-error: true
+        run: |
+          pip install --quiet cyclonedx-bom
+          cyclonedx-py environment -o docs/evidence/sbom-python.cdx.json || true
+          test -f docs/evidence/sbom-python.cdx.json && echo "SBOM written" || echo "SBOM skipped"
+      - name: Red-team corpus offline
+        run: |
+          python3 evals/harness/red_team_runner.py --out docs/evidence/red-team-offline.json
+      - name: Nursing X-01 case count
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          rows = [json.loads(l) for l in Path("evals/sets/nursing_x01.jsonl").read_text().splitlines() if l.strip()]
+          assert len(rows) == 20, len(rows)
+          print("nursing_x01 cases", len(rows))
+          PY

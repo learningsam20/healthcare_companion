@@ -1,0 +1,32 @@
+
+==> Browser end-to-end (Playwright/axe)
+
+> sahyog-web@0.1.0 test:e2e
+> playwright test
+
+
+Running 20 tests using 1 worker
+
+  ✓   1 [setup] › e2e/auth.setup.ts:15:3 › authenticate patient (patient.priya) and store session (1.6s)
+  ✓   2 [setup] › e2e/auth.setup.ts:15:3 › authenticate doctor (doctor.rao) and store session (1.1s)
+  ✓   3 [setup] › e2e/auth.setup.ts:15:3 › authenticate front_desk (frontdesk.imran) and store session (1.6s)
+  ✓   4 [setup] › e2e/auth.setup.ts:15:3 › authenticate compliance (compliance.auditor) and store session (1.2s)
+  ✓   5 [setup] › e2e/auth.setup.ts:15:3 › authenticate admin (admin.ops) and store session (1.1s)
+  ✓   6 [chromium-desktop-light] › e2e/a11y.spec.ts:13:3 › accessibility - sign-in › Keycloak sign-in page has no serious or critical axe violations (644ms)
+  ✓   7 [chromium-desktop-light] › e2e/a11y.spec.ts:26:3 › accessibility - patient pages › dashboard (1.3s)
+  ✓   8 [chromium-desktop-light] › e2e/a11y.spec.ts:32:3 › accessibility - patient pages › chat (1.4s)
+  ✓   9 [chromium-desktop-light] › e2e/a11y.spec.ts:39:3 › accessibility - patient pages › appointments (1.5s)
+  ✓  10 [chromium-desktop-light] › e2e/a11y.spec.ts:46:3 › accessibility - patient pages › settings (1.4s)
+  ✓  11 [chromium-desktop-light] › e2e/a11y.spec.ts:57:3 › accessibility - analytics › analytics (1.3s)
+  ✓  12 [chromium-desktop-light] › e2e/flows.spec.ts:73:3 › sign-in and shell navigation › patient signs in through Keycloak and navigates the shell (1.3s)
+  ✓  13 [chromium-desktop-light] › e2e/flows.spec.ts:93:3 › chat › creates a session, sends a message and shows provenance (5.3s)
+  ✓  14 [chromium-desktop-light] › e2e/flows.spec.ts:131:3 › appointments › lists appointments and books an available slot (2.1s)
+  ✓  15 [chromium-desktop-light] › e2e/flows.spec.ts:151:3 › scribe › creates an encounter, drafts from a transcript and signs the note (15.8s)
+  ✓  16 [chromium-desktop-light] › e2e/flows.spec.ts:237:5 › analytics › compliance › compliance user sees metrics and the compliance tab (1.3s)
+  ✓  17 [chromium-desktop-light] › e2e/flows.spec.ts:252:5 › analytics › admin › admin user can open analytics cost and insight views (1.1s)
+  ✓  18 [chromium-desktop-light] › e2e/screenshots.spec.ts:12:1 › desktop light dashboard and chat (1.1s)
+  ✓  19 [chromium-desktop-dark] › e2e/theme/dark.spec.ts:7:1 › desktop dark theme renders with the dark palette (1.1s)
+  ✓  20 [mobile-360] › e2e/theme/mobile.spec.ts:7:1 › 360px mobile shell, navigation and chat (1.5s)
+
+  20 passed (46.6s)
+ok  requested checks passed

@@ -1,0 +1,196 @@
+# Purpose-based model routing. Product code requests a purpose, never a provider model.
+# Every generative and embedding call goes through LiteLLM. Identified text must resolve
+# to a local alias; only de-identified text may use an egress: external alias.
+version: 1
+purposes:
+  intent:
+    primary: decider_intent
+    fallback: local_small
+    egress: local
+    timeout_seconds: 3
+    description: OpenDecider intent/category mapping used to route tools and models.
+  red_flag_second_pass:
+    primary: decider_red_flag
+    fallback: local_small
+    egress: local
+    timeout_seconds: 3
+    description: Calibrated second pass over deterministic red-flag candidates.
+  rag_answer:
+    primary: external_reasoning
+    fallback: local_main
+    egress: external_deidentified
+    timeout_seconds: 45
+    description: Cited answer over patient records; only de-identified text may take the external route.
+  w3_draft:
+    primary: local_draft
+    fallback: local_main
+    egress: local
+    timeout_seconds: 120
+    description: Identified consultation draft; local only by policy.
+  summarize:
+    primary: local_main
+    fallback: local_small
+    egress: local
+    timeout_seconds: 60
+    description: Summaries that may contain identified text, including X-01.
+  conversation:
+    primary: local_small
+    fallback: local_main
+    egress: local
+    timeout_seconds: 30
+    description: Navigation and conversational replies that do not require record retrieval.
+  triage:
+    primary: local_small
+    fallback: local_main
+    egress: local
+    timeout_seconds: 20
+    description: W1 specialty match against the closed catalogue; never invents doctors or slots.
+  title:
+    primary: local_small
+    fallback: local_main
+    egress: local
+    timeout_seconds: 10
+    description: Short session titles. The decider is not a generative title model.
+  judge:
+    primary: external_judge
+    fallback: local_main
+    egress: external_deidentified
+    timeout_seconds: 60
+    description: Eval judge over de-identified fixtures only.
+  embedding:
+    primary: local_embedding
+    fallback: null
+    egress: local
+    timeout_seconds: 20
+    description: bge-m3, 1024 dimensions, multilingual.
+  stt:
+    primary: local_stt
+    fallback: null
+    egress: local
+    timeout_seconds: 300
+    description: faster-whisper through mcp-stt. Cloud STT is off by default.
+  pii:
+    primary: local_pii
+    fallback: null
+    egress: local
+    timeout_seconds: 10
+    description: Composite Privacy Filter + Presidio + GLiNER-PII engine through mcp-pii.
+  insights:
+    primary: local_main
+    fallback: null
+    egress: local
+    timeout_seconds: 90
+    description: Advisory analytics/FinOps insights over aggregates; no clinical text.
+  nursing_summary:
+    primary: local_main
+    fallback: null
+    egress: local
+    timeout_seconds: 60
+    description: Bounded X-01 slice; draft-only with line citations.
+
+aliases:
+  local_draft:
+    kind: chat
+    provider: ollama
+    model: qwen2.5:7b-instruct-q4_K_M
+    litellm_model: ollama_chat/qwen2.5:7b-instruct-q4_K_M
+    context_window: 8192
+    max_output_tokens: 1800
+    input_price_usd_per_million: 0
+    output_price_usd_per_million: 0
+  local_main:
+    kind: chat
+    provider: ollama
+    model: qwen2.5:3b-instruct-q4_K_M
+    litellm_model: ollama_chat/qwen2.5:3b-instruct-q4_K_M
+    context_window: 8192
+    max_output_tokens: 1200
+    input_price_usd_per_million: 0
+    output_price_usd_per_million: 0
+  local_small:
+    kind: chat
+    provider: ollama
+    model: qwen2.5:3b-instruct-q4_K_M
+    litellm_model: ollama_chat/qwen2.5:3b-instruct-q4_K_M
+    context_window: 8192
+    max_output_tokens: 512
+    input_price_usd_per_million: 0
+    output_price_usd_per_million: 0
+  external_reasoning:
+    kind: chat
+    provider: openrouter
+    model: openai/gpt-4o-mini
+    litellm_model: openrouter/openai/gpt-4o-mini
+    context_window: 128000
+    max_output_tokens: 1600
+    input_price_usd_per_million: 0.15
+    output_price_usd_per_million: 0.60
+  external_judge:
+    kind: chat
+    provider: openrouter
+    model: openai/gpt-4o-mini
+    litellm_model: openrouter/openai/gpt-4o-mini
+    context_window: 128000
+    max_output_tokens: 800
+    input_price_usd_per_million: 0.15
+    output_price_usd_per_million: 0.60
+  local_embedding:
+    kind: embedding
+    provider: ollama
+    model: bge-m3
+    litellm_model: ollama/bge-m3
+    dimensions: 1024
+    input_price_usd_per_million: 0
+  local_stt:
+    kind: stt
+    provider: local
+    model: faster-whisper-small-int8
+    service: mcp-stt
+    input_price_usd_per_hour: 0
+  local_pii:
+    kind: classifier
+    provider: local
+    model: composite-privacy-filter-presidio-gliner
+    service: mcp-pii
+    input_price_usd_per_million: 0
+  decider_intent:
+    kind: classifier
+    provider: ollama
+    model: tev1:0.8b
+    service: mcp-decider
+    note: Ollama Jev tev1:0.8b via /v1/systemone; alt local HF opendecider-small-td-q4_k_m.gguf
+    input_price_usd_per_million: 0
+  decider_red_flag:
+    kind: classifier
+    provider: ollama
+    model: tev1:0.8b
+    service: mcp-decider
+    note: Red-flag gate remains deterministic rules; decider is a second pass only
+    input_price_usd_per_million: 0
+
+# G-04 language-aware overrides (optional). Keys are BCP-47 primary subtags.
+# Overrides must name aliases already defined above; W3/identified purposes stay local.
+language_routing:
+  conversation:
+    hi:
+      primary: local_main
+      note: Prefer larger local alias for Hindi until measured otherwise
+    mr:
+      primary: local_main
+      note: Prefer larger local alias for Marathi until measured otherwise
+  summarize:
+    hi:
+      primary: local_main
+    mr:
+      primary: local_main
+  triage:
+    hi:
+      primary: local_main
+    mr:
+      primary: local_main
+
+budgets:
+  per_session_tokens: 60000
+  per_session_usd: 0.25
+  monthly_usd: 250
+  alert_at_percent: 80

@@ -1,0 +1,26 @@
+Smoke target: http://localhost:5706 · web http://localhost:5705
+
+  PASS api.liveness — HTTP 200
+  PASS api.readiness — HTTP 200
+  PASS web.health — HTTP 200
+  PASS meta
+  PASS meta.contract — app/features/purposes/adapters/disclaimer
+  FAIL meta.adapters_truthful — {'ha': None}
+  PASS auth.patient_me
+  PASS auth.patient_role — role=patient linked=True
+  PASS authz.patient_cannot_list_patients — HTTP 403
+  PASS records.doctor_documents
+  PASS grid.server_meta — total=3
+  PASS chat.session_create
+  PASS chat.red_flag_local
+  PASS chat.red_flag_detected — rules=['RF-BREATHLESS']
+  FAIL provenance.chat_sources — 0 source(s)
+  PASS chat.session_grid
+  PASS chat.session_grid_meta — total=17
+  PASS chat.session_delete — HTTP 204
+  PASS notifications.inapp_list
+  PASS notifications.inapp_grid — total=28
+  PASS audit.list
+  PASS audit.grid — total=10595
+
+20 passed · 0 skipped · 2 failed

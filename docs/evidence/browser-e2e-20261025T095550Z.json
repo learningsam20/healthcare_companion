@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-10-25T09:55:50.741068+00:00",
+  "command": "./scripts/test.sh --e2e",
+  "base_url": "http://localhost:5705",
+  "framework": "Playwright + axe-core",
+  "status": "passed",
+  "summary": {
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 46.6
+  },
+  "projects": {
+    "setup": {
+      "tests": 5,
+      "purpose": "real Keycloak sign-in for patient, doctor, front_desk, compliance, admin"
+    },
+    "chromium-desktop-light": {
+      "tests": 12,
+      "purpose": "a11y smoke on sign-in/dashboard/chat/appointments/settings/analytics, flows, screenshots"
+    },
+    "chromium-desktop-dark": {
+      "tests": 1,
+      "purpose": "dark palette renders"
+    },
+    "mobile-360": {
+      "tests": 1,
+      "purpose": "360 px shell, navigation and chat"
+    }
+  },
+  "flows": [
+    "Keycloak sign-in and shell navigation",
+    "chat session create, message send and provenance display",
+    "appointment list and booking",
+    "scribe encounter draft from transcript and signed note",
+    "analytics compliance and admin cost/insight views",
+    "axe checks on main routes",
+    "dark theme and 360 px viewport"
+  ],
+  "caveats": [
+    "The axe run is a serious/critical smoke check, not a WCAG conformance audit.",
+    "The suite is operator-run; this repository has no automated CI stack for it (G-26).",
+    "Screenshots and the HTML report are retained under apps/web/test-results and apps/web/playwright-report."
+  ]
+}

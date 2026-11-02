@@ -1,0 +1,67 @@
+# MCP servers and per-graph tool allowlists. The broker is the only MCP surface
+# exposed to LiteLLM; direct tool implementations are rejected by static checks.
+version: 1
+broker:
+  url: http://mcp-broker:8100
+  context_ttl_seconds: 120
+  output_char_cap: 12000
+  reject_unknown_tools: true
+servers:
+  scheduling:
+    url: http://mcp-scheduling:8101
+    tools: [search_doctors, get_availability, hold_slot, confirm_booking, cancel_appointment, reschedule_appointment, get_appointment]
+  records:
+    url: http://mcp-records:8102
+    tools: [list_documents, get_document_status, search_records, get_document_chunk, list_medications]
+  clinical:
+    url: http://mcp-clinical:8103
+    tools: [check_red_flags, get_specialty_catalogue, get_stock_status, get_preconsult_brief]
+  platform:
+    url: http://mcp-platform:8104
+    tools: [get_consent, list_notifications, send_notification, get_audit_event, create_review_task]
+  decider:
+    url: http://mcp-decider:8105
+    tools: [classify_intent, classify_red_flag, explain_decision]
+  pii:
+    url: http://mcp-pii:8106
+    tools: [detect, redact, tokenize, restore_in_private_boundary]
+  stt:
+    url: http://mcp-stt:8107
+    tools: [transcribe, get_transcript, stt_status]
+
+graphs:
+  intent:
+    servers: [decider, clinical]
+    tools: [classify_intent, classify_red_flag, check_red_flags]
+  triage:
+    servers: [scheduling, clinical, platform]
+    tools: [search_doctors, get_availability, hold_slot, confirm_booking, check_red_flags, get_specialty_catalogue, get_consent, send_notification]
+  appointment_help:
+    servers: [scheduling, platform]
+    tools: [get_appointment, cancel_appointment, reschedule_appointment, get_availability, send_notification]
+  records:
+    servers: [records, clinical, platform]
+    tools: [list_documents, get_document_status, search_records, get_document_chunk, list_medications, check_red_flags, create_review_task]
+  chat:
+    servers: [decider, clinical, scheduling, records, platform]
+    tools:
+      - classify_intent
+      - check_red_flags
+      - get_specialty_catalogue
+      - search_doctors
+      - search_records
+  scribe:
+    servers: [clinical, records, platform, stt]
+    tools:
+      - get_stock_status
+      - get_preconsult_brief
+      - list_documents
+      - get_document_chunk
+      - create_review_task
+      - transcribe
+  admin:
+    servers: [platform, clinical]
+    tools: [get_audit_event, list_notifications, get_stock_status]
+  compliance:
+    servers: [platform]
+    tools: [get_audit_event, get_consent, list_notifications]

@@ -1,0 +1,152 @@
+# Typed feature registry. This is the only source of build-time feature defaults.
+# Precedence: FEATURE_<KEY> process env > .env.<profile> > .env > default below.
+# class: runtime (audited admin switch) | startup (config + redeploy) | locked (safety; cannot disable)
+version: 1
+flags:
+  - key: chat_sessions
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: product
+    expires: null
+    description: Persistent, user-owned chat sessions with provenance.
+  - key: all_role_assistants
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: product
+    expires: null
+    description: Role-scoped assistants for patient, caregiver, doctor, front desk, pharmacist, compliance officer and admin.
+  - key: analytics_dashboard
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: analytics
+    expires: null
+    description: Six-tab analytics workspace, aggregate-only and small-cell suppressed.
+  - key: finops_what_if
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: finance
+    expires: null
+    description: Configurable FinOps scenarios, growth curves and advisory recommendations.
+  - key: evaluations
+    default: true
+    class: startup
+    environments: [dev, staging, production]
+    owner: quality
+    expires: null
+    description: RAGAS and DeepEval runs through the shared EvalRunner.
+  - key: notifications_email
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: platform
+    expires: null
+    description: Email channel through a configured SMTP adapter. Missing credentials show unconfigured.
+  - key: notifications_sms
+    default: false
+    class: runtime
+    environments: [dev, staging, production]
+    owner: platform
+    expires: 2027-03-31
+    description: SMS channel through a configured HTTP provider. Disabled until provider and sender are configured.
+  - key: notifications_slack_staff
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: platform
+    expires: 2027-03-31
+    description: Staff Slack delivery to the verified staff workspace and allowlisted channels.
+  - key: notifications_slack_patient
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: platform
+    expires: 2027-03-31
+    description: Opt-in patient Slack delivery through the patient workspace and a verified Slack identity.
+  - key: fhir_read
+    default: true
+    class: runtime
+    environments: [dev, staging, production]
+    owner: platform
+    expires: 2027-03-31
+    description: Read-only FHIR R4 demographics and encounters when FHIR_BASE_URL is configured.
+  - key: abdm_link
+    default: false
+    class: startup
+    environments: [dev, staging, production]
+    owner: platform
+    expires: null
+    description: Hospital /api/v1/abdm seam + local official-path stub (docs/abdm-stub-equality.md); certified=false always.
+  - key: memory_preferences
+    default: false
+    class: startup
+    environments: [dev, staging, production]
+    owner: product
+    expires: null
+    description: Preference memory API (/api/v1/me/memory) plus optional self-hosted Mem0 via LiteLLM (G-24).
+  - key: x01_nursing_summary
+    default: false
+    class: runtime
+    environments: [dev, staging, production]
+    owner: clinical
+    expires: 2027-06-30
+    description: Bounded X-01 nursing-note summary via POST /api/v1/nursing/summary; draft-only with citations (G-13).
+  - key: external_mcp
+    default: false
+    class: startup
+    environments: [dev, staging, production]
+    owner: platform
+    expires: null
+    description: External read-only MCP demo listener (G-14); enable with EXTERNAL_MCP_ENABLED.
+  - key: cloud_stt
+    default: false
+    class: startup
+    environments: [dev, staging, production]
+    owner: clinical
+    expires: null
+    description: Cloud speech-to-text. Requires privacy/security approval; local STT is the default.
+  - key: safety_red_flags
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: clinical-safety
+    expires: null
+    description: Deterministic red-flag rules must always run.
+  - key: safety_audit
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: compliance
+    expires: null
+    description: Append-only audit of every patient-linked read/write and safety action.
+  - key: safety_consent
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: compliance
+    expires: null
+    description: Consent scope and expiry are enforced on every caregiver access.
+  - key: safety_pii_egress
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: security
+    expires: null
+    description: The PII/PHI egress gate must be healthy before any external model call.
+  - key: safety_human_review
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: clinical-safety
+    expires: null
+    description: Clinical notes and high-risk actions require a named human decision; no auto-sign.
+  - key: safety_provenance
+    default: true
+    class: locked
+    environments: [dev, staging, production]
+    owner: clinical-safety
+    expires: null
+    description: Every agent answer carries resolved source references.

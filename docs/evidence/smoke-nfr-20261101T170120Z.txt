@@ -1,0 +1,283 @@
+Smoke target: http://localhost:5706 · web http://localhost:5705
+
+  PASS api.liveness — HTTP 200
+  PASS api.readiness — HTTP 200
+  PASS web.health — HTTP 200
+  PASS meta
+  PASS meta.contract — app/features/purposes/adapters/disclaimer
+  PASS meta.adapters_truthful — no mock states
+  PASS auth.patient_me
+  PASS auth.patient_role — role=patient linked=True
+  PASS authz.patient_cannot_list_patients — HTTP 403
+  PASS records.doctor_documents
+  PASS grid.server_meta — total=3
+  PASS chat.session_create
+  PASS chat.red_flag_local
+  PASS chat.red_flag_detected — rules=['RF-BREATHLESS']
+  FAIL provenance.chat_sources — 0 source(s)
+  PASS chat.session_grid
+  PASS chat.session_grid_meta — total=18
+  PASS chat.session_delete — HTTP 204
+  PASS notifications.inapp_list
+  PASS notifications.inapp_grid — total=26
+  PASS notifications.channels_declared — email=configured slack_staff=configured
+  PASS flags.list
+  PASS flags.locked_default_on — 21 flags, 6 locked
+  PASS flags.registry_version — v1
+  PASS analytics.overview
+  PASS analytics.overview.tiles — 9 tile(s)
+  PASS analytics.quality
+  PASS analytics.quality.tiles — 7 tile(s)
+  PASS analytics.compliance
+  PASS analytics.compliance.tiles — 7 tile(s)
+  PASS analytics.evaluations
+  PASS analytics.evaluations.tiles — 2 tile(s)
+  PASS analytics.finops
+  PASS analytics.finops.tiles — 0 tile(s)
+  PASS analytics.insights
+  PASS analytics.insights.tiles — 0 tile(s)
+  FAIL provenance.types — chat source panel exercised
+  PASS audit.list
+  PASS audit.grid — total=11713
+{
+  "checks": 39,
+  "failed": 2,
+  "results": [
+    {
+      "check": "api.liveness",
+      "detail": "HTTP 200",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "api.readiness",
+      "detail": "HTTP 200",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "web.health",
+      "detail": "HTTP 200",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "meta",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "meta.contract",
+      "detail": "app/features/purposes/adapters/disclaimer",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "meta.adapters_truthful",
+      "detail": "no mock states",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "auth.patient_me",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "auth.patient_role",
+      "detail": "role=patient linked=True",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "authz.patient_cannot_list_patients",
+      "detail": "HTTP 403",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "records.doctor_documents",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "grid.server_meta",
+      "detail": "total=3",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "chat.session_create",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "chat.red_flag_local",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "chat.red_flag_detected",
+      "detail": "rules=['RF-BREATHLESS']",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "provenance.chat_sources",
+      "detail": "0 source(s)",
+      "ok": false,
+      "skipped": false
+    },
+    {
+      "check": "chat.session_grid",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "chat.session_grid_meta",
+      "detail": "total=18",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "chat.session_delete",
+      "detail": "HTTP 204",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "notifications.inapp_list",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "notifications.inapp_grid",
+      "detail": "total=26",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "notifications.channels_declared",
+      "detail": "email=configured slack_staff=configured",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "flags.list",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "flags.locked_default_on",
+      "detail": "21 flags, 6 locked",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "flags.registry_version",
+      "detail": "v1",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.overview",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.overview.tiles",
+      "detail": "9 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.quality",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.quality.tiles",
+      "detail": "7 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.compliance",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.compliance.tiles",
+      "detail": "7 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.evaluations",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.evaluations.tiles",
+      "detail": "2 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.finops",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.finops.tiles",
+      "detail": "0 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.insights",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "analytics.insights.tiles",
+      "detail": "0 tile(s)",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "provenance.types",
+      "detail": "chat source panel exercised",
+      "ok": false,
+      "skipped": false
+    },
+    {
+      "check": "audit.list",
+      "detail": "",
+      "ok": true,
+      "skipped": false
+    },
+    {
+      "check": "audit.grid",
+      "detail": "total=11713",
+      "ok": true,
+      "skipped": false
+    }
+  ],
+  "skipped": 0,
+  "status": "failed"
+}

@@ -1,0 +1,234 @@
+# Versioned analytics metric registry. A tile without a registry entry is rejected.
+# Aggregate-only; every patient-adjacent output is suppressed below the small-cell minimum.
+version: 1
+metrics:
+  - id: active_users_30d
+    version: 1
+    label: Active users (30 days)
+    description: Distinct authenticated users with at least one session in the trailing 30 days.
+    source: operational
+    formula: "SELECT count(DISTINCT actor_subject) FROM audit_events WHERE action IN ('session.created','chat.message_sent') AND created_at >= :start_date AND created_at < :end_date"
+    dimensions: [clinic, locale]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: analytics
+  - id: chat_sessions_created
+    version: 1
+    label: Chat sessions created
+    description: Sessions created in the period, excluding synthetic load-test traffic.
+    source: operational
+    formula: "SELECT count(*) FROM chat_sessions WHERE created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [date, locale]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: product
+  - id: chat_messages
+    version: 1
+    label: Chat messages
+    description: User and assistant messages in real-traffic sessions during the period.
+    source: operational
+    formula: "SELECT count(*) FROM chat_messages m JOIN chat_sessions s ON s.id = m.session_id WHERE m.created_at >= :start_date AND m.created_at < :end_date AND s.traffic_class = 'real'"
+    dimensions: [date, locale]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: product
+  - id: red_flag_triggers
+    version: 1
+    label: Red-flag triggers
+    description: Deterministic red-flag actions recorded in the audit trail in the period.
+    source: operational
+    formula: "SELECT count(*) FROM audit_events WHERE action = 'safety.red_flag_triggered' AND created_at >= :start_date AND created_at < :end_date"
+    dimensions: [date, locale]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: clinical-safety
+  - id: egress_blocks
+    version: 1
+    label: Egress policy blocks
+    description: Model replies refused because the configured route required external egress before the PII gate was healthy.
+    source: operational
+    formula: "SELECT count(*) FROM audit_events WHERE action = 'chat.reply_blocked' AND created_at >= :start_date AND created_at < :end_date"
+    dimensions: [date, model_alias]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: security
+  - id: consent_active
+    version: 1
+    label: Active caregiver consents
+    description: Consent rows currently active. Aggregate only; never a patient list.
+    source: operational
+    formula: "SELECT count(*) FROM consents WHERE status = 'active'"
+    dimensions: [clinic]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: compliance
+  - id: audit_events
+    version: 1
+    label: Audit events
+    description: Append-only audit rows recorded in the period.
+    source: operational
+    formula: "SELECT count(*) FROM audit_events WHERE created_at >= :start_date AND created_at < :end_date"
+    dimensions: [date, actor_role, action]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: compliance
+  - id: bookings_confirmed
+    version: 1
+    label: Bookings confirmed
+    description: Confirmed appointments in the period, excluding synthetic traffic.
+    source: operational
+    formula: "SELECT count(*) FROM appointments WHERE status = 'confirmed' AND created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [date, clinic, workflow, status]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: operations
+  - id: red_flag_recall
+    version: 1
+    label: Red-flag recall
+    description: Deterministic and second-pass recall on the approved safety fixture set.
+    source: eval_runs
+    formula: "SELECT value FROM eval_metric_results WHERE metric_key = 'red_flag_recall' AND run_id = :latest_run"
+    dimensions: [dataset, model_alias, locale]
+    freshness_hours: 168
+    suppression: none
+    owner: clinical-safety
+  - id: rag_faithfulness
+    version: 1
+    label: RAG faithfulness (RAGAS)
+    description: Latest faithfulness score on the approved RAG eval set.
+    source: eval_runs
+    formula: "SELECT value FROM eval_metric_results WHERE metric_key = 'faithfulness' AND framework = 'ragas' AND run_id = :latest_run"
+    dimensions: [dataset, model_alias, locale]
+    freshness_hours: 168
+    suppression: none
+    owner: quality
+  - id: notification_delivery_success
+    version: 1
+    label: Notification delivery success
+    description: Delivered notifications divided by attempted notifications, per channel.
+    source: operational
+    formula: "SELECT sum(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END)::numeric / nullif(count(*),0) FROM notification_deliveries WHERE created_at >= :start_date AND created_at < :end_date"
+    dimensions: [channel, status]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: platform
+  - id: cost_per_chat_turn
+    version: 1
+    label: Cost per chat turn
+    description: External and internal model cost attributable to completed chat turns.
+    source: cost_rollup
+    formula: "SELECT sum(cost_usd) / nullif(count(DISTINCT turn_id),0) FROM cost_events WHERE created_at >= :start_date AND created_at < :end_date"
+    dimensions: [date, model_alias, workflow]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: finance
+  - id: finops_monthly_run_rate_usd
+    version: 1
+    label: FinOps monthly run rate
+    description: Observed model usage cost extrapolated to a 30-day run rate (USD).
+    source: finops
+    formula: "SELECT (sum(cost_usd) / :days) * 30 FROM usage_records WHERE created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [date, model_alias, purpose]
+    freshness_hours: 24
+    suppression: none
+    owner: finance
+  - id: finops_observed_cost_usd
+    version: 1
+    label: FinOps observed cost
+    description: Sum of recorded usage_record cost_usd in the selected period.
+    source: finops
+    formula: "SELECT sum(cost_usd) FROM usage_records WHERE created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [date, model_alias, purpose]
+    freshness_hours: 24
+    suppression: none
+    owner: finance
+  - id: handoff_mtta_p50_seconds
+    version: 1
+    label: Handoff MTTA (p50)
+    description: Median seconds from emergency/staff handoff create to first human assign (acknowledge).
+    source: operational
+    formula: "SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY mtta_seconds) FROM handoffs WHERE acknowledged_at >= :start_date AND mtta_seconds IS NOT NULL"
+    dimensions: [priority, clinic]
+    freshness_hours: 1
+    suppression: none
+    owner: operations
+  - id: handoff_mtta_within_sla_pct
+    version: 1
+    label: Handoff MTTA within SLA
+    description: Share of acknowledged handoffs whose mtta_seconds beat the priority SLA (emergency 120s).
+    source: operational
+    formula: "SELECT avg(CASE WHEN mtta_seconds <= sla_seconds THEN 1 ELSE 0 END) FROM handoffs WHERE acknowledged_at >= :start_date AND mtta_seconds IS NOT NULL"
+    dimensions: [priority, clinic]
+    freshness_hours: 1
+    suppression: none
+    owner: operations
+  - id: gross_margin_pct
+    version: 1
+    label: Gross margin
+    description: Revenue minus direct model, notification and infrastructure cost, divided by revenue.
+    source: finops
+    formula: "SELECT (revenue_usd - direct_cost_usd) / nullif(revenue_usd,0) FROM finops_period_summary WHERE period_start = :start_date"
+    dimensions: [clinic, workflow]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: finance
+  - id: no_show_predicted_high
+    version: 1
+    label: Predicted high no-show risk
+    description: Confirmed/held appointments scored high no-show risk in the period.
+    source: operational
+    formula: "SELECT count(*) FROM appointments WHERE no_show_band = 'high' AND created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [clinic, band]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: operations
+  - id: no_show_observed
+    version: 1
+    label: Observed no-shows
+    description: Appointments marked no_show in the period (real traffic).
+    source: operational
+    formula: "SELECT count(*) FROM appointments WHERE status = 'no_show' AND created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [clinic]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: operations
+  - id: waitlist_suggestions
+    version: 1
+    label: Waitlist suggestions
+    description: Bookings flagged for front-desk waitlist fill due to high no-show risk.
+    source: operational
+    formula: "SELECT count(*) FROM appointments WHERE waitlist_suggested = true AND created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'"
+    dimensions: [clinic]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: operations
+  - id: scribe_edit_distance_mean
+    version: 1
+    label: Mean scribe edit distance
+    description: Mean total Levenshtein distance from first draft to signed note across scribe runs.
+    source: operational
+    formula: "SELECT avg((edit_distance->>'total')::float) FROM scribe_runs WHERE edit_distance IS NOT NULL AND completed_at >= :start_date AND completed_at < :end_date"
+    dimensions: [clinic]
+    freshness_hours: 24
+    suppression: none
+    owner: clinical-quality
+  - id: scribe_review_seconds_p50
+    version: 1
+    label: Scribe review time (p50)
+    description: Median seconds from draft-ready to doctor signature.
+    source: operational
+    formula: "SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY review_seconds) FROM scribe_runs WHERE review_seconds IS NOT NULL AND completed_at >= :start_date"
+    dimensions: [clinic]
+    freshness_hours: 24
+    suppression: none
+    owner: clinical-quality
+  - id: citation_failures
+    version: 1
+    label: Citation failures
+    description: Grounded-ask turns refused because citations failed deterministic scope checks.
+    source: operational
+    formula: "SELECT count(*) FROM audit_events WHERE action = 'safety.citation_failed' AND created_at >= :start_date AND created_at < :end_date"
+    dimensions: [date]
+    freshness_hours: 24
+    suppression: small_cell
+    owner: clinical-safety

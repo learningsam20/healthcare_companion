@@ -1,0 +1,6 @@
+stock_items|15010
+appointments|5040
+appointments_synthetic|5004
+patients|9
+documents|6
+document_chunks|4

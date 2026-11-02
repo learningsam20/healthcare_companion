@@ -1,0 +1,53 @@
+# Closed specialty catalogue. Free-text specialties are mapped to this list only.
+version: 1
+specialties:
+  - code: general_medicine
+    en: General Medicine
+    hi: सामान्य चिकित्सा
+    mr: सामान्य वैद्यकशास्त्र
+    synonyms: [physician, internal medicine, general physician, md medicine]
+  - code: cardiology
+    en: Cardiology
+    hi: हृदय रोग
+    mr: हृदयरोग
+    synonyms: [heart, cardiac, chest pain specialist]
+  - code: dermatology
+    en: Dermatology
+    hi: त्वचा रोग
+    mr: त्वचारोग
+    synonyms: [skin, skin specialist, rash, acne]
+  - code: pediatrics
+    en: Pediatrics
+    hi: बाल रोग
+    mr: बालरोग
+    synonyms: [child specialist, baby doctor, paediatric]
+  - code: orthopedics
+    en: Orthopedics
+    hi: अस्थि रोग
+    mr: अस्थिरोग
+    synonyms: [bone, joint, knee, fracture, orthopaedic]
+  - code: ent
+    en: ENT
+    hi: कान, नाक, गला
+    mr: कान, नाक, घसा
+    synonyms: [ear nose throat, ear, nose, throat, sinus]
+  - code: ophthalmology
+    en: Ophthalmology
+    hi: नेत्र रोग
+    mr: नेत्ररोग
+    synonyms: [eye, vision, eye specialist, ophthalmologist]
+  - code: psychiatry
+    en: Psychiatry
+    hi: मनोचिकित्सा
+    mr: मनोविकार
+    synonyms: [mental health, depression, anxiety, psychiatrist]
+  - code: obstetrics_gynecology
+    en: Obstetrics and Gynecology
+    hi: स्त्री रोग
+    mr: स्त्रीरोग
+    synonyms: [gynecology, pregnancy, women's health, obgyn]
+  - code: pulmonology
+    en: Pulmonology
+    hi: फेफड़ा रोग
+    mr: फुफ्फुसरोग
+    synonyms: [chest, lungs, asthma, breathing specialist]

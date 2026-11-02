@@ -1,0 +1,45 @@
+# App-tier HA overlay: nginx LB + scaled API + required Postgres checkpointer.
+# Data plane remains single Postgres/Redis/MinIO — document honestly.
+#
+# Usage:
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.ha.yml \
+#     docker compose --profile minimal up -d --scale api=2
+#   ./scripts/compose-ha-smoke.sh
+
+services:
+  api:
+    # Host port moves to api-lb so --scale api=2 does not collide.
+    ports: []
+    environment:
+      HA_MODE: "true"
+      CHECKPOINTER_REQUIRED: "true"
+
+  api-lb:
+    profiles: [minimal]
+    image: nginx:1.27-alpine
+    ports:
+      - "${API_PORT:-5706}:8080"
+    volumes:
+      - ./docker/api-lb.nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app]
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  web:
+    environment:
+      # Web container still reaches the `api` DNS name (multi-A via Docker).
+      HA_MODE: "true"

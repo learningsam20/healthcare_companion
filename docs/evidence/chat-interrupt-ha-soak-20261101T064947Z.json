@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "session_id": "b388577c-ef5c-428e-aee5-aebf982764c0",
+  "api_a": "http://localhost:5706",
+  "api_b": "http://localhost:5706",
+  "same_base": true,
+  "run_id": "2895540f-4184-488c-b93d-6e422297f36b",
+  "interrupt_id": "int_4e38a91da5e24413",
+  "candidate_count": 6,
+  "resume_status_code": 200,
+  "idempotent_resume_error": "HTTP Error 409: Conflict",
+  "assistant_snippet": "Confirmed specialty **General Medicine**, but no open slots were found. Please try another day or ask the front desk."
+}

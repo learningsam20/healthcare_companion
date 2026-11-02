@@ -1,0 +1,12 @@
+{
+  "description": "Public human-speech clips for G-05 WER (Mozilla DeepSpeech v0.9.3 audio release; LibriSpeech-derived). Non-PHI.",
+  "synthetic": false,
+  "wer_evidence": true,
+  "source": "https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/audio-0.9.3.tar.gz",
+  "licence_note": "See License.txt / Attribution.txt in this folder. Internal STT measurement only.",
+  "files": [
+    {"audio": "2830-3980-0043.wav", "reference": "2830-3980-0043.reference.txt", "language": "en"},
+    {"audio": "4507-16021-0012.wav", "reference": "4507-16021-0012.reference.txt", "language": "en"},
+    {"audio": "8455-210777-0068.wav", "reference": "8455-210777-0068.reference.txt", "language": "en"}
+  ]
+}

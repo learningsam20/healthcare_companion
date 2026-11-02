@@ -1,0 +1,78 @@
+{
+  "actual_requests_per_hour": 1435.1,
+  "auth": "keycloak_password_grant",
+  "burst": 1,
+  "capacity_acceptance_note": "P/S host profiles and non-passing runs cannot establish M/L capacity.",
+  "capacity_accepted": false,
+  "cohort": {
+    "identities": 2,
+    "subjects": 2,
+    "users": [
+      "loadtest.patient01",
+      "loadtest.frontdesk01"
+    ]
+  },
+  "duration_seconds": 15.0,
+  "endpoints": {
+    "/api/v1/records/documents": 1
+  },
+  "error_rate_pct": 0.0,
+  "finished_at": "2026-10-31T17:04:14.370837+00:00",
+  "guard": {
+    "abort_on_real_slo": false,
+    "aborts": [
+      "budget_guard"
+    ],
+    "allow_real_users": false,
+    "approval_ref_present": false,
+    "baseline_synthetic_cost_usd": 0.0,
+    "budget_usd": 0.01,
+    "prometheus_available": false,
+    "samples": [
+      {
+        "abort": "budget_guard",
+        "at": "2026-10-31T17:04:13.892292+00:00",
+        "injected_synthetic_cost_delta_usd": 0.02,
+        "kill_drill_injected": true,
+        "real_actors": 0,
+        "real_events": 0,
+        "synthetic_cost_delta_usd": 0.0,
+        "synthetic_cost_usd": 0.0
+      }
+    ]
+  },
+  "host_profile": "P",
+  "issued": 1,
+  "kill_drill": {
+    "aborts": [
+      "budget_guard"
+    ],
+    "enabled": true,
+    "expected_abort": "budget_guard",
+    "injected": true,
+    "note": "LOAD_TEST_KILL=1: the budget overrun was INJECTED into the first guard sample to exercise decide_guard_abort; it is a drill, not a measured breach, and the run cannot establish capacity.",
+    "observed_abort": true,
+    "requests_sent_before_stop": 1
+  },
+  "latency_ms": {
+    "p50": 20.8,
+    "p95": 20.8,
+    "p99": 20.8
+  },
+  "mode": "client_side_public_api",
+  "notes": [
+    "No dev-auth bypass, direct database seed or disabled audit/PII check was used.",
+    "Only tagged loadtest.* identities and public API paths were used.",
+    "Synthetic cost comes from analytics/load-guard (usage_records), not LiteLLM spend.",
+    "Real-user p95/error requires the full profile Prometheus exporter."
+  ],
+  "p95_target_ms": 1500.0,
+  "profile": "r1",
+  "release": "0.1.0",
+  "requested_rate_per_hour": 500,
+  "requests": 1,
+  "started_at": "2026-10-31T17:04:11.466424+00:00",
+  "status": "kill_drill_passed",
+  "tool": "scripts/load_test.py",
+  "traffic_class": "synthetic"
+}

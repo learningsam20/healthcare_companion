@@ -1,0 +1,1020 @@
+# Sahyog Care Companion — local, acceptance and pilot stack.
+#
+# Profiles are cumulative. Always start through scripts/start.sh, which selects
+# COMPOSE_PROFILES (minimal -> minimal,core -> minimal,core,full), validates .env,
+# runs migrations explicitly and imports the Keycloak realm.
+#
+# There is no SQLite path, no dev-auth bypass and no runtime mock integration.
+# Every credential is interpolated from .env or a vault; nothing is baked into an image.
+
+name: sahyog
+
+x-api-build: &api-build
+  context: .
+  dockerfile: docker/api.Dockerfile
+
+x-api-env: &api-env
+  APP_ENV: ${APP_ENV:-dev}
+  APP_PROFILE: ${APP_PROFILE:-minimal}
+  APP_VERSION: ${APP_VERSION:-0.1.0}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  TZ: ${TZ:-Asia/Kolkata}
+  CONFIG_DIR: /app/config
+  DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-sahyog}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:-sahyog}
+  REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+  KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080}
+  KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-http://localhost:5707}
+  KEYCLOAK_REALM: ${KEYCLOAK_REALM:-sahyog}
+  KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-sahyog-api}
+  KEYCLOAK_AUDIENCE: ${KEYCLOAK_AUDIENCE:-sahyog-api}
+  KEYCLOAK_ADMIN_URL: http://keycloak:8080
+  LITELLM_BASE_URL: ${LITELLM_BASE_URL:-http://litellm:4000}
+  LITELLM_DATABASE_URL: ${LITELLM_DATABASE_URL:-}
+  MCP_BROKER_URL: ${MCP_BROKER_URL:-http://mcp-broker:8100}
+  PII_SERVICE_URL: ${PII_SERVICE_URL:-http://mcp-pii:8106}
+  STOCK_API_KEY: ${STOCK_API_KEY:-}
+  INTERNAL_API_KEY: ${INTERNAL_API_KEY:-}
+  MEM0_URL: ${MEM0_URL:-http://mem0:8000}
+  MEM0_API_KEY: ${MEM0_API_KEY:-}
+  MEM0_TIMEOUT_SECONDS: ${MEM0_TIMEOUT_SECONDS:-15}
+  CLAMAV_HOST: ${CLAMAV_HOST:-}
+  CLAMAV_PORT: ${CLAMAV_PORT:-3310}
+  MALWARE_SCAN_MODE: ${MALWARE_SCAN_MODE:-advisory}
+  S3_ENDPOINT_URL: ${S3_ENDPOINT_URL:-http://s3proxy:80}
+  S3_PUBLIC_ENDPOINT_URL: ${S3_PUBLIC_ENDPOINT_URL:-http://localhost:5719}
+  OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+  OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-sahyog-api}
+  LANGFUSE_HOST: ${LANGFUSE_HOST:-http://langfuse-web:3000}
+  LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+  LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+  LANGFUSE_CAPTURE_CONTENT: ${LANGFUSE_CAPTURE_CONTENT:-false}
+  TRACE_EXPORT_SAMPLE_RATIO: ${TRACE_EXPORT_SAMPLE_RATIO:-0.1}
+  HA_MODE: ${HA_MODE:-false}
+  CHECKPOINTER_REQUIRED: ${CHECKPOINTER_REQUIRED:-false}
+  ABDM_SANDBOX_URL: ${ABDM_SANDBOX_URL:-http://abdm-stub:8090}
+  ABDM_CLIENT_ID: ${ABDM_CLIENT_ID:-}
+  ABDM_CLIENT_SECRET: ${ABDM_CLIENT_SECRET:-}
+  EXTERNAL_EGRESS_ENABLED: ${EXTERNAL_EGRESS_ENABLED:-false}
+
+x-mcp-env: &mcp-env
+  APP_ENV: ${APP_ENV:-dev}
+  APP_VERSION: ${APP_VERSION:-0.1.0}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  TZ: ${TZ:-Asia/Kolkata}
+  CONFIG_DIR: /app/config
+  MCP_CONTEXT_TTL_SECONDS: ${MCP_CONTEXT_TTL_SECONDS:-120}
+  MCP_CONTEXT_SECRET: ${MCP_CONTEXT_SECRET:?MCP_CONTEXT_SECRET is required}
+  STOCK_API_KEY: ${STOCK_API_KEY:-}
+  INTERNAL_API_KEY: ${INTERNAL_API_KEY:-}
+  SAHYOG_API_URL: ${SAHYOG_API_URL:-http://api:8000}
+  WHISPER_MODEL_DIR: ${WHISPER_MODEL_DIR:-/models/whisper/faster-whisper-small}
+  STT_ADAPTER: ${STT_ADAPTER:-local}
+  STT_COMPUTE_TYPE: ${STT_COMPUTE_TYPE:-int8}
+  ALLOW_CLOUD_STT: ${ALLOW_CLOUD_STT:-false}
+  STT_CLOUD_BASE_URL: ${STT_CLOUD_BASE_URL:-}
+  STT_CLOUD_API_KEY: ${STT_CLOUD_API_KEY:-}
+  STT_CLOUD_MODEL: ${STT_CLOUD_MODEL:-whisper-1}
+  WHISPER_DEVICE: ${WHISPER_DEVICE:-cpu}
+  GLINER_MODEL: ${GLINER_MODEL:-/models/gliner-pii/gliner-pii-large-v1.0}
+  PII_ENGINE: ${PII_ENGINE:-composite}
+  DECIDER_LLAMA_URL: ${DECIDER_LLAMA_URL:-http://litellm:4000}
+  DECIDER_BACKEND: ${DECIDER_BACKEND:-auto}
+  DECIDER_MODEL: ${DECIDER_MODEL:-hf.co/manjunathshiva/opendecider-small-GGUF:Q8_0}
+  STRANDS_DECIDER_URL: ${STRANDS_DECIDER_URL:-}
+  STRANDS_DECIDER_MODEL: ${STRANDS_DECIDER_MODEL:-StrandsAgents/strands-decider-2B-qwen3.5-v1-2610}
+  OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+  LITELLM_BASE_URL: ${LITELLM_BASE_URL:-http://litellm:4000}
+  LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:-}
+  EXTERNAL_MCP_ENABLED: ${EXTERNAL_MCP_ENABLED:-false}
+
+x-mcp-service: &mcp-service
+  image: sahyog-api:local
+  build: *api-build
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    <<: *mcp-env
+  restart: unless-stopped
+  networks: [app]
+  read_only: true
+  tmpfs:
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  # ------------------------------------------------------------------ frontend
+  web:
+    profiles: [minimal]
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:5706}
+        VITE_OIDC_AUTHORITY: ${VITE_OIDC_AUTHORITY:-http://localhost:5707/realms/sahyog}
+        VITE_OIDC_CLIENT_ID: ${VITE_OIDC_CLIENT_ID:-sahyog-web}
+        VITE_OIDC_REDIRECT_URI: ${VITE_OIDC_REDIRECT_URI:-http://localhost:5705/auth/callback}
+        VITE_OIDC_POST_LOGOUT_REDIRECT_URI: ${VITE_OIDC_POST_LOGOUT_REDIRECT_URI:-http://localhost:5705/}
+        VITE_APP_ENV: ${VITE_APP_ENV:-dev}
+        VITE_DEFAULT_LOCALE: ${VITE_DEFAULT_LOCALE:-en-IN}
+        VITE_SUPPORTED_LOCALES: ${VITE_SUPPORTED_LOCALES:-en-IN,hi-IN,mr-IN}
+        AUTH_ORIGIN: ${AUTH_ORIGIN:-http://localhost:5707}
+    ports:
+      - "${WEB_PORT:-5705}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app]
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ----------------------------------------------------------------- application
+  api:
+    profiles: [minimal]
+    image: sahyog-api:local
+    build: *api-build
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--app-dir", "apps/api"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      <<: *api-env
+    ports:
+      - "${API_PORT:-5706}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      s3proxy:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      litellm:
+        condition: service_started
+      mcp-broker:
+        condition: service_healthy
+      mcp-pii:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  worker:
+    profiles: [minimal]
+    image: sahyog-api:local
+    command: ["arq", "app.worker.WorkerSettings"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      <<: *api-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      s3proxy:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      # HIS/pharmacy CSV drop: place files in incoming/; worker archives to processed|failed.
+      - ./.data/stock:/app/data/stock
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "arq", "app.worker.WorkerSettings", "--check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  scheduler:
+    profiles: [core]
+    image: sahyog-api:local
+    command: ["arq", "app.scheduler.WorkerSettings"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      <<: *api-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  # ------------------------------------------------------------------- identity
+  keycloak:
+    profiles: [minimal]
+    image: quay.io/keycloak/keycloak:26.8.1
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USER:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?KEYCLOAK_ADMIN_PASSWORD is required}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?KEYCLOAK_DB_PASSWORD is required}
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      KC_LOG_LEVEL: INFO
+    ports:
+      - "127.0.0.1:${KEYCLOAK_PORT:-5707}:8080"
+    volumes:
+      - ./docker/keycloak:/opt/keycloak/data/import:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/127.0.0.1/9000; printf 'GET /health/ready HTTP/1.0\\r\\n\\r\\n' >&3; head -1 <&3 | grep -q 200",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  # -------------------------------------------------------------------- storage
+  postgres:
+    profiles: [minimal]
+    image: pgvector/pgvector:pg16
+    command:
+      - postgres
+      - -c
+      - shared_buffers=${PG_SHARED_BUFFERS:-256MB}
+      - -c
+      - work_mem=32MB
+      - -c
+      - max_connections=100
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sahyog}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-sahyog}
+      LITELLM_DB_PASSWORD: ${LITELLM_DB_PASSWORD:?LITELLM_DB_PASSWORD is required}
+      LANGFUSE_DB_PASSWORD: ${LANGFUSE_DB_PASSWORD:?LANGFUSE_DB_PASSWORD is required}
+      KEYCLOAK_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?KEYCLOAK_DB_PASSWORD is required}
+    ports:
+      # Requires the non-internal `app` network: Docker does not publish ports for
+      # containers that are only on an `internal: true` network (breaks host/--local).
+      - "127.0.0.1:${POSTGRES_PORT:-5724}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/10-init.sh:ro
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sahyog} -d ${POSTGRES_DB:-sahyog}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  redis:
+    profiles: [minimal]
+    image: redis:7.4.11-alpine
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1"]
+    ports:
+      # Same as postgres: join `app` so 127.0.0.1:REDIS_PORT publishes for host/--local.
+      - "127.0.0.1:${REDIS_PORT:-5725}:6379"
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  s3proxy:
+    profiles: [minimal]
+    # Local/pilot S3-compatible store (filesystem). MinIO community images are no
+    # longer used. Auth is aws-v4 with S3_ACCESS_KEY / S3_SECRET_KEY — never
+    # S3PROXY_AUTHORIZATION=none. Production uses a managed S3 service.
+    image: andrewgaul/s3proxy:2.8.0
+    environment:
+      S3PROXY_ENDPOINT: http://0.0.0.0:80
+      S3PROXY_AUTHORIZATION: aws-v4
+      S3PROXY_IDENTITY: ${S3_ACCESS_KEY:?S3_ACCESS_KEY is required}
+      S3PROXY_CREDENTIAL: ${S3_SECRET_KEY:?S3_SECRET_KEY is required}
+      S3PROXY_CORS_ALLOW_ALL: "false"
+      JCLOUDS_PROVIDER: filesystem
+      JCLOUDS_FILESYSTEM_BASEDIR: /data
+      JCLOUDS_REGIONS: ${S3_REGION:-us-east-1}
+      LOG_LEVEL: info
+    ports:
+      # Keep MINIO_PORT as a legacy alias for the published S3 API port.
+      - "127.0.0.1:${S3_PORT:-5719}:80"
+    volumes:
+      - s3proxydata:/data
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # Unauthenticated GET returns 403 when aws-v4 is enforced; that proves the listener is up.
+      test:
+        [
+          "CMD-SHELL",
+          "code=$$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:80/); test $$code = 403 -o $$code = 200",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 10s
+
+  s3-init:
+    profiles: [minimal]
+    image: amazon/aws-cli:2.22.12
+    entrypoint: ["/bin/bash", "/init/init.sh"]
+    environment:
+      S3_ENDPOINT_URL: http://s3proxy:80
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:?S3_ACCESS_KEY is required}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:?S3_SECRET_KEY is required}
+      S3_REGION: ${S3_REGION:-us-east-1}
+      S3_BUCKET_DOCUMENTS: ${S3_BUCKET_DOCUMENTS:-sahyog-documents}
+      S3_BUCKET_AUDIO: ${S3_BUCKET_AUDIO:-sahyog-audio}
+      S3_BUCKET_EXPORTS: ${S3_BUCKET_EXPORTS:-sahyog-exports}
+      S3_BUCKET_ANCHORS: ${S3_BUCKET_ANCHORS:-sahyog-audit-anchors}
+      S3_BUCKET_EVAL: ${S3_BUCKET_EVAL:-sahyog-eval}
+      S3_BUCKET_BACKUPS: ${S3_BUCKET_BACKUPS:-sahyog-backups}
+    volumes:
+      - ./docker/s3proxy/init.sh:/init/init.sh:ro
+    depends_on:
+      s3proxy:
+        condition: service_healthy
+    restart: "no"
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+
+  # ------------------------------------------------------------------- gateway
+  litellm:
+    profiles: [minimal]
+    image: ghcr.io/berriai/litellm:v1.106.3
+    command: ["--config", "/app/config/litellm.yaml", "--port", "4000", "--num_workers", "1"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?LITELLM_MASTER_KEY is required}
+      LITELLM_DATABASE_URL: postgresql://litellm:${LITELLM_DB_PASSWORD:?LITELLM_DB_PASSWORD is required}@postgres:5432/litellm
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_CHAT_MODEL: ${OLLAMA_CHAT_MODEL:-ollama_chat/qwen2.5:7b-instruct-q4_K_M}
+      OLLAMA_SMALL_MODEL: ${OLLAMA_SMALL_MODEL:-ollama_chat/qwen2.5:3b-instruct-q4_K_M}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      MCP_SERVICE_TOKEN: ${MCP_SERVICE_TOKEN:?MCP_SERVICE_TOKEN is required}
+      LITELLM_LOG: INFO
+      STORE_MODEL_IN_DB: "false"
+    ports:
+      - "127.0.0.1:${LITELLM_PORT:-5708}:4000"
+    volumes:
+      - ./config:/app/config:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4000/health/liveliness', timeout=3)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  # --------------------------------------------------------------- MCP services
+  mcp-broker:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_broker.main:app", "--host", "0.0.0.0", "--port", "8100"]
+    ports:
+      - "127.0.0.1:${MCP_BROKER_PORT:-5709}:8100"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-scheduling:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_scheduling.main:app", "--host", "0.0.0.0", "--port", "8101"]
+    ports:
+      - "127.0.0.1:${MCP_SCHEDULING_PORT:-5710}:8101"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8101/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-records:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_records.main:app", "--host", "0.0.0.0", "--port", "8102"]
+    ports:
+      - "127.0.0.1:${MCP_RECORDS_PORT:-5711}:8102"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8102/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-clinical:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_clinical.main:app", "--host", "0.0.0.0", "--port", "8103"]
+    ports:
+      - "127.0.0.1:${MCP_CLINICAL_PORT:-5712}:8103"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8103/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-platform:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_platform.main:app", "--host", "0.0.0.0", "--port", "8104"]
+    ports:
+      - "127.0.0.1:${MCP_PLATFORM_PORT:-5713}:8104"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8104/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-decider:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_decider.main:app", "--host", "0.0.0.0", "--port", "8105"]
+    # Load package from workspace so OpenDecider reasoning/thinking parse ships without a full image rebuild.
+    volumes:
+      - ./services/mcp-decider:/app/services/mcp-decider:ro
+    environment:
+      <<: *mcp-env
+      PYTHONPATH: /app/services/mcp-decider:/app/apps/api:/app/packages/py-common
+      DECIDER_BACKEND: ${DECIDER_BACKEND:-ollama}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:${MCP_DECIDER_PORT:-5714}:8105"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8105/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  mcp-stt:
+    <<: *mcp-service
+    profiles: [core]
+    command: ["uvicorn", "sahyog_mcp_stt.main:app", "--host", "0.0.0.0", "--port", "8107"]
+    volumes:
+      - ./data/models:/models:ro
+      # Live workspace package so PyAV/faster-whisper compat patches ship without rebuild.
+      - ./services/mcp-stt:/app/services/mcp-stt:ro
+    environment:
+      <<: *mcp-env
+      PYTHONPATH: /app/services/mcp-stt:/app/apps/api:/app/packages/py-common
+    ports:
+      - "127.0.0.1:${MCP_STT_PORT:-5716}:8107"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8107/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  mcp-pii:
+    <<: *mcp-service
+    profiles: [minimal]
+    command: ["uvicorn", "sahyog_mcp_pii.main:app", "--host", "0.0.0.0", "--port", "8106"]
+    environment:
+      <<: *mcp-env
+      PYTHONPATH: /app/services/mcp-pii:/app/apps/api:/app/packages/py-common
+      # Read-only rootfs: keep HF/torch/uv caches on tmpfs (G-28 composite load).
+      HOME: /tmp/sahyog-home
+      XDG_CACHE_HOME: /tmp/sahyog-home/.cache
+      HF_HOME: /tmp/sahyog-home/.cache/huggingface
+      TRANSFORMERS_CACHE: /tmp/sahyog-home/.cache/huggingface
+      TORCH_HOME: /tmp/sahyog-home/.cache/torch
+    volumes:
+      - ./data/models:/models:ro
+    tmpfs:
+      - /tmp:size=2g
+      - /tmp/sahyog-home:size=2g
+    ports:
+      - "127.0.0.1:${MCP_PII_PORT:-5715}:8106"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8106/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  mcp-external:
+    <<: *mcp-service
+    profiles: [core]
+    command: ["uvicorn", "sahyog_mcp_external.main:app", "--host", "0.0.0.0", "--port", "8108"]
+    environment:
+      <<: *mcp-env
+      PYTHONPATH: /app/services/mcp-external:/app/apps/api:/app/packages/py-common
+    ports:
+      - "127.0.0.1:${MCP_EXTERNAL_PORT:-5734}:8108"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8108/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  abdm-stub:
+    profiles: [minimal]
+    image: sahyog-api:local
+    build: *api-build
+    command:
+      ["uvicorn", "sahyog_abdm_stub.main:app", "--host", "0.0.0.0", "--port", "8090"]
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      PYTHONPATH: /app/services/abdm-stub:/app/apps/api:/app/packages/py-common
+    ports:
+      - "127.0.0.1:${ABDM_STUB_PORT:-5735}:8090"
+    restart: unless-stopped
+    networks: [app]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8090/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # --------------------------------------------------------------------- email
+  mailpit:
+    profiles: [minimal]
+    image: axllent/mailpit:v1.32.0
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+    ports:
+      - "127.0.0.1:${SMTP_CAPTURE_PORT:-5717}:1025"
+      - "127.0.0.1:${MAILPIT_UI_PORT:-5718}:8025"
+    restart: unless-stopped
+    networks: [app]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8025/api/v1/info"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------- telemetry
+  langfuse-web:
+    profiles: [core]
+    image: langfuse/langfuse:2.95.0
+    environment:
+      DATABASE_URL: postgresql://langfuse:${LANGFUSE_DB_PASSWORD:?LANGFUSE_DB_PASSWORD is required}@postgres:5432/langfuse
+      NEXTAUTH_URL: ${LANGFUSE_PUBLIC_URL:-http://localhost:5721}
+      # Docker sets HOSTNAME to the container id; Next.js would bind only that address.
+      HOSTNAME: 0.0.0.0
+      # Core-only secrets use defaults so an inactive profile does not block minimal.
+      # scripts/start.sh validates them for core/full before Compose runs.
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-}
+      SALT: ${LANGFUSE_SALT:-}
+      ENCRYPTION_KEY: ${LANGFUSE_ENCRYPTION_KEY:-}
+      TELEMETRY_ENABLED: "false"
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "false"
+      LANGFUSE_CAPTURE_CONTENT: "false"
+      LANGFUSE_INIT_ORG_ID: ${LANGFUSE_INIT_ORG_ID:-sahyog}
+      LANGFUSE_INIT_ORG_NAME: ${LANGFUSE_INIT_ORG_NAME:-Sahyog}
+      LANGFUSE_INIT_PROJECT_ID: ${LANGFUSE_INIT_PROJECT_ID:-sahyog}
+      LANGFUSE_INIT_PROJECT_NAME: ${LANGFUSE_INIT_PROJECT_NAME:-Sahyog Care Companion}
+      LANGFUSE_INIT_PROJECT_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_INIT_PROJECT_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_INIT_USER_EMAIL: ${LANGFUSE_INIT_USER_EMAIL:-admin@sahyog.local}
+      LANGFUSE_INIT_USER_NAME: ${LANGFUSE_INIT_USER_NAME:-Sahyog Admin}
+      LANGFUSE_INIT_USER_PASSWORD: ${LANGFUSE_INIT_USER_PASSWORD:-}
+    ports:
+      - "127.0.0.1:${LANGFUSE_PORT:-5721}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/public/health >/dev/null || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  langfuse-worker:
+    profiles: [core]
+    image: langfuse/langfuse-worker:2.95.0
+    environment:
+      DATABASE_URL: postgresql://langfuse:${LANGFUSE_DB_PASSWORD:?LANGFUSE_DB_PASSWORD is required}@postgres:5432/langfuse
+      NEXTAUTH_URL: ${LANGFUSE_PUBLIC_URL:-http://localhost:5721}
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-}
+      SALT: ${LANGFUSE_SALT:-}
+      ENCRYPTION_KEY: ${LANGFUSE_ENCRYPTION_KEY:-}
+      TELEMETRY_ENABLED: "false"
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "false"
+      LANGFUSE_CAPTURE_CONTENT: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app, data]
+    security_opt:
+      - no-new-privileges:true
+
+  otel-collector:
+    profiles: [core]
+    image: otel/opentelemetry-collector-contrib:0.163.2
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes:
+      - ./docker/otel/config.yaml:/etc/otel/config.yaml:ro
+    restart: unless-stopped
+    networks: [app, obs]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/otelcol-contrib", "components"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ------------------------------------------------------ full observability
+  prometheus:
+    profiles: [full]
+    image: prom/prometheus:v3.7.3
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=15d
+      - --web.enable-lifecycle
+    ports:
+      - "127.0.0.1:${PROMETHEUS_PORT:-5722}:9090"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./docker/prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - promdata:/prometheus
+    # Scrape host/--local API metrics (job sahyog-api-host → host.docker.internal:5706).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - alertmanager
+    restart: unless-stopped
+    networks: [obs, app]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9090/-/ready"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  alertmanager:
+    profiles: [full]
+    image: prom/alertmanager:v0.28.1
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --storage.path=/alertmanager
+    ports:
+      - "127.0.0.1:${ALERTMANAGER_PORT:-5736}:9093"
+    volumes:
+      - ./docker/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanagerdata:/alertmanager
+    restart: unless-stopped
+    # obs for Prometheus; app so SMTP can reach Mailpit (G-25 demo paging).
+    networks: [obs, app]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9093/-/ready"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  grafana:
+    profiles: [full]
+    image: grafana/grafana:12.2.0
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      # Allow the Sahyog admin /ops console to iframe Grafana (same-origin loopback).
+      GF_SECURITY_ALLOW_EMBEDDING: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: ${GRAFANA_ANONYMOUS_ENABLED:-false}
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    ports:
+      - "127.0.0.1:${GRAFANA_PORT:-5723}:3000"
+    volumes:
+      - grafanadata:/var/lib/grafana
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [obs]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health >/dev/null || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  clamav:
+    profiles: [full]
+    # The clamav/clamav repository publishes amd64-only manifests; the Debian
+    # repository is the maintained multi-arch build. The _base tag ships without
+    # signatures, so the first start downloads them into the persisted volume.
+    image: clamav/clamav-debian:1.4.6_base
+    environment:
+      CLAMAV_NO_CLAMD: "false"
+      CLAMAV_NO_FRESHCLAMD: "false"
+      CLAMAV_NO_MILTERD: "true"
+    ports:
+      # Host/--local API reaches clamd via 127.0.0.1:CLAMAV_PUBLISH_PORT.
+      - "127.0.0.1:${CLAMAV_PUBLISH_PORT:-5737}:3310"
+    volumes:
+      - clamavdata:/var/lib/clamav
+    restart: unless-stopped
+    networks: [app]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "echo PING | nc -w 2 localhost 3310 | grep -q PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+  # Opt-in only. Host Ollama is the default (OLLAMA_BASE_URL). scripts/start.sh
+  # does not enable this profile, so the image is not pulled with minimal/core/full.
+  # Do not run this container beside a host Ollama on port 11434.
+  ollama:
+    profiles: [ollama]
+    image: ollama/ollama:0.12.3
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT:-5728}:11434"
+    volumes:
+      - ollamamodels:/root/.ollama
+    restart: unless-stopped
+    networks: [app]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  loadgen:
+    profiles: [full]
+    image: grafana/k6:1.3.0
+    command: ["run", "/scripts/smoke.js"]
+    environment:
+      BASE_URL: ${LOADGEN_BASE_URL:-http://api:8000}
+    volumes:
+      - ./docker/loadgen:/scripts:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: "no"
+    networks: [app]
+    security_opt:
+      - no-new-privileges:true
+
+  egress-proxy:
+    profiles: [full]
+    image: ubuntu/squid:latest
+    ports:
+      - "127.0.0.1:${EGRESS_PROXY_PORT:-5726}:3128"
+    volumes:
+      - ./docker/egress/squid.conf:/etc/squid/squid.conf:ro
+    restart: unless-stopped
+    networks: [app]
+    security_opt:
+      - no-new-privileges:true
+
+  # ------------------------------------------------------------ optional MELT
+  clickhouse:
+    profiles: [melt]
+    image: clickhouse/clickhouse-server:24.8-alpine
+    environment:
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB:-otel}
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-otel}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    ports:
+      - "127.0.0.1:${CLICKHOUSE_HTTP_PORT:-5727}:8123"
+    volumes:
+      - clickhousedata:/var/lib/clickhouse
+    restart: unless-stopped
+    networks: [obs, melt]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8123/ping"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  # --------------------------------------------------------------- mem0 (self-host)
+  # https://mem0.ai/library/integrations/self-host-mem0-docker
+  # LLM/embed via LiteLLM (Ollama / llama-server). Ports 5730–5733.
+  mem0-postgres:
+    profiles: [core]
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: mem0
+      POSTGRES_PASSWORD: ${MEM0_POSTGRES_PASSWORD:-mem0}
+      POSTGRES_DB: mem0
+    volumes:
+      - mem0pgdata:/var/lib/postgresql/data
+    networks: [app]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mem0 -d mem0"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mem0-neo4j:
+    profiles: [core]
+    image: neo4j:5.26.4
+    environment:
+      NEO4J_AUTH: neo4j/${MEM0_NEO4J_PASSWORD:-mem0graph}
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_apoc_import_file_enabled: "true"
+      NEO4J_apoc_import_file_use__neo4j__config: "true"
+    volumes:
+      - mem0neo4j:/data
+    networks: [app]
+    ports:
+      - "127.0.0.1:${MEM0_NEO4J_HTTP_PORT:-5731}:7474"
+      - "127.0.0.1:${MEM0_NEO4J_BOLT_PORT:-5732}:7687"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null -q http://localhost:7474 || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 90s
+
+  mem0:
+    profiles: [core]
+    build:
+      context: ./docker/mem0
+      dockerfile: Dockerfile
+    image: sahyog-mem0:local
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+      POSTGRES_HOST: mem0-postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: mem0
+      POSTGRES_USER: mem0
+      POSTGRES_PASSWORD: ${MEM0_POSTGRES_PASSWORD:-mem0}
+      NEO4J_URI: bolt://mem0-neo4j:7687
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: ${MEM0_NEO4J_PASSWORD:-mem0graph}
+      LLM_PROVIDER: ${MEM0_LLM_PROVIDER:-openai}
+      LLM_MODEL: ${MEM0_LLM_MODEL:-${OLLAMA_SMALL_MODEL:-qwen2.5:3b-instruct-q4_K_M}}
+      EMBEDDER_PROVIDER: ${MEM0_EMBEDDER_PROVIDER:-openai}
+      EMBEDDER_MODEL: ${MEM0_EMBEDDER_MODEL:-${EMBED_MODEL:-bge-m3}}
+      OPENAI_API_KEY: ${LITELLM_MASTER_KEY:-sk-local}
+      OPENAI_BASE_URL: ${MEM0_OPENAI_BASE_URL:-http://litellm:4000/v1}
+      OPENAI_API_BASE: ${MEM0_OPENAI_BASE_URL:-http://litellm:4000/v1}
+      LLM_BASE_URL: ${MEM0_OPENAI_BASE_URL:-http://litellm:4000/v1}
+      EMBEDDER_BASE_URL: ${MEM0_OPENAI_BASE_URL:-http://litellm:4000/v1}
+      AUTH_DISABLED: ${MEM0_AUTH_DISABLED:-true}
+    volumes:
+      - mem0history:/app/history
+      - ./docker/mem0/config.json:/app/config.json:ro
+    depends_on:
+      mem0-postgres:
+        condition: service_healthy
+      mem0-neo4j:
+        condition: service_healthy
+    networks: [app]
+    ports:
+      - "127.0.0.1:${MEM0_PORT:-5730}:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/docs"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  llama-decider:
+    profiles: [core]
+    image: ghcr.io/ggerganov/llama.cpp:server
+    command:
+      - "--model"
+      - "/models/opendecider/model.gguf"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8080"
+      - "--ctx-size"
+      - "2048"
+    volumes:
+      - ./data/models:/models:ro
+    networks: [app]
+    ports:
+      - "127.0.0.1:${DECIDER_LLAMA_PORT:-5733}:8080"
+    restart: unless-stopped
+
+networks:
+  app:
+  data:
+    internal: true
+  obs:
+  melt:
+    internal: true
+
+volumes:
+  pgdata:
+  redisdata:
+  s3proxydata:
+  promdata:
+  grafanadata:
+  ollamamodels:
+  clickhousedata:
+  clamavdata:
+  mem0pgdata:
+  mem0neo4j:
+  mem0history:
+  alertmanagerdata:

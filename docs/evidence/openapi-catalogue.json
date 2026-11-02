@@ -1,0 +1,462 @@
+{
+  "generated_at": "2026-10-31T15:30:00.268519+00:00",
+  "note": "As-built OpenAPI catalogue for G-38; not a WCAG/ABDM certification claim.",
+  "path_count": 144,
+  "paths": {
+    "/api/v1/abdm/patients/{patient_id}/link": [
+      "PUT"
+    ],
+    "/api/v1/abdm/patients/{patient_id}/links": [
+      "GET"
+    ],
+    "/api/v1/abdm/patients/{patient_id}/links/{system}": [
+      "DELETE"
+    ],
+    "/api/v1/abdm/status": [
+      "GET"
+    ],
+    "/api/v1/abdm/stub/equality": [
+      "GET"
+    ],
+    "/api/v1/admin/audit": [
+      "GET"
+    ],
+    "/api/v1/admin/audit/export": [
+      "GET"
+    ],
+    "/api/v1/admin/compliance": [
+      "GET"
+    ],
+    "/api/v1/admin/compliance/{kind}/attest": [
+      "POST"
+    ],
+    "/api/v1/admin/costs": [
+      "GET"
+    ],
+    "/api/v1/admin/flags": [
+      "GET"
+    ],
+    "/api/v1/admin/flags/changes": [
+      "GET"
+    ],
+    "/api/v1/admin/flags/{key}": [
+      "PATCH"
+    ],
+    "/api/v1/admin/governance": [
+      "GET",
+      "PATCH"
+    ],
+    "/api/v1/admin/model-routes": [
+      "GET"
+    ],
+    "/api/v1/admin/notification-deliveries": [
+      "GET"
+    ],
+    "/api/v1/admin/prompts": [
+      "GET"
+    ],
+    "/api/v1/analytics/compliance": [
+      "GET"
+    ],
+    "/api/v1/analytics/eval-runs/{run_id}": [
+      "GET"
+    ],
+    "/api/v1/analytics/evaluations": [
+      "GET"
+    ],
+    "/api/v1/analytics/finops": [
+      "GET"
+    ],
+    "/api/v1/analytics/finops/budgets": [
+      "GET",
+      "PUT"
+    ],
+    "/api/v1/analytics/finops/export": [
+      "GET"
+    ],
+    "/api/v1/analytics/finops/reconcile": [
+      "POST"
+    ],
+    "/api/v1/analytics/finops/reconciliation": [
+      "GET"
+    ],
+    "/api/v1/analytics/finops/savings": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/analytics/finops/what-if": [
+      "POST"
+    ],
+    "/api/v1/analytics/insights": [
+      "GET"
+    ],
+    "/api/v1/analytics/insights/{insight_id}/decision": [
+      "POST"
+    ],
+    "/api/v1/analytics/load-guard": [
+      "GET"
+    ],
+    "/api/v1/analytics/metrics": [
+      "GET"
+    ],
+    "/api/v1/analytics/overview": [
+      "GET"
+    ],
+    "/api/v1/analytics/quality": [
+      "GET"
+    ],
+    "/api/v1/appointments": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/appointments/{appointment_id}": [
+      "GET"
+    ],
+    "/api/v1/appointments/{appointment_id}/cancel": [
+      "POST"
+    ],
+    "/api/v1/appointments/{appointment_id}/override": [
+      "POST"
+    ],
+    "/api/v1/appointments/{appointment_id}/reschedule": [
+      "POST"
+    ],
+    "/api/v1/auth/me": [
+      "GET"
+    ],
+    "/api/v1/chat/citations/{chunk_id}": [
+      "GET"
+    ],
+    "/api/v1/chat/messages/{message_id}/feedback": [
+      "POST"
+    ],
+    "/api/v1/chat/messages/{message_id}/sources": [
+      "GET"
+    ],
+    "/api/v1/chat/runs/{run_id}": [
+      "GET"
+    ],
+    "/api/v1/chat/runs/{run_id}/events": [
+      "GET"
+    ],
+    "/api/v1/chat/runs/{run_id}/resume": [
+      "POST"
+    ],
+    "/api/v1/chat/runs/{run_id}/retry": [
+      "POST"
+    ],
+    "/api/v1/chat/runs/{run_id}/sources": [
+      "GET"
+    ],
+    "/api/v1/chat/runs/{run_id}/stop": [
+      "POST"
+    ],
+    "/api/v1/chat/sessions": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/chat/sessions/{session_id}": [
+      "DELETE",
+      "GET",
+      "PATCH"
+    ],
+    "/api/v1/chat/sessions/{session_id}/messages": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/consents": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/consents/{consent_id}/revoke": [
+      "POST"
+    ],
+    "/api/v1/doctors": [
+      "GET"
+    ],
+    "/api/v1/doctors/{doctor_name}/slots": [
+      "GET"
+    ],
+    "/api/v1/fhir/patients/{patient_id}": [
+      "GET"
+    ],
+    "/api/v1/fhir/patients/{patient_id}/encounters": [
+      "GET"
+    ],
+    "/api/v1/fhir/patients/{patient_id}/link": [
+      "PUT"
+    ],
+    "/api/v1/handoffs": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/handoffs/{handoff_id}/assign": [
+      "POST"
+    ],
+    "/api/v1/handoffs/{handoff_id}/resolve": [
+      "POST"
+    ],
+    "/api/v1/incidents": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/incidents/{incident_id}": [
+      "PATCH"
+    ],
+    "/api/v1/internal/records/chunks/{chunk_id}": [
+      "GET"
+    ],
+    "/api/v1/internal/records/documents": [
+      "GET"
+    ],
+    "/api/v1/internal/records/documents/{document_id}/status": [
+      "GET"
+    ],
+    "/api/v1/internal/records/medications": [
+      "GET"
+    ],
+    "/api/v1/internal/records/search": [
+      "POST"
+    ],
+    "/api/v1/internal/scheduling/appointments/{appointment_id}": [
+      "GET"
+    ],
+    "/api/v1/internal/scheduling/cancel": [
+      "POST"
+    ],
+    "/api/v1/internal/scheduling/confirm": [
+      "POST"
+    ],
+    "/api/v1/internal/scheduling/doctors": [
+      "GET"
+    ],
+    "/api/v1/internal/scheduling/hold": [
+      "POST"
+    ],
+    "/api/v1/internal/scheduling/reschedule": [
+      "POST"
+    ],
+    "/api/v1/internal/scheduling/slots": [
+      "GET"
+    ],
+    "/api/v1/me/contacts": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/me/contacts/{contact_id}": [
+      "DELETE"
+    ],
+    "/api/v1/me/contacts/{contact_id}/request-verification": [
+      "POST"
+    ],
+    "/api/v1/me/contacts/{contact_id}/verify": [
+      "POST"
+    ],
+    "/api/v1/me/context": [
+      "DELETE"
+    ],
+    "/api/v1/me/contexts": [
+      "GET"
+    ],
+    "/api/v1/me/contexts/{consent_id}/activate": [
+      "POST"
+    ],
+    "/api/v1/me/deletion-request": [
+      "DELETE",
+      "GET",
+      "POST"
+    ],
+    "/api/v1/me/export": [
+      "GET"
+    ],
+    "/api/v1/me/memory": [
+      "GET",
+      "PUT"
+    ],
+    "/api/v1/me/memory/purge": [
+      "POST"
+    ],
+    "/api/v1/me/memory/semantic": [
+      "GET"
+    ],
+    "/api/v1/me/memory/{key}": [
+      "DELETE"
+    ],
+    "/api/v1/meta": [
+      "GET"
+    ],
+    "/api/v1/notifications": [
+      "GET"
+    ],
+    "/api/v1/notifications/contacts": [
+      "POST"
+    ],
+    "/api/v1/notifications/contacts/list": [
+      "GET"
+    ],
+    "/api/v1/notifications/contacts/{contact_id}/request-verification": [
+      "POST"
+    ],
+    "/api/v1/notifications/contacts/{contact_id}/verify": [
+      "POST"
+    ],
+    "/api/v1/notifications/send": [
+      "POST"
+    ],
+    "/api/v1/notifications/slack-coverage": [
+      "GET"
+    ],
+    "/api/v1/notifications/templates": [
+      "GET"
+    ],
+    "/api/v1/notifications/{notification_id}": [
+      "GET"
+    ],
+    "/api/v1/notifications/{notification_id}/read": [
+      "POST"
+    ],
+    "/api/v1/nursing/patients/{patient_id}/summaries": [
+      "GET"
+    ],
+    "/api/v1/nursing/summaries/{summary_id}": [
+      "GET"
+    ],
+    "/api/v1/nursing/summaries/{summary_id}/decision": [
+      "POST"
+    ],
+    "/api/v1/nursing/summary": [
+      "POST"
+    ],
+    "/api/v1/patients": [
+      "GET"
+    ],
+    "/api/v1/pharmacy/stock": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/pharmacy/stock/import": [
+      "POST"
+    ],
+    "/api/v1/pharmacy/stock/lookup": [
+      "GET"
+    ],
+    "/api/v1/pharmacy/stock/status": [
+      "GET"
+    ],
+    "/api/v1/pharmacy/stock/typeahead": [
+      "GET"
+    ],
+    "/api/v1/pharmacy/stock/{item_id}": [
+      "DELETE",
+      "GET",
+      "PATCH"
+    ],
+    "/api/v1/records/ask": [
+      "POST"
+    ],
+    "/api/v1/records/documents": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/records/documents/{document_id}": [
+      "DELETE",
+      "GET"
+    ],
+    "/api/v1/records/documents/{document_id}/chunks": [
+      "GET"
+    ],
+    "/api/v1/records/documents/{document_id}/download": [
+      "GET"
+    ],
+    "/api/v1/records/documents/{document_id}/ingest": [
+      "POST"
+    ],
+    "/api/v1/records/medications": [
+      "GET"
+    ],
+    "/api/v1/records/search": [
+      "POST"
+    ],
+    "/api/v1/review-queue": [
+      "GET"
+    ],
+    "/api/v1/review-queue/{task_id}/claim": [
+      "POST"
+    ],
+    "/api/v1/review-queue/{task_id}/close": [
+      "POST"
+    ],
+    "/api/v1/scribe/encounters": [
+      "GET",
+      "POST"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}": [
+      "GET"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/audio": [
+      "POST"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/audio/{transcript_id}/complete": [
+      "POST"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/close": [
+      "POST"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/runs": [
+      "POST"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/transcript": [
+      "GET"
+    ],
+    "/api/v1/scribe/encounters/{encounter_id}/transcripts": [
+      "POST"
+    ],
+    "/api/v1/scribe/notes": [
+      "GET"
+    ],
+    "/api/v1/scribe/notes/{note_id}": [
+      "GET"
+    ],
+    "/api/v1/scribe/notes/{note_id}/corrections": [
+      "POST"
+    ],
+    "/api/v1/scribe/notes/{note_id}/download": [
+      "GET"
+    ],
+    "/api/v1/scribe/notes/{note_id}/reservations": [
+      "POST"
+    ],
+    "/api/v1/scribe/notes/{note_id}/sources": [
+      "GET"
+    ],
+    "/api/v1/scribe/notes/{note_id}/versions": [
+      "GET"
+    ],
+    "/api/v1/scribe/runs/{run_id}": [
+      "GET"
+    ],
+    "/api/v1/scribe/runs/{run_id}/acknowledge": [
+      "POST"
+    ],
+    "/api/v1/scribe/runs/{run_id}/draft": [
+      "PATCH"
+    ],
+    "/api/v1/scribe/runs/{run_id}/reject": [
+      "POST"
+    ],
+    "/api/v1/scribe/runs/{run_id}/sign": [
+      "POST"
+    ],
+    "/api/v1/scribe/stock": [
+      "GET"
+    ],
+    "/healthz": [
+      "GET"
+    ],
+    "/readyz": [
+      "GET"
+    ]
+  },
+  "title": "Sahyog Care Companion API",
+  "version": "0.1.0"
+}

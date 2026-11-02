@@ -1,0 +1,430 @@
+{
+  "generated_at": "2026-10-25T06:30:51.006257+00:00",
+  "mode": "live_computed",
+  "note": "Analytics are computed at request time in this build. This file is a frozen copy, not a scheduled database rollup.",
+  "sections": {
+    "compliance": {
+      "as_of": "2026-10-25T06:30:50.988478+00:00",
+      "latest_audit_event_at": "2026-10-25T06:30:00.485129+00:00",
+      "tiles": [
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "description": "Consent rows currently active. Aggregate only; never a patient list.",
+          "dimensions": [
+            "clinic"
+          ],
+          "formula": "SELECT count(*) FROM consents WHERE status = 'active'",
+          "freshness_hours": 24,
+          "id": "consent_active",
+          "label": "Active caregiver consents",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "consents",
+          "value": 1,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "formula": "count(status = 'expired')",
+          "id": "consent_expired",
+          "label": "Expired caregiver consents",
+          "source": "consents",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "consents",
+          "value": 0
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "description": "Append-only audit rows recorded in the period.",
+          "dimensions": [
+            "date",
+            "actor_role",
+            "action"
+          ],
+          "formula": "SELECT count(*) FROM audit_events WHERE created_at >= :start_date AND created_at < :end_date",
+          "freshness_hours": 24,
+          "id": "audit_events",
+          "label": "Audit events",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "events",
+          "value": 82,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "formula": "verify(prev_hash, hash) over the full chain",
+          "id": "audit_chain",
+          "label": "Audit hash chain",
+          "note": "Hash chaining is not enabled in this build; append-only rows exist but the chain is not verifiable.",
+          "source": "audit_events",
+          "status": "not_configured",
+          "suppressed": false,
+          "unit": "status",
+          "value": null
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "formula": "latest run per job",
+          "id": "retention_runs",
+          "label": "Retention and deletion jobs",
+          "note": "The scheduled retention worker is not part of the current build.",
+          "source": "retention_run",
+          "status": "not_configured",
+          "suppressed": false,
+          "unit": "status",
+          "value": null
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "formula": "users with MFA / active users",
+          "id": "mfa_coverage",
+          "label": "MFA coverage",
+          "note": "Keycloak MFA enrolment is not queried by this build.",
+          "source": "keycloak",
+          "status": "unknown",
+          "suppressed": false,
+          "unit": "percent",
+          "value": null
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.988478+00:00",
+          "formula": "EXTERNAL_EGRESS_ENABLED",
+          "id": "egress_policy",
+          "label": "External model egress",
+          "note": "External egress stays disabled until the PII gate is healthy.",
+          "source": "runtime settings",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "status",
+          "value": "disabled"
+        }
+      ]
+    },
+    "evaluations": {
+      "as_of": "2026-10-25T06:30:50.991845+00:00",
+      "frameworks": {
+        "non_rag": "deepeval",
+        "rag": "ragas"
+      },
+      "metrics": [
+        {
+          "as_of": "2026-10-25T06:30:50.991845+00:00",
+          "description": "Deterministic and second-pass recall on the approved safety fixture set.",
+          "dimensions": [
+            "dataset",
+            "model_alias",
+            "locale"
+          ],
+          "formula": "SELECT value FROM eval_metric_results WHERE metric_key = 'red_flag_recall' AND run_id = :latest_run",
+          "freshness_hours": 168,
+          "id": "red_flag_recall",
+          "label": "Red-flag recall",
+          "note": "No matching evaluation run has been recorded.",
+          "source": "eval_runs",
+          "status": "no_runs",
+          "suppressed": false,
+          "unit": "ratio",
+          "value": null,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.991845+00:00",
+          "description": "Latest faithfulness score on the approved RAG eval set.",
+          "dimensions": [
+            "dataset",
+            "model_alias",
+            "locale"
+          ],
+          "formula": "SELECT value FROM eval_metric_results WHERE metric_key = 'faithfulness' AND framework = 'ragas' AND run_id = :latest_run",
+          "freshness_hours": 168,
+          "id": "rag_faithfulness",
+          "label": "RAG faithfulness (RAGAS)",
+          "note": "No matching evaluation run has been recorded.",
+          "source": "eval_runs",
+          "status": "no_runs",
+          "suppressed": false,
+          "unit": "ratio",
+          "value": null,
+          "version": 1
+        }
+      ],
+      "runs": [],
+      "status": "no_runs"
+    },
+    "finops": {
+      "as_of": "2026-10-25T06:30:50.997083+00:00",
+      "budgets_usd": {
+        "monthly_infra_usd": 50,
+        "monthly_models_usd": 250,
+        "monthly_notifications_usd": 25
+      },
+      "by_purpose": [
+        {
+          "calls": 2,
+          "completion_tokens": 84,
+          "cost_usd": 0.0,
+          "model_alias": "local_small",
+          "prompt_tokens": 370,
+          "purpose": "conversation"
+        },
+        {
+          "calls": 2,
+          "completion_tokens": 160,
+          "cost_usd": 0.0,
+          "model_alias": "local_main",
+          "prompt_tokens": 756,
+          "purpose": "rag_answer"
+        }
+      ],
+      "finops_model_version": "2026-10-25.1",
+      "fx_usd_inr": 88,
+      "monthly_run_rate_usd": 0.0,
+      "observed": {
+        "calls": 4,
+        "completion_tokens": 244,
+        "cost_usd": 0.0,
+        "prompt_tokens": 1126
+      },
+      "period": {
+        "days": 1,
+        "end": "2026-10-25T06:30:50.997083+00:00",
+        "start": "2026-10-24T06:30:50.997083+00:00"
+      },
+      "price_basis_date": "2026-10-25",
+      "price_version": 1,
+      "reconciliation": {
+        "note": "LiteLLM spend reconciliation is not wired in this build; observed cost comes from app usage records.",
+        "status": "unavailable"
+      },
+      "status": "observed",
+      "traffic_class": "real"
+    },
+    "insights": {
+      "ai_generated": false,
+      "as_of": "2026-10-25T06:30:51.001632+00:00",
+      "generator": "deterministic_rules",
+      "items": [
+        {
+          "advisory": true,
+          "area": "finops",
+          "confidence": "medium",
+          "effort": "medium",
+          "evidence": [
+            "config/models.yaml egress classes",
+            "config/finops_model.yaml external_llm_share"
+          ],
+          "id": "local-routing",
+          "impact": "External share target: 40% of turns",
+          "owner": "platform",
+          "recommendation": "Keep record-bearing prompts on local aliases; reserve external aliases for de-identified text.",
+          "status": "new"
+        }
+      ],
+      "note": "Advisory only. Generated by deterministic rules, not a model. No insight changes config, prompts, models, budgets or clinical behaviour."
+    },
+    "overview": {
+      "active_users_by_role": [
+        {
+          "active_users": 4,
+          "role": "service"
+        },
+        {
+          "active_users": 1,
+          "role": "doctor"
+        },
+        {
+          "active_users": 1,
+          "role": "patient"
+        }
+      ],
+      "as_of": "2026-10-25T06:30:50.966743+00:00",
+      "period": {
+        "days": 1,
+        "end": "2026-10-25T06:30:50.966743+00:00",
+        "start": "2026-10-24T06:30:50.966743+00:00"
+      },
+      "small_cell_minimum": 5,
+      "tiles": [
+        {
+          "as_of": "2026-10-25T06:30:50.966743+00:00",
+          "description": "Distinct authenticated users with at least one session in the trailing 30 days.",
+          "dimensions": [
+            "clinic",
+            "locale"
+          ],
+          "formula": "SELECT count(DISTINCT actor_subject) FROM audit_events WHERE action IN ('session.created','chat.message_sent') AND created_at >= :start_date AND created_at < :end_date",
+          "freshness_hours": 24,
+          "id": "active_users_30d",
+          "label": "Active users (30 days)",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "users",
+          "value": 6,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.966743+00:00",
+          "description": "Sessions created in the period, excluding synthetic load-test traffic.",
+          "dimensions": [
+            "date",
+            "locale"
+          ],
+          "formula": "SELECT count(*) FROM chat_sessions WHERE created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'",
+          "freshness_hours": 24,
+          "id": "chat_sessions_created",
+          "label": "Chat sessions created",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": true,
+          "unit": "sessions",
+          "value": null,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.966743+00:00",
+          "description": "User and assistant messages in real-traffic sessions during the period.",
+          "dimensions": [
+            "date",
+            "locale"
+          ],
+          "formula": "SELECT count(*) FROM chat_messages m JOIN chat_sessions s ON s.id = m.session_id WHERE m.created_at >= :start_date AND m.created_at < :end_date AND s.traffic_class = 'real'",
+          "freshness_hours": 24,
+          "id": "chat_messages",
+          "label": "Chat messages",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "messages",
+          "value": 16,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.966743+00:00",
+          "description": "Confirmed appointments in the period, excluding synthetic traffic.",
+          "dimensions": [
+            "date",
+            "clinic",
+            "workflow",
+            "status"
+          ],
+          "formula": "SELECT count(*) FROM appointments WHERE status = 'confirmed' AND created_at >= :start_date AND created_at < :end_date AND traffic_class = 'real'",
+          "freshness_hours": 24,
+          "id": "bookings_confirmed",
+          "label": "Bookings confirmed",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": true,
+          "unit": "bookings",
+          "value": null,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.966743+00:00",
+          "description": "Deterministic red-flag actions recorded in the audit trail in the period.",
+          "dimensions": [
+            "date",
+            "locale"
+          ],
+          "formula": "SELECT count(*) FROM audit_events WHERE action = 'safety.red_flag_triggered' AND created_at >= :start_date AND created_at < :end_date",
+          "freshness_hours": 24,
+          "id": "red_flag_triggers",
+          "label": "Red-flag triggers",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": true,
+          "unit": "events",
+          "value": null,
+          "version": 1
+        }
+      ],
+      "traffic_class": "real"
+    },
+    "quality": {
+      "period": {
+        "days": 1,
+        "end": "2026-10-25T06:30:50.981366+00:00",
+        "start": "2026-10-24T06:30:50.981366+00:00"
+      },
+      "tiles": [
+        {
+          "as_of": "2026-10-25T06:30:50.981366+00:00",
+          "description": "Deterministic red-flag actions recorded in the audit trail in the period.",
+          "dimensions": [
+            "date",
+            "locale"
+          ],
+          "formula": "SELECT count(*) FROM audit_events WHERE action = 'safety.red_flag_triggered' AND created_at >= :start_date AND created_at < :end_date",
+          "freshness_hours": 24,
+          "id": "red_flag_triggers",
+          "label": "Red-flag triggers",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": true,
+          "unit": "events",
+          "value": null,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.981366+00:00",
+          "description": "Model replies refused because the configured route required external egress before the PII gate was healthy.",
+          "dimensions": [
+            "date",
+            "model_alias"
+          ],
+          "formula": "SELECT count(*) FROM audit_events WHERE action = 'chat.reply_blocked' AND created_at >= :start_date AND created_at < :end_date",
+          "freshness_hours": 24,
+          "id": "egress_blocks",
+          "label": "Egress policy blocks",
+          "source": "operational",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "events",
+          "value": 0,
+          "version": 1
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.981366+00:00",
+          "formula": "count(action = 'chat.reply_failed')",
+          "id": "gateway_failures",
+          "label": "Model gateway failures",
+          "source": "audit_events",
+          "status": "ok",
+          "suppressed": false,
+          "unit": "events",
+          "value": 0
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.981366+00:00",
+          "formula": "count(status != 'closed')",
+          "id": "open_incidents",
+          "label": "Open safety incidents",
+          "note": "The incident register is not part of the current build; do not read this as zero.",
+          "source": "incident",
+          "status": "not_configured",
+          "suppressed": false,
+          "unit": "incidents",
+          "value": null
+        },
+        {
+          "as_of": "2026-10-25T06:30:50.981366+00:00",
+          "formula": "within SLA / resolved",
+          "id": "review_sla",
+          "label": "Review queue SLA",
+          "note": "The review queue is not part of the current build.",
+          "source": "review_queue_item",
+          "status": "not_configured",
+          "suppressed": false,
+          "unit": "percent",
+          "value": null
+        }
+      ],
+      "zero_tolerance_note": "Zero-tolerance measures are shown as counts, never averaged into a score."
+    }
+  },
+  "window_days": 1
+}

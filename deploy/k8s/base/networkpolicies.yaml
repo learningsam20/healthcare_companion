@@ -1,0 +1,300 @@
+# Default-deny ingress, then explicit trust-zone paths. Data pods also deny egress
+# except DNS and in-namespace traffic. Egress from app/ai pods is intentionally not
+# default-denied yet; production must route provider egress through an approved
+# proxy/firewall (recorded in docs/gaps.md).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-controller
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values: [web, api, keycloak, s3proxy]
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 8000
+        - protocol: TCP
+          port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-to-api
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: web
+      ports:
+        - protocol: TCP
+          port: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-and-sync-to-keycloak
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: keycloak
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: app
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: keycloak-sync
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 9000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-postgres
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: app
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: keycloak
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: litellm
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: langfuse-web
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: langfuse-worker
+      ports:
+        - protocol: TCP
+          port: 5432
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-redis
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: app
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: langfuse-worker
+      ports:
+        - protocol: TCP
+          port: 6379
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-s3proxy
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: s3proxy
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: app
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: s3-init
+      ports:
+        - protocol: TCP
+          port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-ai
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      sahyog.io/zone: ai
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: app
+      ports:
+        - protocol: TCP
+          port: 4000
+        - protocol: TCP
+          port: 8100
+        - protocol: TCP
+          port: 8101
+        - protocol: TCP
+          port: 8102
+        - protocol: TCP
+          port: 8103
+        - protocol: TCP
+          port: 8104
+        - protocol: TCP
+          port: 8105
+        - protocol: TCP
+          port: 8106
+        - protocol: TCP
+          port: 8107
+    # The broker forwards to leaf MCP services and the local decider may call
+    # Ollama; both are inside the AI zone.
+    - from:
+        - podSelector:
+            matchLabels:
+              sahyog.io/zone: ai
+      ports:
+        - protocol: TCP
+          port: 11434
+        - protocol: TCP
+          port: 8100
+        - protocol: TCP
+          port: 8101
+        - protocol: TCP
+          port: 8102
+        - protocol: TCP
+          port: 8103
+        - protocol: TCP
+          port: 8104
+        - protocol: TCP
+          port: 8105
+        - protocol: TCP
+          port: 8106
+        - protocol: TCP
+          port: 8107
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-litellm-to-ai
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values: [ollama, mcp-broker]
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: litellm
+      ports:
+        - protocol: TCP
+          port: 11434
+        - protocol: TCP
+          port: 8100
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-observability
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values: [otel-collector, langfuse-web, mailpit]
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 4317
+        - protocol: TCP
+          port: 4318
+        - protocol: TCP
+          port: 3000
+        - protocol: TCP
+          port: 1025
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: data-egress
+  labels:
+    app.kubernetes.io/part-of: sahyog
+spec:
+  podSelector:
+    matchLabels:
+      sahyog.io/zone: data
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    - to:
+        - podSelector: {}

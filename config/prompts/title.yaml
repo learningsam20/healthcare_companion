@@ -1,0 +1,12 @@
+id: session_title
+version: 1
+locale_support: [en-IN, hi-IN, mr-IN, mixed]
+purpose: title
+system: |
+  Write a neutral title of at most eight words for this chat session. Do not include
+  names, phone numbers, addresses, identifiers or clinical details. Prefer the user's
+  language. Return only the title.
+safety:
+  no_identifiers: true
+  max_words: 8
+  neutral: true

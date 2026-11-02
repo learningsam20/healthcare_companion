@@ -1,0 +1,141 @@
+# Non-secret runtime configuration. Secrets are in the sahyog-secrets Secret.
+#
+# When a key appears in both the Secret and this ConfigMap, this ConfigMap is
+# listed last in each pod's envFrom list and therefore wins. That lets an
+# operator create the Secret from .env while Kubernetes hostnames stay correct.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sahyog-config
+  labels:
+    app.kubernetes.io/part-of: sahyog
+data:
+  APP_ENV: staging
+  APP_PROFILE: full
+  APP_VERSION: "0.1.0"
+  LOG_LEVEL: INFO
+  TZ: Asia/Kolkata
+  CONFIG_DIR: /app/config
+
+  APP_NAME: Sahyog Care Companion
+  APP_BASE_URL: https://care.example.invalid
+  API_BASE_URL: https://care.example.invalid
+  CORS_ORIGINS: https://care.example.invalid
+  SUPPORTED_LOCALES: en-IN,hi-IN,mr-IN
+  DEFAULT_LOCALE: en-IN
+  LANGUAGE_DETECTION_ENABLED: "true"
+  DISCLAIMER_KEY: demo_not_medical_device
+
+  POSTGRES_USER: sahyog
+  POSTGRES_DB: sahyog
+  DATABASE_POOL_SIZE: "10"
+  DATABASE_POOL_OVERFLOW: "5"
+  PG_SHARED_BUFFERS: 256MB
+  EMBEDDING_DIM: "1024"
+  REDIS_URL: redis://redis:6379/0
+  ARQ_WORKER_QUEUE: sahyog:worker
+  ARQ_SCHEDULER_QUEUE: sahyog:scheduler
+
+  KEYCLOAK_URL: http://keycloak:8080
+  KEYCLOAK_PUBLIC_URL: https://auth.care.example.invalid
+  KEYCLOAK_ADMIN_URL: http://keycloak:8080
+  KEYCLOAK_REALM: sahyog
+  KEYCLOAK_CLIENT_ID: sahyog-api
+  KEYCLOAK_AUDIENCE: sahyog-api
+  KEYCLOAK_ADMIN_USER: admin
+  KEYCLOAK_ADMIN_CLIENT_ID: sahyog-admin
+  KEYCLOAK_WEB_CLIENT_ID: sahyog-web
+  KEYCLOAK_CLI_CLIENT_ID: sahyog-cli
+  KEYCLOAK_MCP_CLIENT_ID: sahyog-mcp
+  KEYCLOAK_WEB_ROOT_URL: https://care.example.invalid
+  KEYCLOAK_WEB_REDIRECT_URIS: https://care.example.invalid/*
+  KEYCLOAK_WEB_ORIGINS: https://care.example.invalid
+
+  S3_ENDPOINT_URL: http://s3proxy:80
+  S3_REGION: us-east-1
+  S3_PUBLIC_ENDPOINT_URL: https://storage.care.example.invalid
+  MINIO_API_CORS_ALLOW_ORIGIN: https://care.example.invalid
+  S3_REGION: ap-south-1
+  S3_BUCKET_DOCUMENTS: sahyog-documents
+  S3_BUCKET_AUDIO: sahyog-audio
+  S3_BUCKET_EXPORTS: sahyog-exports
+  S3_BUCKET_ANCHORS: sahyog-audit-anchors
+  S3_BUCKET_EVAL: sahyog-eval
+  S3_BUCKET_BACKUPS: sahyog-backups
+  S3_USE_PATH_STYLE: "true"
+  PRESIGN_TTL_SECONDS: "300"
+
+  LITELLM_BASE_URL: http://litellm:4000
+  MODEL_ROUTES_CONFIG: config/models.yaml
+  OLLAMA_BASE_URL: http://ollama:11434
+  OLLAMA_CHAT_MODEL: ollama_chat/qwen2.5:7b-instruct-q4_K_M
+  OLLAMA_SMALL_MODEL: ollama_chat/qwen2.5:3b-instruct-q4_K_M
+  EMBED_MODEL: bge-m3
+  EMBEDDING_BASE_URL: http://ollama:11434/v1
+  EXTERNAL_EGRESS_ENABLED: "false"
+
+  MCP_BROKER_URL: http://mcp-broker:8100
+  MCP_SCHEDULING_URL: http://mcp-scheduling:8101
+  MCP_RECORDS_URL: http://mcp-records:8102
+  MCP_CLINICAL_URL: http://mcp-clinical:8103
+  MCP_PLATFORM_URL: http://mcp-platform:8104
+  MCP_DECIDER_URL: http://mcp-decider:8105
+  MCP_PII_URL: http://mcp-pii:8106
+  MCP_STT_URL: http://mcp-stt:8107
+  MCP_CONTEXT_TTL_SECONDS: "120"
+  MCP_OUTPUT_CHAR_CAP: "12000"
+
+  PII_ENGINE: composite
+  PII_FAIL_CLOSED: "true"
+  PII_SCORE_THRESHOLD: "0.65"
+  PRESIDIO_ENABLED: "true"
+  GLINER_ENABLED: "true"
+  PRIVACY_FILTER_ENABLED: "true"
+  DECIDER_ADAPTER: mcp
+  STT_ADAPTER: local
+  STT_MODEL: small
+  STT_COMPUTE_TYPE: int8
+  ALLOW_CLOUD_STT: "false"
+
+  FHIR_TIMEOUT_SECONDS: "15"
+  FEATURE_FHIR_READ: "true"
+  STOCK_ADAPTER: csv
+  STOCK_SOURCE_PATH: config/stock.csv
+  STOCK_STALE_AFTER_MINUTES: "60"
+  SMS_ADAPTER: http
+
+  NOTIFICATIONS_ENABLED: "true"
+  EMAIL_ADAPTER: smtp
+  SMTP_HOST: mailpit
+  SMTP_PORT: "1025"
+  SMTP_AUTH_MODE: none
+  SMTP_USE_STARTTLS: "false"
+  EMAIL_FROM: care@example.invalid
+  SLACK_ADAPTER: bot
+  FEATURE_NOTIFICATIONS_SLACK_STAFF: "true"
+  FEATURE_NOTIFICATIONS_SLACK_PATIENT: "true"
+  NOTIFY_SEND_EXTERNAL: "false"
+  NOTIFY_MAX_RETRIES: "3"
+
+  ANALYTICS_ENABLED: "true"
+  ANALYTICS_REFRESH_CRON: "15 2 * * *"
+  ANALYTICS_SMALL_CELL_MINIMUM: "5"
+  ANALYTICS_STALE_AFTER_HOURS: "30"
+  INSIGHTS_ENABLED: "true"
+  INSIGHTS_SCHEDULE_CRON: "30 2 * * *"
+  FINANCE_MODEL_CONFIG: config/finops_model.yaml
+  USD_TO_INR_RATE: "88"
+  FX_RATE_DATE: "2026-10-25"
+
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+  OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+  OTEL_SERVICE_NAME: sahyog-api
+  LANGFUSE_HOST: http://langfuse-web:3000
+  # Browser-facing NextAuth callback. The UI is reached through
+  # `kubectl port-forward service/langfuse-web 5721:3000`, never exposed by ingress.
+  LANGFUSE_PUBLIC_URL: http://localhost:5721
+  LANGFUSE_CAPTURE_CONTENT: "false"
+
+  GRAFANA_ADMIN_USER: admin
+  CLICKHOUSE_DB: otel
+  CLICKHOUSE_USER: otel

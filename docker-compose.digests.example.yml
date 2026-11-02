@@ -1,0 +1,55 @@
+# G-27 example overlay: replace tags with digests from scripts/pin-image-digests.sh.
+#
+# Usage:
+#   1. Ensure images are pulled/built: docker compose --profile full pull (and build locals)
+#   2. Capture digests:  bash scripts/pin-image-digests.sh
+#      → writes docs/evidence/image-digests-<UTC>.txt
+#   3. Copy this file to docker-compose.digests.yml (gitignored) and substitute
+#      @sha256:… values from that evidence file (including any REPLACE_AFTER_PIN).
+#   4. Run with: docker compose -f docker-compose.yml -f docker-compose.digests.yml …
+#
+# Notes (2026-10-31):
+# - Latest capture: docs/evidence/image-digests-20261031T124646Z.txt
+# - Digests below are from that capture where available; REPLACE_AFTER_PIN marks
+#   images that still need a local pull/build before pinning.
+# - Service keys match docker-compose.yml names.
+# - This file is documentation / starter overlay only — not a verified supply-chain
+#   gate (see docs/evidence/supply-chain-status.md). CI Semgrep/Trivy/SBOM remain
+#   continue-on-error until a green advisory run is recorded.
+services:
+  mailpit:
+    image: axllent/mailpit:v1.32.0@sha256:0790692be935ea4420d085694f7985b1f692ca6a8771ab0e0bd8ba75ac180498
+  postgres:
+    image: pgvector/pgvector:pg16@sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
+  redis:
+    image: redis:7.4.11-alpine@sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
+  minio:
+    image: bitnamilegacy/minio:2025.7.23-debian-12-r2@sha256:a70e90bb70f4732221901de53502334cef58665c6c4275a014d47adad10e1883
+  minio-init:
+    image: bitnamilegacy/minio-client:2025.7.21-debian-12-r3@sha256:73bd39f7899a0cef12b8dd5df13aa93a3ed1aaa44236542442e9ac76819ac158
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.1@sha256:a78d6b79572168cb25886b80a8b5b8d4ed4390743e3eecb810538683e209dd6b
+  litellm:
+    image: ghcr.io/berriai/litellm:v1.106.3@sha256:74d0696a9f0afcc993c7659d246f0c542f003368298633e852228250779f1032
+  prometheus:
+    image: prom/prometheus:v3.7.3@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
+  alertmanager:
+    image: prom/alertmanager:v0.28.1@sha256:REPLACE_AFTER_PIN
+  grafana:
+    image: grafana/grafana:12.2.0@sha256:74144189b38447facf737dfd0f3906e42e0776212bf575dc3334c3609183adf7
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.163.2@sha256:7f22d2a6748110ffb6a59bc0df448bccbf501cdb667d610ede4c61d3863d5849
+  langfuse-web:
+    image: langfuse/langfuse:2.95.0@sha256:4ba90fe9e69674c094deca11d72a4cb745ffe5fdd8519176afd1a2edf82c7b41
+  langfuse-worker:
+    image: langfuse/langfuse-worker:2.95.0@sha256:f07dea8342821c927195de4dfe0b038903a7e29925c1f47118dd7782a9e95241
+  clamav:
+    image: clamav/clamav-debian:1.4.6_base@sha256:28862c4a72217988313a099f0b53a4bc322597947b51cf525c183b52417107a9
+  loadgen:
+    image: grafana/k6:1.3.0@sha256:3ddc8b1a33a2c3d8edc6e99b6a762ae36cba08788463458f5e6a7703e14eb77d
+  egress-proxy:
+    image: ubuntu/squid:latest@sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029
+  llama-decider:
+    image: ghcr.io/ggerganov/llama.cpp:server@sha256:REPLACE_AFTER_PIN
+  mem0-neo4j:
+    image: neo4j:5.26.4@sha256:REPLACE_AFTER_PIN

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sahyog
+  labels:
+    app.kubernetes.io/part-of: sahyog
+    # Third-party data images are not all verified against the restricted profile.
+    # App workloads set restricted-compatible security contexts explicitly; the
+    # namespace enforces baseline so a third-party image cannot silently gain
+    # privileged access, while restricted violations are still audited and warned.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted

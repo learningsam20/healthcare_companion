@@ -1,0 +1,22 @@
+{
+  "kind": "k8s_ha_manifest_smoke",
+  "generated_at": null,
+  "overlay": "deploy/k8s/overlays/ha",
+  "rendered_manifest": null,
+  "render_status": "not_run",
+  "kubeconform": {
+    "available": null,
+    "status": "not_run"
+  },
+  "settings_asserted": {
+    "HA_MODE": "true",
+    "CHECKPOINTER_REQUIRED": "true"
+  },
+  "failover_tested": false,
+  "ha_claim": false,
+  "limitations": [
+    "This smoke test only renders and optionally schema-validates manifests.",
+    "It does not exercise or claim failover.",
+    "Postgres, Redis and MinIO remain single data-plane instances."
+  ]
+}

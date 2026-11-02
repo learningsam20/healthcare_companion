@@ -1,0 +1,196 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: langfuse-web
+  labels:
+    app.kubernetes.io/name: langfuse-web
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: obs
+spec:
+  selector:
+    app.kubernetes.io/name: langfuse-web
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: langfuse-web
+  labels:
+    app.kubernetes.io/name: langfuse-web
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: obs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: langfuse-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: langfuse-web
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: obs
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: langfuse-web
+          image: langfuse/langfuse:2.95.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_DATABASE_URL
+            - name: NEXTAUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sahyog-config
+                  key: LANGFUSE_PUBLIC_URL
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_NEXTAUTH_SECRET
+            - name: SALT
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_SALT
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_ENCRYPTION_KEY
+            - name: TELEMETRY_ENABLED
+              value: "false"
+            - name: LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES
+              value: "false"
+            - name: LANGFUSE_CAPTURE_CONTENT
+              value: "false"
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /api/public/health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/public/health
+              port: http
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: langfuse-worker
+  labels:
+    app.kubernetes.io/name: langfuse-worker
+    app.kubernetes.io/part-of: sahyog
+    sahyog.io/zone: obs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: langfuse-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: langfuse-worker
+        app.kubernetes.io/part-of: sahyog
+        sahyog.io/zone: obs
+    spec:
+      serviceAccountName: sahyog-workload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: langfuse-worker
+          image: langfuse/langfuse-worker:2.95.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_DATABASE_URL
+            - name: NEXTAUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sahyog-config
+                  key: LANGFUSE_PUBLIC_URL
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_NEXTAUTH_SECRET
+            - name: SALT
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_SALT
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sahyog-secrets
+                  key: LANGFUSE_ENCRYPTION_KEY
+            - name: TELEMETRY_ENABLED
+              value: "false"
+            - name: LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES
+              value: "false"
+            - name: LANGFUSE_CAPTURE_CONTENT
+              value: "false"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
