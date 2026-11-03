@@ -7,6 +7,11 @@ from zoneinfo import ZoneInfo
 
 from app.core.services import Services
 from app.modules.notifications.attachments import build_template_attachments
+from app.modules.notifications.format import (
+    clean_subject_detail,
+    plain_body,
+    presentation_from_copy,
+)
 from app.repositories.audit import AuditRepository
 from app.repositories.consents import ConsentRepository
 from app.repositories.models import ContactChannel, Notification, NotificationDelivery, Patient
@@ -28,6 +33,7 @@ ALLOWED_TEMPLATE_DATA = {
     "starts_at_iso",
     "duration_minutes",
     "appointment_id",
+    "appointment_id_short",
     "queue",
     "channel",
     "alert",
@@ -74,6 +80,18 @@ def quiet_hours_end(*, now: dt.datetime, start: str, end: str, timezone: str) ->
     return candidate
 
 
+def _default_action_path(template_id: str) -> str:
+    if template_id == "staff_handoff":
+        return "/escalations"
+    if template_id == "ops_alert":
+        return "/ops"
+    if template_id == "document_ready":
+        return "/records"
+    if template_id == "delivery_failure":
+        return "/notifications"
+    return "/appointments"
+
+
 class NotificationService:
     def __init__(self, services: Services, session: AsyncSession) -> None:
         self._services = services
@@ -94,28 +112,38 @@ class NotificationService:
             if key not in ALLOWED_TEMPLATE_DATA or value is None:
                 continue
             text = str(value).strip()
-            # Defence in depth: strip CR/LF from subject-bound fields later; keep body newlines out of values.
-            safe[key] = " ".join(text.split()) if key != "alert" else text
+            # Defence in depth: strip CR/LF from subject-bound fields later; keep alert newlines.
+            # Braces would be interpreted by format_map.
+            text = " ".join(text.split()) if key != "alert" else text
+            safe[key] = text.replace("{", "(").replace("}", ")")
+        if not safe["appointment_id_short"] and safe["appointment_id"]:
+            safe["appointment_id_short"] = safe["appointment_id"].split("-", 1)[0][:8]
+        if not safe["handoff_id_short"] and safe["handoff_id"]:
+            safe["handoff_id_short"] = safe["handoff_id"].split("-", 1)[0][:8]
         return safe
 
-    def render(self, template_id: str, locale: str, data: dict[str, Any]) -> tuple[str, str]:
+    def render(
+        self, template_id: str, locale: str, data: dict[str, Any]
+    ) -> tuple[str, str, dict[str, Any]]:
         self._template(template_id)
         language = locale.split("-")[0]
         entry = self._copy.get("templates", {}).get(template_id, {})
         copy = entry.get(language) or entry.get("en")
-        if copy is None:
+        if copy is None or not str(copy.get("intro") or "").strip():
             raise NotificationError("template_copy_missing", "Approved copy is missing.")
         safe_data = self._safe_data(data)
         try:
             subject = str(copy["subject"]).format_map(safe_data).strip()
-            detail = str(copy.get("subject_detail") or "").format_map(safe_data).strip(" —-\t")
+            detail = clean_subject_detail(
+                str(copy.get("subject_detail") or "").format_map(safe_data)
+            )
             if detail:
                 subject = f"{subject} — {detail}"
             # Email subjects are single-line and capped at the Notification.title column.
             subject = " ".join(subject.split())[:200]
-            body = str(copy["body"]).format_map(safe_data).strip()
-            return subject, body
-        except KeyError as exc:
+            presentation = presentation_from_copy(copy, safe_data)
+            return subject, plain_body(presentation), presentation
+        except (KeyError, ValueError) as exc:
             raise NotificationError(
                 "template_data_missing", "The notification is missing required data."
             ) from exc
@@ -254,20 +282,17 @@ class NotificationService:
         requested_channels: list[str] | None = None,
         emergency: bool = False,
         now: dt.datetime | None = None,
+        action_path: str | None = None,
     ) -> tuple[Notification, list[NotificationDelivery]]:
         template = self._template(template_id)
         enriched = dict(data)
         if not enriched.get("action_url"):
-            path = "/escalations" if template_id in {"staff_handoff", "ops_alert"} else "/appointments"
-            if template_id == "document_ready":
-                path = "/records"
-            if template_id == "delivery_failure":
-                path = "/admin"
+            path = action_path or _default_action_path(template_id)
             enriched["action_url"] = self._action_url(path)
         if template_id == "ops_alert" and not enriched.get("alert_summary"):
             alert_text = str(enriched.get("alert") or "").strip()
             enriched["alert_summary"] = (alert_text[:80] + ("…" if len(alert_text) > 80 else "")) or "ops"
-        subject, body = self.render(template_id, locale, enriched)
+        subject, body, presentation = self.render(template_id, locale, enriched)
         email_cfg = self._config.get("channels", {}).get("email", {})
         attachments: list[dict[str, str]] = []
         if email_cfg.get("allow_attachments", False):
@@ -287,6 +312,7 @@ class NotificationService:
                 "template_id": template_id,
                 "attachments": attachments,
                 "attachment_count": len(attachments),
+                "presentation": presentation,
             },
         )
         self._session.add(notification)

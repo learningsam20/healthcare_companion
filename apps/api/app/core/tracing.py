@@ -1,7 +1,8 @@
 """Agent trace collection.
 
-Spans carry identifiers, counts, hashes and durations only. Prompt text, completions,
-tool arguments and results are never attached. A per-request collector can be
+Spans carry identifiers, counts, hashes and durations by default. Optional
+PII-redacted generation input/output may be attached when LANGFUSE_REDACTED_IO is
+enabled. Raw PHI capture remains forbidden. A per-request collector can be
 exported to Langfuse's ingestion API; OTLP export remains available independently.
 """
 
@@ -52,6 +53,8 @@ class TraceCollector:
     name: str
     started_at: dt.datetime = field(default_factory=lambda: dt.datetime.now(dt.UTC))
     spans: list[SpanRecord] = field(default_factory=list)
+    session_id: str | None = None
+    user_id: str | None = None
     _stack: list[str] = field(default_factory=list)
 
     @contextmanager
@@ -136,6 +139,11 @@ def _sampled(trace_id: str, ratio: float) -> bool:
 
 
 def _event(collector: TraceCollector, record: SpanRecord) -> dict[str, Any]:
+    meta = {
+        key: value
+        for key, value in record.attributes.items()
+        if key not in {"redacted_input", "redacted_output"}
+    }
     body: dict[str, Any] = {
         "id": record.span_id,
         "traceId": collector.trace_id,
@@ -143,7 +151,7 @@ def _event(collector: TraceCollector, record: SpanRecord) -> dict[str, Any]:
         "startTime": record.start_time.isoformat(),
         "endTime": record.end_time.isoformat(),
         "metadata": {
-            **record.attributes,
+            **meta,
             "duration_ms": round((record.end_time - record.start_time).total_seconds() * 1000, 2),
         },
         "level": "ERROR" if record.error else "DEFAULT",
@@ -161,6 +169,12 @@ def _event(collector: TraceCollector, record: SpanRecord) -> dict[str, Any]:
             "total": prompt_tokens + completion_tokens,
             "unit": "TOKENS",
         }
+        redacted_in = record.attributes.get("redacted_input")
+        redacted_out = record.attributes.get("redacted_output")
+        if isinstance(redacted_in, str) and redacted_in:
+            body["input"] = redacted_in
+        if isinstance(redacted_out, str) and redacted_out:
+            body["output"] = redacted_out
         event.update({"type": "generation-create", "body": body})
         return event
     event.update({"type": "span-create", "body": body})
@@ -194,20 +208,25 @@ async def export_trace(settings: Settings, collector: TraceCollector) -> bool:
         return False
     if not _sampled(collector.trace_id, settings.trace_export_sample_ratio):
         return False
+    trace_body: dict[str, Any] = {
+        "id": collector.trace_id,
+        "name": collector.name,
+        "timestamp": collector.started_at.isoformat(),
+        "metadata": {
+            "service": settings.otel_service_name,
+            "span_count": len(collector.spans),
+        },
+    }
+    if collector.session_id:
+        trace_body["sessionId"] = collector.session_id
+    if collector.user_id:
+        trace_body["userId"] = collector.user_id
     batch: list[dict[str, Any]] = [
         {
             "id": uuid.uuid4().hex,
             "type": "trace-create",
             "timestamp": collector.started_at.isoformat(),
-            "body": {
-                "id": collector.trace_id,
-                "name": collector.name,
-                "timestamp": collector.started_at.isoformat(),
-                "metadata": {
-                    "service": settings.otel_service_name,
-                    "span_count": len(collector.spans),
-                },
-            },
+            "body": trace_body,
         }
     ]
     batch.extend(_event(collector, record) for record in collector.spans)

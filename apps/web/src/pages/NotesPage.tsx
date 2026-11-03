@@ -7,9 +7,10 @@ import {
   Pill,
   ShieldAlert,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 
 import { Badge, StatusBadge } from "../components/Badge";
+import { ClinicalRecord } from "../components/ClinicalRecord";
 import { DataGrid, type DataGridColumn } from "../components/DataGrid";
 import { Modal } from "../components/Modal";
 import {
@@ -109,10 +110,13 @@ export function NotesPage() {
   });
   const [reserving, setReserving] = useState(false);
   const [medicineName, setMedicineName] = useState("");
+  const [medicineQuery, setMedicineQuery] = useState("");
+  const [stockComboOpen, setStockComboOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [clinic, setClinic] = useState(me.clinic_ids[0] ?? "");
   const [actionError, setActionError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const deferredMedicineQ = useDeferredValue(medicineQuery);
 
   const notesQuery = useQuery({
     queryKey: ["notes", grid.params],
@@ -136,6 +140,19 @@ export function NotesPage() {
     queryKey: ["notes", "sources", detailId],
     queryFn: () => api<ScribeSource[]>(`/api/v1/scribe/notes/${detailId}/sources`),
     enabled: Boolean(detailId) && showSources,
+  });
+
+  const stockSuggestionsQuery = useQuery({
+    queryKey: ["pharmacy", "typeahead", "reserve", deferredMedicineQ, clinic],
+    queryFn: () =>
+      api<{ items: { id: string; drug_name: string; clinic_code: string; quantity: number; strength?: string }[] }>(
+        `/api/v1/pharmacy/stock/typeahead${qs({
+          q: deferredMedicineQ,
+          clinic_code: clinic || undefined,
+          limit: 8,
+        })}`,
+      ),
+    enabled: reserving && deferredMedicineQ.trim().length >= 2,
   });
 
   const correctionMutation = useMutation({
@@ -172,6 +189,9 @@ export function NotesPage() {
       }),
     onSuccess: () => {
       setReserving(false);
+      setMedicineName("");
+      setMedicineQuery("");
+      setQuantity(1);
       setActionError(null);
       setNotice(t("notes.reserved"));
     },
@@ -184,14 +204,41 @@ export function NotesPage() {
     onError: (error) => setActionError(errorMessage(error)),
   });
 
+  const resetReserveForm = () => {
+    setMedicineName("");
+    setMedicineQuery("");
+    setStockComboOpen(false);
+    setQuantity(1);
+    setClinic(me.clinic_ids[0] ?? "");
+  };
+
   const openNote = (noteId: string) => {
     setDetailId(noteId);
     setShowVersions(false);
     setShowSources(false);
     setCorrecting(false);
     setReserving(false);
+    resetReserveForm();
     setActionError(null);
     setNotice(null);
+  };
+
+  const toggleReserving = () => {
+    setReserving((open) => {
+      if (open) {
+        resetReserveForm();
+        return false;
+      }
+      return true;
+    });
+    setActionError(null);
+  };
+
+  const pickMedicine = (name: string, clinicCode?: string) => {
+    setMedicineName(name);
+    setMedicineQuery(name);
+    setStockComboOpen(false);
+    if (clinicCode) setClinic(clinicCode);
   };
 
   const note = detailQuery.data;
@@ -304,7 +351,7 @@ export function NotesPage() {
                 <Download size={15} aria-hidden="true" /> {t("notes.download")}
               </button>
               {canReserve ? (
-                <button type="button" className="btn" onClick={() => setReserving((value) => !value)}>
+                <button type="button" className="btn" onClick={toggleReserving}>
                   <Pill size={15} aria-hidden="true" /> {t("notes.reserveStock")}
                 </button>
               ) : null}
@@ -381,108 +428,75 @@ export function NotesPage() {
                 </div>
               </div>
             ) : note.content ? (
-              <div className="note-content">
-                {SECTIONS.map((key) => {
-                  const lines = note.content?.[key] ?? [];
-                  if (!lines.length) return null;
-                  return (
-                    <section key={key}>
-                      <h3 className="section-title">{humanize(key)}</h3>
-                      <ul className="draft-lines">
-                        {lines.map((line, index) => (
-                          <li key={`${key}-${index}`} className={line.unsourced ? "is-unsourced" : undefined}>
-                            <span>{line.text}</span>
-                            {line.unsourced ? (
-                              <Badge tone="warning">{t("common.unsourced")}</Badge>
-                            ) : (
-                              <span className="citation-chips">
-                                {line.source_turn_ids.map((turn) => (
-                                  <Badge key={turn} tone="neutral">
-                                    {t("scribe.citation", { turn })}
-                                  </Badge>
-                                ))}
-                              </span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  );
-                })}
-                {note.content.follow_up ? (
-                  <section>
-                    <h3 className="section-title">{t("scribe.followUp")}</h3>
-                    <p>{note.content.follow_up.text}</p>
-                  </section>
-                ) : null}
-                {medicines.length ? (
-                  <section>
-                    <h3 className="section-title">{t("records.medications")}</h3>
-                    <div className="table-wrap">
-                      <table className="data-table compact">
-                        <thead>
-                          <tr>
-                            <th>{t("scribe.medicine")}</th>
-                            <th>{t("scribe.dose")}</th>
-                            <th>{t("scribe.frequency")}</th>
-                            <th>{t("scribe.duration")}</th>
-                            <th>{t("scribe.stock")}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {medicines.map((medicine, index) => (
-                            <tr key={`${medicine.name}-${index}`}>
-                              <td>{medicine.name}</td>
-                              <td>{medicine.dose ?? "—"}</td>
-                              <td>{medicine.frequency ?? "—"}</td>
-                              <td>{medicine.duration ?? "—"}</td>
-                              <td>
-                                {medicine.stock?.status ? (
-                                  <StatusBadge
-                                    status={medicine.stock.status}
-                                    label={
-                                      medicine.stock.status === "unknown"
-                                        ? t("scribe.stockUnknown")
-                                        : humanize(medicine.stock.status)
-                                    }
-                                  />
-                                ) : (
-                                  <span className="muted">—</span>
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </section>
-                ) : null}
-              </div>
+              <ClinicalRecord content={note.content} />
             ) : (
               <p className="muted">{t("common.emptyTitle")}</p>
             )}
 
             {reserving ? (
-              <div className="inline-form">
-                <Field label={t("scribe.medicine")} required>
-                  {medicines.length ? (
-                    <select
-                      value={medicineName}
-                      onChange={(event) => setMedicineName(event.target.value)}
-                    >
-                      <option value="">{t("scribe.medicine")}</option>
-                      {medicines.map((medicine, index) => (
-                        <option key={`${medicine.name}-${index}`} value={medicine.name}>
-                          {medicine.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
+              <div className="inline-form reserve-form">
+                {medicines.length ? (
+                  <div className="reserve-note-picks">
+                    <span className="muted small">{t("notes.fromNote")}</span>
+                    <div className="chip-row">
+                      {medicines.map((medicine, index) => {
+                        const name = medicine.name?.trim();
+                        if (!name) return null;
+                        const selected = medicineName.toLowerCase() === name.toLowerCase();
+                        return (
+                          <button
+                            key={`${name}-${index}`}
+                            type="button"
+                            className={`chip${selected ? " is-selected" : ""}`}
+                            onClick={() => pickMedicine(name)}
+                          >
+                            {name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+                <Field label={t("notes.searchStock")} required>
+                  <div className="combobox reserve-combobox">
                     <input
-                      value={medicineName}
-                      onChange={(event) => setMedicineName(event.target.value)}
+                      role="combobox"
+                      aria-expanded={stockComboOpen && deferredMedicineQ.trim().length >= 2}
+                      aria-controls="reserve-stock-list"
+                      aria-autocomplete="list"
+                      placeholder={t("notes.selectMedicine")}
+                      value={medicineQuery}
+                      onChange={(event) => {
+                        setMedicineQuery(event.target.value);
+                        setMedicineName(event.target.value);
+                        setStockComboOpen(true);
+                      }}
+                      onFocus={() => setStockComboOpen(true)}
+                      onBlur={() => window.setTimeout(() => setStockComboOpen(false), 120)}
                     />
-                  )}
+                    {stockComboOpen &&
+                    deferredMedicineQ.trim().length >= 2 &&
+                    (stockSuggestionsQuery.data?.items.length ?? 0) > 0 ? (
+                      <ul id="reserve-stock-list" role="listbox" className="combo-list">
+                        {stockSuggestionsQuery.data?.items.map((item) => (
+                          <li key={item.id} role="option">
+                            <button
+                              type="button"
+                              className="combo-option"
+                              onMouseDown={(event) => event.preventDefault()}
+                              onClick={() => pickMedicine(item.drug_name, item.clinic_code)}
+                            >
+                              <strong>{item.drug_name}</strong>
+                              <span className="muted small">
+                                {item.clinic_code} · qty {item.quantity}
+                                {item.strength ? ` · ${item.strength}` : ""}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 </Field>
                 <Field label={t("notes.quantity")} required>
                   <input
@@ -495,7 +509,9 @@ export function NotesPage() {
                 </Field>
                 <Field label={t("common.clinic")} required>
                   <select value={clinic} onChange={(event) => setClinic(event.target.value)}>
-                    <option value="">{t("common.clinic")}</option>
+                    <option value="" disabled>
+                      {t("notes.selectClinic")}
+                    </option>
                     {me.clinic_ids.map((code) => (
                       <option key={code} value={code}>
                         {code}

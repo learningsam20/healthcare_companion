@@ -443,6 +443,11 @@ async def delete_session(
         raise ProblemError(404, "session_not_found", "Session not found", "No such chat session.")
     cancelled = await ChatRunRepository(session).cancel_active_runs(session_id)
     await ChatRepository(session).soft_delete(chat)
+    from app.modules.memory.service import MemoryFacade
+
+    durable_purged = await MemoryFacade(services, session).purge_session(
+        subject=context.subject, session_id=str(chat.id)
+    )
     AuditRepository(session).append(
         actor_subject=context.subject,
         actor_role=context.primary_role.value,
@@ -452,7 +457,7 @@ async def delete_session(
         patient_id=chat.patient_id,
         consent_id=context.consent_id,
         trace_id=_trace(request),
-        metadata={"cancelled_runs": cancelled},
+        metadata={"cancelled_runs": cancelled, "durable_memory_purged": durable_purged},
     )
     await session.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -546,6 +551,16 @@ async def send_message(
     provisional.checkpoint = {**(provisional.checkpoint or {}), "thread_id": thread_id}
     await session.flush()
     orchestrator = ChatOrchestrator(services, session)
+    from app.core.tracing import current_trace
+    from app.modules.memory.service import MemoryFacade
+
+    collector = current_trace()
+    if collector is not None:
+        collector.session_id = str(chat.id)
+        collector.user_id = context.subject
+
+    from app.core.security import doctor_schedule_name
+
     turn = await orchestrator.handle_turn(
         text=body.content,
         locale=language,
@@ -557,6 +572,8 @@ async def send_message(
         traffic_class=context.traffic_class,
         trace_id=trace_id,
         thread_id=thread_id,
+        chat_session_id=str(chat.id),
+        fixed_doctor_name=doctor_schedule_name(context),
     )
     if turn.metadata.get("error") == "egress_blocked":
         blocked = await repo.add_message(
@@ -728,6 +745,15 @@ async def send_message(
         trace_id=trace_id,
         model_alias=turn.model_alias,
     )
+    try:
+        await MemoryFacade(services, session).remember_session_turn(
+            subject=context.subject,
+            session_id=str(chat.id),
+            user_text=body.content,
+            assistant_text=turn_content,
+        )
+    except Exception:  # noqa: BLE001 - memory write must not fail the turn
+        logger.debug("session episodic memory write skipped", exc_info=True)
     if turn.model_alias and (turn.prompt_tokens or turn.completion_tokens):
         await UsageRepository(session).record(
             purpose=turn.purpose,
@@ -1007,6 +1033,13 @@ async def send_message_stream(
             if streamable_ask:
                 from app.agents.types import AgentTurnResult as _Turn
 
+                from app.core.tracing import current_trace
+
+                collector = current_trace()
+                if collector is not None:
+                    collector.session_id = str(chat.id)
+                    collector.user_id = context.subject
+                orchestrator._turn_context = tool_context
                 assembled = ""
                 final_turn: _Turn | None = None
                 async for piece in orchestrator.w2.stream(
@@ -1097,6 +1130,8 @@ async def send_message_stream(
                 return
 
             if not streamable_chat:
+                from app.core.security import doctor_schedule_name
+
                 turn = await orchestrator.handle_turn(
                     text=body.content,
                     locale=language,
@@ -1108,6 +1143,8 @@ async def send_message_stream(
                     traffic_class=chat.traffic_class,
                     trace_id=trace_id,
                     thread_id=thread_id,
+                    chat_session_id=str(chat.id),
+                    fixed_doctor_name=doctor_schedule_name(context),
                 )
                 if turn.metadata.get("error") in {"egress_blocked", "gateway_unavailable"}:
                     code = str(turn.metadata.get("error"))
@@ -1296,6 +1333,8 @@ async def send_message_stream(
                         result_message_id=assistant.id,
                         checkpoint={
                             "intent": turn.intent,
+                            "user_message_id": str(user_message.id),
+                            "user_text": body.content,
                             "thread_id": thread_id,
                             "durable_interrupt": bool(turn.metadata.get("durable_interrupt")),
                             "stream": True,
@@ -1348,6 +1387,20 @@ async def send_message_stream(
                 return
 
             # Streamable path: safety already cleared via intent graph.
+            from app.core.tracing import current_trace
+            from app.modules.memory.service import MemoryFacade, append_attribution
+
+            collector = current_trace()
+            if collector is not None:
+                collector.session_id = str(chat.id)
+                collector.user_id = context.subject
+
+            recall = await MemoryFacade(services, session).recall(
+                subject=context.subject,
+                query=body.content,
+                session_id=str(chat.id),
+                history=history,
+            )
             prompt = services.prompt("conversation")
             messages = [
                 {"role": "system", "content": str(prompt.get("system", ""))},
@@ -1356,10 +1409,23 @@ async def send_message_stream(
                     "content": (
                         f"Reply in {LANGUAGE_NAMES.get(language, 'English')}. "
                         "Do not diagnose, prescribe, or invent clinic data. "
-                        "If the user needs booking or records, say so briefly."
+                        "If the user needs booking or records, say so briefly. "
+                        "When using remembered preferences or earlier chat context, "
+                        "mention the marker like [M1] or [C1] inline."
                     ),
                 },
             ]
+            if recall.memory_note:
+                messages.append(
+                    {
+                        "role": "system",
+                        "content": (
+                            f"{recall.memory_note}. Use only for tone/routing; "
+                            "never invent clinical facts from preferences. "
+                            "Cite markers [M#]/[C#] when you rely on them."
+                        ),
+                    }
+                )
             for item in history[-12:]:
                 if item.get("role") in {"user", "assistant"}:
                     messages.append(
@@ -1387,26 +1453,41 @@ async def send_message_stream(
             if final_result is None:
                 raise LlmGatewayError("stream ended without a final result")
 
+            content = append_attribution(
+                assembled or final_result.content, recall.attribution
+            )
             sources = [
-                s.model_dump(mode="json")
-                for s in [
-                    SourceRef(
-                        id=f"model:{final_result.model_alias}",
-                        type=SourceType.GENERAL,
-                        title="General assistant response — not clinical evidence",
-                        locator=f"model:{final_result.model_alias}",
-                    )
-                ]
+                *recall.sources,
+                *(
+                    s.model_dump(mode="json")
+                    for s in [
+                        SourceRef(
+                            id=f"model:{final_result.model_alias}",
+                            type=SourceType.GENERAL,
+                            title="General assistant response — not clinical evidence",
+                            locator=f"model:{final_result.model_alias}",
+                        )
+                    ]
+                ),
             ]
             assistant = await repo.add_message(
                 session_id=chat.id,
                 role="assistant",
-                content=assembled or final_result.content,
+                content=content,
                 language=language,
                 sources=_source_refs(sources),
                 trace_id=trace_id,
                 model_alias=final_result.model_alias,
             )
+            try:
+                await MemoryFacade(services, session).remember_session_turn(
+                    subject=context.subject,
+                    session_id=str(chat.id),
+                    user_text=body.content,
+                    assistant_text=content,
+                )
+            except Exception:  # noqa: BLE001
+                logger.debug("session episodic memory write skipped", exc_info=True)
             if final_result.model_alias and (
                 final_result.prompt_tokens or final_result.completion_tokens
             ):
@@ -1956,6 +2037,8 @@ async def resume_run(
                 run_id=run.id,
             )
         # Re-run triage with the confirmed locale (skips language clarify).
+        from app.core.security import doctor_schedule_name
+
         orch = ChatOrchestrator(services, session)
         new_thread = f"w1:{uuid.uuid4().hex[:16]}"
         turn = await orch.handle_turn(
@@ -1969,6 +2052,9 @@ async def resume_run(
             traffic_class=chat.traffic_class,
             trace_id=trace_id,
             thread_id=new_thread,
+            chat_session_id=str(chat.id),
+            skip_language_clarify=True,
+            fixed_doctor_name=doctor_schedule_name(context),
         )
         assistant = await repo.add_message(
             session_id=chat.id,
@@ -2103,7 +2189,9 @@ async def resume_run(
         )
         tools = McpToolClient(services.settings)
         from app.agents.booking_prefs import format_slot_label, rank_slots_near_preference
+        from app.core.security import doctor_schedule_name
 
+        fixed_doctor = doctor_schedule_name(context)
         slot_pool: list[dict[str, Any]] = []
         try:
             doctors_result = await tools.call(
@@ -2120,7 +2208,21 @@ async def resume_run(
             doctors = list(doctors_result.get("doctors") or [])
         except ToolUnavailable:
             doctors = []
-        for doctor in doctors[:3]:
+        if fixed_doctor:
+            matched = [
+                d
+                for d in doctors
+                if str(d.get("doctor_name") or d.get("name") or "").strip().lower()
+                == fixed_doctor.lower()
+            ]
+            doctors = matched[:1] or [
+                {
+                    "doctor_name": fixed_doctor,
+                    "clinic_code": clinic_code,
+                    "specialty_code": specialty_code,
+                }
+            ]
+        for doctor in doctors[: (1 if fixed_doctor else 3)]:
             name = str(doctor.get("doctor_name") or doctor.get("name") or "").strip()
             clinic = str(doctor.get("clinic_code") or clinic_code).strip()
             if not name or not clinic:

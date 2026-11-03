@@ -193,6 +193,28 @@ async def ingest_document(services: Services, document_id: uuid.UUID) -> str:
             return "ingestion_failed"
 
 
+def _document_kind(content_type: str | None) -> str:
+    """Readable file kind. Never the filename or title (those can identify a person)."""
+    subtype = (content_type or "document").split("/")[-1].split(";")[0].strip().lower()[:40]
+    labels = {
+        "pdf": "PDF",
+        "png": "Image",
+        "jpeg": "Image",
+        "jpg": "Image",
+        "webp": "Image",
+        "gif": "Image",
+        "tiff": "Image",
+        "plain": "Text file",
+        "csv": "Spreadsheet",
+        "json": "Data file",
+    }
+    if subtype in labels:
+        return labels[subtype]
+    if subtype.isascii() and subtype.isalnum() and len(subtype) <= 8:
+        return subtype.upper()
+    return "Document"
+
+
 async def _notify_document_ready(services: Services, session: AsyncSession, document: Document) -> None:
     """Best-effort in-app notice when a report becomes askable (G-50)."""
     try:
@@ -206,8 +228,7 @@ async def _notify_document_ready(services: Services, session: AsyncSession, docu
             locale=document.language or "en-IN",
             data={
                 # Never put document.title in outbound copy (may contain identifiers).
-                "document_kind": (document.content_type or "document").split("/")[-1][:40]
-                or "document",
+                "document_kind": _document_kind(document.content_type),
             },
             actor_subject="system:ingestion",
             actor_role="service",

@@ -134,6 +134,30 @@ class LlmGateway:
             {**message, "content": piece} for message, piece in zip(messages, pieces, strict=True)
         ]
 
+    async def _attach_redacted_io(
+        self,
+        attributes: dict[str, Any],
+        *,
+        messages: list[dict[str, str]],
+        content: str,
+        trace_id: str | None,
+    ) -> None:
+        if not getattr(self._settings, "langfuse_redacted_io", False):
+            return
+        joined = "\n".join(f"{m.get('role', '')}: {m.get('content', '')}" for m in messages)[
+            :12000
+        ]
+        tid = (trace_id or "-")[:64]
+        try:
+            in_gate = await self._pii_gate.redact(joined, trace_id=tid)
+            out_gate = await self._pii_gate.redact(str(content or "")[:8000], trace_id=tid)
+        except Exception:  # noqa: BLE001 - never fail the turn for telemetry
+            return
+        if in_gate.healthy and in_gate.redacted_text:
+            attributes["redacted_input"] = in_gate.redacted_text[:12000]
+        if out_gate.healthy and out_gate.redacted_text:
+            attributes["redacted_output"] = out_gate.redacted_text[:8000]
+
     async def complete(
         self,
         *,
@@ -240,6 +264,12 @@ class LlmGateway:
             attributes["prompt_tokens"] = prompt_tokens
             attributes["completion_tokens"] = completion_tokens
             attributes["gateway_request_id"] = request_id or ""
+            await self._attach_redacted_io(
+                attributes,
+                messages=outbound,
+                content=str(content),
+                trace_id=trace_id,
+            )
         return LlmResult(
             content=str(content),
             model_alias=route.alias_name,
@@ -408,6 +438,12 @@ class LlmGateway:
             attributes["prompt_tokens"] = prompt_tokens
             attributes["completion_tokens"] = completion_tokens
             attributes["gateway_request_id"] = request_id or ""
+            await self._attach_redacted_io(
+                attributes,
+                messages=outbound,
+                content=content,
+                trace_id=trace_id,
+            )
         yield LlmResult(
             content=content,
             model_alias=route.alias_name,

@@ -1,11 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CalendarPlus, Eye, XCircle } from "lucide-react";
+import { CalendarPlus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { AppointmentTimeline } from "../components/AppointmentTimeline";
 import { Badge, StatusBadge } from "../components/Badge";
 import { ConfirmDialog } from "../components/ConfirmDialog";
-import { DataGrid, type DataGridColumn } from "../components/DataGrid";
-import { IconButton } from "../components/IconButton";
 import { Modal } from "../components/Modal";
 import { PatientPicker } from "../components/PatientPicker";
 import {
@@ -15,6 +14,7 @@ import {
   FormError,
   PageHeader,
   Spinner,
+  Tabs,
 } from "../components/primitives";
 import { api, errorMessage, qs } from "../lib/api";
 import { useAuth } from "../lib/auth";
@@ -42,7 +42,7 @@ export function AppointmentsPage() {
   const { t, locale } = useI18n();
   const { me, hasRole } = useAuth();
   const queryClient = useQueryClient();
-  const grid = useGridState("starts_at", "asc");
+  const grid = useGridState("starts_at", "desc");
   const [statusFilter, setStatusFilter] = useState("");
   const [specialtyFilter, setSpecialtyFilter] = useState("");
   const [clinicFilter, setClinicFilter] = useState("");
@@ -59,7 +59,7 @@ export function AppointmentsPage() {
   const [rescheduleDuration, setRescheduleDuration] = useState(20);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const [bookOpen, setBookOpen] = useState(false);
+  const [view, setView] = useState<"schedule" | "book">("schedule");
   const [patient, setPatient] = useState<Patient | null>(null);
   const [clinic, setClinic] = useState("");
   const [doctorName, setDoctorName] = useState("");
@@ -73,7 +73,6 @@ export function AppointmentsPage() {
   const isDoctor = hasRole("doctor");
   const isPatientView = hasRole("patient", "caregiver");
   const myDoctorName = me.doctor_display_name?.trim() || "";
-  const [slotDateFilter, setSlotDateFilter] = useState("");
 
   const metaQuery = useQuery({
     queryKey: ["meta"],
@@ -106,19 +105,6 @@ export function AppointmentsPage() {
       ),
   });
 
-  const mySlotsClinic = clinicFilter || clinics[0]?.code || "";
-  const mySlotsQuery = useQuery({
-    queryKey: ["slots", "mine", myDoctorName, mySlotsClinic],
-    queryFn: () =>
-      api<SlotsResponse>(
-        `/api/v1/doctors/${encodeURIComponent(myDoctorName)}/slots${qs({
-          clinic: mySlotsClinic,
-          days: 14,
-        })}`,
-      ),
-    enabled: isDoctor && Boolean(myDoctorName) && Boolean(mySlotsClinic),
-  });
-
   useEffect(() => {
     if (isDoctor && myDoctorName && doctorName !== myDoctorName) {
       setDoctorName(myDoctorName);
@@ -131,7 +117,7 @@ export function AppointmentsPage() {
       api<GridResponse<Doctor>>(
         `/api/v1/doctors${qs({ page_size: 100, clinic: clinic || undefined })}`,
       ),
-    enabled: bookOpen && Boolean(clinic),
+    enabled: view === "book" && Boolean(clinic),
   });
 
   /** Distinct specialties mapped to the currently selected doctor (same clinic list). */
@@ -180,7 +166,7 @@ export function AppointmentsPage() {
           days: 7,
         })}`,
       ),
-    enabled: bookOpen && doctorName.trim().length >= 2 && Boolean(clinic),
+    enabled: view === "book" && doctorName.trim().length >= 2 && Boolean(clinic),
   });
 
   const detailQuery = useQuery({
@@ -215,7 +201,7 @@ export function AppointmentsPage() {
       }),
     onSuccess: () => {
       setSuccess(t("appointments.created"));
-      setBookOpen(false);
+      setView("schedule");
       setBookError(null);
       setPatient(null);
       setSlot("");
@@ -311,170 +297,10 @@ export function AppointmentsPage() {
     bookingMutation.mutate();
   };
 
-  const columns: DataGridColumn<Appointment>[] = [
-    {
-      key: "starts_at",
-      header: t("common.date"),
-      sortKey: "starts_at",
-      render: (row) => (
-        <div className="cell-stack">
-          <strong>{formatDateTime(row.starts_at, locale, metaQuery.data?.app.timezone)}</strong>
-          <span className="muted small">
-            {row.duration_minutes} {t("appointments.minutes")}
-          </span>
-        </div>
-      ),
-    },
-    ...(isDoctor
-      ? []
-      : [
-          {
-            key: "doctor",
-            header: t("common.doctor"),
-            sortKey: "doctor_name" as const,
-            render: (row: Appointment) => (
-              <div className="cell-stack">
-                <strong>{row.doctor_name}</strong>
-                <span className="muted small">
-                  {row.specialty_label ?? specialtyLabel(row.specialty_code)}
-                </span>
-              </div>
-            ),
-          } satisfies DataGridColumn<Appointment>,
-        ]),
-    {
-      key: "clinic",
-      header: t("common.clinic"),
-      sortKey: "clinic_code",
-      hideOnMobile: true,
-      render: (row) => <Badge tone="neutral">{row.clinic_code}</Badge>,
-    },
-    ...(isPatientView
-      ? []
-      : [
-          {
-            key: "patient",
-            header: t("appointments.withPatient"),
-            render: (row: Appointment) => (
-              <div className="cell-stack">
-                <strong>{row.patient_display_name ?? t("common.unknown")}</strong>
-                <div className="tag-row">
-                  {row.visit_kind === "first" ? (
-                    <Badge tone="info">{t("appointments.visitFirst")}</Badge>
-                  ) : row.visit_kind === "repeat" ? (
-                    <Badge tone="neutral">{t("appointments.visitRepeat")}</Badge>
-                  ) : null}
-                </div>
-              </div>
-            ),
-          } satisfies DataGridColumn<Appointment>,
-          {
-            key: "visit",
-            header: t("appointments.forSpecialty"),
-            hideOnMobile: true,
-            render: (row: Appointment) => (
-              <span>{row.specialty_label ?? specialtyLabel(row.specialty_code)}</span>
-            ),
-          } satisfies DataGridColumn<Appointment>,
-        ]),
-    ...(hasRole("front_desk", "admin")
-      ? [
-          {
-            key: "source",
-            header: "Source",
-            hideOnMobile: true,
-            render: (row: Appointment) => (
-              <Badge tone={row.source === "assistant" ? "info" : "neutral"}>
-                {row.source === "assistant" ? "Assistant" : "Front desk"}
-              </Badge>
-            ),
-          } satisfies DataGridColumn<Appointment>,
-        ]
-      : []),
-    {
-      key: "status",
-      header: t("appointments.status"),
-      sortKey: "status",
-      render: (row) => (
-        <div className="cell-stack">
-          <StatusBadge status={row.status} />
-          {row.no_show_band ? (
-            <Badge
-              tone={
-                row.no_show_band === "high"
-                  ? "danger"
-                  : row.no_show_band === "medium"
-                    ? "warning"
-                    : "neutral"
-              }
-            >
-              {t("appointments.noShowRisk")}: {row.no_show_band}
-              {typeof row.no_show_risk === "number" ? ` (${Math.round(row.no_show_risk * 100)}%)` : ""}
-            </Badge>
-          ) : null}
-          {row.waitlist_suggested ? (
-            <Badge tone="warning">{t("appointments.waitlistSuggested")}</Badge>
-          ) : null}
-          {row.confirm_by_reply ? (
-            <Badge tone="info">{t("appointments.confirmByReply")}</Badge>
-          ) : null}
-        </div>
-      ),
-    },
-    {
-      key: "actions",
-      header: t("common.actions"),
-      align: "right",
-      render: (row) => (
-        <div className="row-actions">
-          <IconButton
-            label={t("common.details")}
-            icon={<Eye size={15} />}
-            onClick={(event) => {
-              event.stopPropagation();
-              setDetailId(row.id);
-            }}
-          />
-          {canChange && ["held", "confirmed"].includes(row.status) ? (
-            <IconButton
-              label={t("appointments.cancelAppointment")}
-              icon={<XCircle size={15} />}
-              tone="danger"
-              onClick={(event) => {
-                event.stopPropagation();
-                setCancelTarget(row);
-              }}
-            />
-          ) : null}
-        </div>
-      ),
-    },
-  ];
-
   const detail = detailQuery.data;
   const bookingSlots = bookingSlotsQuery.data?.slots ?? [];
   const rescheduleSlots = rescheduleSlotsQuery.data?.slots ?? [];
   const timezone = metaQuery.data?.app.timezone ?? "Asia/Kolkata";
-  const filteredDoctorSlots = useMemo(() => {
-    const slots = mySlotsQuery.data?.slots ?? [];
-    if (!slotDateFilter) return slots;
-    return slots.filter((slot) => {
-      const isoDay = new Intl.DateTimeFormat("en-CA", {
-        timeZone: timezone,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(new Date(slot));
-      return isoDay === slotDateFilter;
-    });
-  }, [mySlotsQuery.data?.slots, slotDateFilter, timezone]);
-  const openBookForSlot = (slotIso: string) => {
-    setBookOpen(true);
-    setSlot(slotIso);
-    setClinic(mySlotsClinic);
-    if (isDoctor && myDoctorName) setDoctorName(myDoctorName);
-    setBookError(null);
-  };
   const pageTitle = isDoctor
     ? t("appointments.titleMine")
     : isPatientView
@@ -493,7 +319,15 @@ export function AppointmentsPage() {
         subtitle={pageSubtitle}
         actions={
           canBook ? (
-            <button type="button" className="btn btn-primary" data-testid="appointments-book" onClick={() => setBookOpen(true)}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-testid="appointments-book"
+              onClick={() => {
+                setBookError(null);
+                setView("book");
+              }}
+            >
               <CalendarPlus size={16} aria-hidden="true" /> {t("appointments.book")}
             </button>
           ) : null
@@ -507,145 +341,127 @@ export function AppointmentsPage() {
       ) : null}
       <FormError message={actionError} />
 
-      {isDoctor ? (
-        <section className="panel" data-testid="doctor-free-slots">
-          <div className="section-head">
-            <h2>{t("appointments.slotsByDate")}</h2>
-            <span className="muted small">
-              {myDoctorName || me.display_name || "—"} · {mySlotsClinic || "—"}
-            </span>
-          </div>
-          <p className="muted small">{t("appointments.slotsByDateHint")}</p>
-          <div className="filter-row">
-            <label className="filter-field">
-              <span>{t("appointments.filterDate")}</span>
-              <input
-                type="date"
-                value={slotDateFilter}
-                onChange={(event) => setSlotDateFilter(event.target.value)}
-              />
-            </label>
-            {slotDateFilter ? (
-              <button type="button" className="btn btn-sm btn-ghost" onClick={() => setSlotDateFilter("")}>
-                {t("common.clear")}
-              </button>
-            ) : null}
-          </div>
-          {mySlotsQuery.isPending ? (
-            <Spinner />
-          ) : mySlotsQuery.isError ? (
-            <FormError message={errorMessage(mySlotsQuery.error)} />
-          ) : filteredDoctorSlots.length === 0 ? (
-            <p className="muted">{t("appointments.noSlots")}</p>
-          ) : (
-            <div className="slot-calendar" data-testid="slot-calendar">
-              <SlotGroups
-                slots={filteredDoctorSlots}
-                value={slot}
-                onSelect={openBookForSlot}
-                locale={locale}
-              />
-            </div>
-          )}
-        </section>
+      {canBook ? (
+        <div className="appt-tabs">
+          <Tabs
+            items={[
+              {
+                id: "schedule",
+                label: t("appointments.tabSchedule"),
+                count: appointmentsQuery.data?.meta.total,
+              },
+              { id: "book", label: t("appointments.tabNew") },
+            ]}
+            active={view}
+            onChange={(id) => setView(id === "book" ? "book" : "schedule")}
+          />
+        </div>
       ) : null}
 
-      <DataGrid
-        columns={columns}
-        items={appointmentsQuery.data?.items}
-        meta={appointmentsQuery.data?.meta}
-        loading={appointmentsQuery.isFetching}
-        error={appointmentsQuery.error}
-        grid={grid}
-        rowKey={(row) => row.id}
-        onRetry={() => void appointmentsQuery.refetch()}
-        onRowClick={(row) => setDetailId(row.id)}
-        searchPlaceholder={t("appointments.searchPlaceholder")}
-        filters={
-          <div className="filter-row">
-            <label className="filter-field">
-              <span>{t("appointments.status")}</span>
-              <select
-                value={statusFilter}
-                onChange={(event) => {
-                  setStatusFilter(event.target.value);
-                  grid.resetPage();
-                }}
-              >
-                <option value="">{t("common.all")}</option>
-                {STATUSES.map((status) => (
-                  <option key={status} value={status}>
-                    {humanize(status)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="filter-field">
-              <span>{t("common.specialty")}</span>
-              <select
-                value={specialtyFilter}
-                onChange={(event) => {
-                  setSpecialtyFilter(event.target.value);
-                  grid.resetPage();
-                }}
-              >
-                <option value="">{t("common.all")}</option>
-                {(metaQuery.data?.specialties ?? []).map((entry) => (
-                  <option key={entry.code} value={entry.code}>
-                    {entry[localeKey(locale)]}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="filter-field">
-              <span>{t("common.clinic")}</span>
-              <select
-                value={clinicFilter}
-                onChange={(event) => {
-                  setClinicFilter(event.target.value);
-                  grid.resetPage();
-                }}
-              >
-                <option value="">{t("common.all")}</option>
-                {clinics.map((entry) => (
-                  <option key={entry.code} value={entry.code}>
-                    {entry.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="filter-field">
-              <span>{t("appointments.dateFrom")}</span>
-              <input
-                type="date"
-                value={dateFrom}
-                onChange={(event) => {
-                  setDateFrom(event.target.value);
-                  grid.resetPage();
-                }}
-              />
-            </label>
-            <label className="filter-field">
-              <span>{t("appointments.dateTo")}</span>
-              <input
-                type="date"
-                value={dateTo}
-                onChange={(event) => {
-                  setDateTo(event.target.value);
-                  grid.resetPage();
-                }}
-              />
-            </label>
-            <button type="button" className="btn btn-sm btn-ghost" onClick={resetFilters}>
-              {t("common.clear")}
-            </button>
-          </div>
-        }
-        emptyTitle={t("common.emptyTitle")}
-        emptyHint={t("common.emptyHint")}
-      />
+      {view === "schedule" || !canBook ? (
+        <AppointmentTimeline
+          items={appointmentsQuery.data?.items}
+          meta={appointmentsQuery.data?.meta}
+          loading={appointmentsQuery.isFetching}
+          error={appointmentsQuery.error}
+          grid={grid}
+          locale={locale}
+          timezone={timezone}
+          searchPlaceholder={t("appointments.searchPlaceholder")}
+          showPatient={!isPatientView}
+          showDoctor={!isDoctor}
+          showSource={hasRole("front_desk", "admin")}
+          canCancel={(row) => canChange && ["held", "confirmed"].includes(row.status)}
+          specialtyLabel={specialtyLabel}
+          onOpen={(row) => setDetailId(row.id)}
+          onCancel={setCancelTarget}
+          onRetry={() => void appointmentsQuery.refetch()}
+          emptyTitle={t("common.emptyTitle")}
+          emptyHint={t("common.emptyHint")}
+          filters={
+            <>
+              <label className="filter-field">
+                <span>{t("appointments.status")}</span>
+                <select
+                  value={statusFilter}
+                  onChange={(event) => {
+                    setStatusFilter(event.target.value);
+                    grid.resetPage();
+                  }}
+                >
+                  <option value="">{t("common.all")}</option>
+                  {STATUSES.map((status) => (
+                    <option key={status} value={status}>
+                      {humanize(status)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="filter-field">
+                <span>{t("common.specialty")}</span>
+                <select
+                  value={specialtyFilter}
+                  onChange={(event) => {
+                    setSpecialtyFilter(event.target.value);
+                    grid.resetPage();
+                  }}
+                >
+                  <option value="">{t("common.all")}</option>
+                  {(metaQuery.data?.specialties ?? []).map((entry) => (
+                    <option key={entry.code} value={entry.code}>
+                      {entry[localeKey(locale)]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="filter-field">
+                <span>{t("common.clinic")}</span>
+                <select
+                  value={clinicFilter}
+                  onChange={(event) => {
+                    setClinicFilter(event.target.value);
+                    grid.resetPage();
+                  }}
+                >
+                  <option value="">{t("common.all")}</option>
+                  {clinics.map((entry) => (
+                    <option key={entry.code} value={entry.code}>
+                      {entry.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="filter-field">
+                <span>{t("appointments.dateFrom")}</span>
+                <input
+                  type="date"
+                  value={dateFrom}
+                  onChange={(event) => {
+                    setDateFrom(event.target.value);
+                    grid.resetPage();
+                  }}
+                />
+              </label>
+              <label className="filter-field">
+                <span>{t("appointments.dateTo")}</span>
+                <input
+                  type="date"
+                  value={dateTo}
+                  onChange={(event) => {
+                    setDateTo(event.target.value);
+                    grid.resetPage();
+                  }}
+                />
+              </label>
+              <button type="button" className="btn btn-sm btn-ghost" onClick={resetFilters}>
+                {t("common.clear")}
+              </button>
+            </>
+          }
+        />
+      ) : null}
 
-      <Modal
+            <Modal
         open={Boolean(detailId)}
         title={t("appointments.title")}
         onClose={() => setDetailId(null)}
@@ -751,32 +567,14 @@ export function AppointmentsPage() {
         ) : null}
       </Modal>
 
-      <Modal
-        open={bookOpen}
-        title={t("appointments.book")}
-        description={t("appointments.slotsHint")}
-        onClose={() => setBookOpen(false)}
-        size="lg"
-        busy={bookingMutation.isPending}
-        footer={
-          <>
-            <button type="button" className="btn" onClick={() => setBookOpen(false)}>
-              {t("common.cancel")}
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-testid="appointments-confirm-booking"
-              onClick={submitBooking}
-              disabled={bookingMutation.isPending}
-            >
-              {bookingMutation.isPending ? <Spinner /> : <CalendarPlus size={15} aria-hidden="true" />}
-              {t("appointments.confirmBooking")}
-            </button>
-          </>
-        }
-      >
-        <div className="form-grid">
+      {view === "book" && canBook ? (
+        <>
+          <section className="panel book-panel" data-testid="appointments-book-panel">
+            <div className="section-head">
+              <h2>{t("appointments.book")}</h2>
+            </div>
+            <p className="muted small">{t("appointments.slotsHint")}</p>
+            <div className="form-grid">
           <Field label={t("appointments.patient")} required>
             <PatientPicker value={patient} onChange={setPatient} />
           </Field>
@@ -879,8 +677,25 @@ export function AppointmentsPage() {
           )}
           <p className="muted small">{t("appointments.timezone", { zone: "Asia/Kolkata" })}</p>
         </div>
-        <FormError message={bookError} />
-      </Modal>
+            <FormError message={bookError} />
+            <div className="button-row book-actions">
+              <button type="button" className="btn" onClick={() => setView("schedule")}>
+                {t("common.cancel")}
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-testid="appointments-confirm-booking"
+                onClick={submitBooking}
+                disabled={bookingMutation.isPending}
+              >
+                {bookingMutation.isPending ? <Spinner /> : <CalendarPlus size={15} aria-hidden="true" />}
+                {t("appointments.confirmBooking")}
+              </button>
+            </div>
+          </section>
+        </>
+      ) : null}
 
       <Modal
         open={Boolean(rescheduleTarget)}

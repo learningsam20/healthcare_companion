@@ -289,6 +289,7 @@ async def mark_overdue_handoffs(session: AsyncSession, services: Services) -> di
                     actor_role="service",
                     requested_channels=["in_app", "email", "slack_staff"],
                     emergency=True,
+                    action_path="/escalations",
                 )
             except Exception:  # noqa: BLE001
                 logger.warning(

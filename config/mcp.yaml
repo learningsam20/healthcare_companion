@@ -50,6 +50,8 @@ graphs:
       - get_specialty_catalogue
       - search_doctors
       - search_records
+      - list_medications
+      - get_consent
   scribe:
     servers: [clinical, records, platform, stt]
     tools:

@@ -1,8 +1,9 @@
 """SOAP draft schema validation and line-level grounding.
 
-A schema or citation failure is a hard failure: nothing is persisted and the doctor
-sees a retryable error. Unsourced section lines are explicitly labelled; a medicine
-without a transcript basis is rejected outright.
+A schema or citation failure on a SOAP line is a hard failure: nothing is persisted
+and the doctor sees a retryable error. Unsourced section lines are explicitly
+labelled. A medicine the transcript does not support is omitted so the rest of the
+draft can still be reviewed; invented drugs are never persisted.
 """
 
 from __future__ import annotations
@@ -11,11 +12,27 @@ import json
 from pathlib import Path
 from typing import Any
 
+from app.modules.scribe.clinical_prose import fold_sections, polish_line, visit_follow_up
+from app.modules.scribe.medicine_match import supporting_turns
 from jsonschema import Draft202012Validator
 
 SCHEMA_VERSION = "scribe_v1"
 UNSOURCED_LABEL = "[doctor to specify]"
 SECTION_FIELDS = ("subjective", "objective", "assessment", "plan")
+_PLACEHOLDER_TEXT = {
+    "",
+    "undefined",
+    "null",
+    "none",
+    "n/a",
+    "na",
+    "unknown",
+    "nil",
+    "medicine",
+    "something",
+    "[doctor to specify]",
+    "doctor to specify",
+}
 
 
 class DraftRejected(ValueError):
@@ -46,6 +63,24 @@ def parse_model_output(content: str) -> dict[str, Any]:
     return coerce_model_draft(payload)
 
 
+def _optional_text(value: Any, *, limit: int) -> str | None:
+    if value is None or isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        text = str(value).strip()
+    elif isinstance(value, str):
+        text = value.strip()
+    else:
+        return None
+    if text.casefold() in _PLACEHOLDER_TEXT:
+        return None
+    return text[:limit]
+
+
+def _placeholder_name(name: str) -> bool:
+    return name.casefold() in _PLACEHOLDER_TEXT
+
+
 def _as_line(item: Any) -> dict[str, Any]:
     if isinstance(item, str):
         text = item.strip()
@@ -67,7 +102,8 @@ def coerce_model_draft(payload: dict[str, Any]) -> dict[str, Any]:
     """Repair common local-model shape mistakes before hard schema validation.
 
     Small instruct models often emit bare strings in SOAP arrays or wrap follow_up
-    as a list. Coercion keeps fail-closed medicine grounding intact.
+    as a list. Placeholder medicine names and blank dose fields are dropped here;
+    transcript grounding still removes any drug the visit did not mention.
     """
     coerced: dict[str, Any] = {}
     for field in SECTION_FIELDS:
@@ -80,7 +116,7 @@ def coerce_model_draft(payload: dict[str, Any]) -> dict[str, Any]:
             raw = [raw]
         coerced[field] = [_as_line(item) for item in raw]
 
-    follow_up = payload.get("follow_up", None)
+    follow_up = payload.get("follow_up")
     if isinstance(follow_up, list):
         follow_up = follow_up[0] if follow_up else None
     coerced["follow_up"] = None if follow_up is None else _as_line(follow_up)
@@ -95,7 +131,7 @@ def coerce_model_draft(payload: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(item, dict):
             continue
         name = str(item.get("name") or "").strip()
-        if not name:
+        if not name or _placeholder_name(name):
             continue
         turn_ids_raw = item.get("source_turn_ids") or []
         turn_ids = [int(value) for value in turn_ids_raw if str(value).lstrip("-").isdigit()]
@@ -103,10 +139,10 @@ def coerce_model_draft(payload: dict[str, Any]) -> dict[str, Any]:
         medicines.append(
             {
                 "name": name[:200],
-                "dose": item.get("dose"),
-                "frequency": item.get("frequency"),
-                "duration": item.get("duration"),
-                "instructions": item.get("instructions"),
+                "dose": _optional_text(item.get("dose"), limit=100),
+                "frequency": _optional_text(item.get("frequency"), limit=100),
+                "duration": _optional_text(item.get("duration"), limit=100),
+                "instructions": _optional_text(item.get("instructions"), limit=300),
                 "source_turn_ids": turn_ids,
                 "unsourced": unsourced,
             }
@@ -170,7 +206,7 @@ def _line_sources(
 def _normalize_line(
     line: dict[str, Any], *, field: str, line_index: int, turns: dict[int, dict[str, Any]]
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    text = str(line["text"]).strip()
+    text = polish_line(str(line["text"]).strip(), field=field) or str(line["text"]).strip()
     turn_ids = [int(item) for item in line["source_turn_ids"]]
     unsourced = bool(line["unsourced"]) or not turn_ids
     if unsourced and UNSOURCED_LABEL not in text:
@@ -194,14 +230,26 @@ def ground_draft(
     by_index = _turns_by_index(turns)
     normalized: dict[str, Any] = {}
     sources: list[dict[str, Any]] = []
+    pending: dict[str, list[dict[str, Any]]] = {}
     for field in SECTION_FIELDS:
         lines: list[dict[str, Any]] = []
         for index, line in enumerate(payload[field]):
-            clean, source = _normalize_line(line, field=field, line_index=index, turns=by_index)
+            clean, _source = _normalize_line(line, field=field, line_index=index, turns=by_index)
             lines.append(clean)
-            sources.append(source)
-        normalized[field] = lines
-    follow_up = payload.get("follow_up")
+        pending[field] = lines
+    pending = fold_sections(pending, turns)
+    for field in SECTION_FIELDS:
+        normalized[field] = pending[field]
+        for index, line in enumerate(pending[field]):
+            sources.append(
+                _line_sources(
+                    field=field,
+                    line_index=index,
+                    turn_ids=[int(item) for item in line["source_turn_ids"]],
+                    turns=by_index,
+                )
+            )
+    follow_up = payload.get("follow_up") or visit_follow_up(turns)
     if follow_up is not None:
         clean, source = _normalize_line(follow_up, field="follow_up", line_index=0, turns=by_index)
         normalized["follow_up"] = clean
@@ -210,26 +258,24 @@ def ground_draft(
         normalized["follow_up"] = None
 
     medicines: list[dict[str, Any]] = []
-    for index, medicine in enumerate(payload["medicines"]):
-        turn_ids = [int(item) for item in medicine["source_turn_ids"]]
-        if not turn_ids or medicine["unsourced"]:
-            raise DraftRejected(
-                "medicine_unsourced",
-                f"Medicine {medicine['name']} has no transcript basis.",
-            )
-        cited = " ".join(
-            str(by_index[turn_id]["text"]).casefold() for turn_id in turn_ids if turn_id in by_index
+    for medicine in payload["medicines"]:
+        name = str(medicine["name"]).strip()
+        if _placeholder_name(name):
+            continue
+        spoken = supporting_turns(name, turns)
+        turn_ids = [int(item) for item in medicine["source_turn_ids"] if int(item) in spoken]
+        if not turn_ids:
+            turn_ids = spoken
+        if not turn_ids:
+            # Keep the SOAP draft. An invented or unspoken drug is not a clinical order.
+            continue
+        medicines.append(
+            {**medicine, "name": name, "source_turn_ids": turn_ids, "unsourced": False}
         )
-        if str(medicine["name"]).casefold() not in cited:
-            raise DraftRejected(
-                "medicine_ungrounded",
-                f"Medicine {medicine['name']} is not supported by the cited transcript turns.",
-            )
-        medicines.append({**medicine, "unsourced": False})
         sources.append(
             _line_sources(
                 field="medicine",
-                line_index=index,
+                line_index=len(medicines) - 1,
                 turn_ids=turn_ids,
                 turns=by_index,
             )

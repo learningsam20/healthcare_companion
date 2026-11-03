@@ -14,6 +14,7 @@ import aiosmtplib
 import httpx
 from app.core.config import Settings
 from app.core.ports import DeliveryError
+from app.modules.notifications.format import email_html, slack_message
 
 
 class EmailAdapter:
@@ -30,6 +31,7 @@ class EmailAdapter:
         subject: str,
         body: str,
         attachments: list[dict[str, Any]] | None = None,
+        presentation: dict[str, Any] | None = None,
     ) -> str:
         if not self.configured():
             raise DeliveryError("smtp_unconfigured")
@@ -40,6 +42,7 @@ class EmailAdapter:
         if self._settings.email_reply_to:
             message["Reply-To"] = self._settings.email_reply_to
         message.set_content(body)
+        message.add_alternative(email_html(subject, body, presentation), subtype="html")
         for item in attachments or []:
             content = item.get("content")
             filename = str(item.get("filename") or "attachment.bin")
@@ -161,16 +164,31 @@ class SlackAdapter:
             )
         return False
 
-    async def send(self, *, channel: str, address: str, text: str) -> str:
+    async def send(
+        self,
+        *,
+        channel: str,
+        address: str,
+        text: str,
+        blocks: list[dict[str, Any]] | None = None,
+    ) -> str:
         token = self.token_for(channel)
         if not token:
             raise DeliveryError("slack_unconfigured")
+        payload: dict[str, Any] = {
+            "channel": address,
+            "text": text,
+            "unfurl_links": False,
+            "unfurl_media": False,
+        }
+        if blocks:
+            payload["blocks"] = blocks
         try:
             async with httpx.AsyncClient(timeout=15) as client:
                 response = await client.post(
                     "https://slack.com/api/chat.postMessage",
                     headers={"Authorization": f"Bearer {token}"},
-                    json={"channel": address, "text": text, "unfurl_links": False},
+                    json=payload,
                 )
                 response.raise_for_status()
                 data = response.json()
@@ -211,6 +229,7 @@ class NotificationDispatcher:
         subject: str,
         body: str,
         attachments: list[dict[str, Any]] | None = None,
+        presentation: dict[str, Any] | None = None,
     ) -> str:
         if channel == "email":
             return await self._email.send(
@@ -218,10 +237,16 @@ class NotificationDispatcher:
                 subject=subject,
                 body=body,
                 attachments=attachments,
+                presentation=presentation,
             )
         if channel == "sms":
             return await self._sms.send(address=address, body=body)
         if channel in {"slack_staff", "slack_patient"}:
-            text = f"*{subject}*\n{body}" if subject else body
-            return await self._slack.send(channel=channel, address=address, text=text)
+            slack = slack_message(subject, body, presentation)
+            return await self._slack.send(
+                channel=channel,
+                address=address,
+                text=str(slack["text"]),
+                blocks=slack.get("blocks"),
+            )
         raise DeliveryError("unknown_channel")

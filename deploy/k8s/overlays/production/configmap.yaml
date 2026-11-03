@@ -5,10 +5,10 @@ metadata:
 data:
   APP_ENV: production
   LOG_LEVEL: INFO
-  # Mailpit is removed in this overlay. Email and SMS remain unconfigured until
-  # the client supplies an approved SMTP relay or provider; they never fall back
-  # to a mock. Set these keys in an operator-owned overlay patch when approved.
+  # Mailpit is removed in this overlay. Email stays unconfigured until an
+  # approved SMTP relay is set in this ConfigMap; adapters fail closed and never
+  # fall back to a mock. External delivery is on so configured Slack and SMTP send.
   SMTP_HOST: ""
   SMTP_AUTH_MODE: password
   SMTP_USE_STARTTLS: "true"
-  NOTIFY_SEND_EXTERNAL: "false"
+  NOTIFY_SEND_EXTERNAL: "true"

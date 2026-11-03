@@ -344,12 +344,16 @@ async def dispatch_pending_notifications(ctx: dict[str, Any]) -> dict[str, int]:
 
                         payload = notification.payload or {}
                         attachments = decode_attachments(payload.get("attachments"))
+                    raw_presentation = (notification.payload or {}).get("presentation")
                     message_id = await dispatcher.send(
                         channel=delivery.channel,
                         address=contact.address,
                         subject=notification.title,
                         body=notification.body,
                         attachments=attachments,
+                        presentation=(
+                            raw_presentation if isinstance(raw_presentation, dict) else None
+                        ),
                     )
                 except DeliveryError as exc:
                     error_code = exc.code

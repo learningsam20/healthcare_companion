@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.agents.appointment_help_graph import AppointmentHelpGraph
 from app.agents.conversation_graph import ConversationGraph
 from app.agents.intent_graph import IntentGraph
-from app.agents.mcp_client import McpToolClient
+from app.agents.mcp_client import McpToolClient, ToolUnavailable
 from app.agents.types import AgentTurnResult, IntentLabel
 from app.agents.w1_triage_graph import W1TriageGraph
 from app.agents.w2_ask_graph import W2AskGraph
@@ -30,6 +30,8 @@ class ChatOrchestrator:
         self._services = services
         self._session = session
         tools = McpToolClient(services.settings)
+        self._tools = tools
+        self._turn_context: ExecutionContext | None = None
         checkpointer = getattr(services, "checkpointer", None)
         self.intent = IntentGraph(
             red_flags_config=services.red_flags,
@@ -150,6 +152,9 @@ class ChatOrchestrator:
     async def _retrieve_records(
         self, question: str, patient_id: uuid.UUID, *, top_k: int = 6
     ) -> tuple[list[dict[str, Any]], list[SourceRef]]:
+        via_mcp = await self._records_via_mcp(question, patient_id, top_k=top_k)
+        if via_mcp is not None:
+            return via_mcp
         try:
             embedding = await embed_query(self._services, question)
         except Exception:  # noqa: BLE001
@@ -191,6 +196,123 @@ class ChatOrchestrator:
             )
         return evidence, refs
 
+    async def _records_via_mcp(
+        self, question: str, patient_id: uuid.UUID, *, top_k: int
+    ) -> tuple[list[dict[str, Any]], list[SourceRef]] | None:
+        context = self._turn_context
+        if context is None:
+            return None
+        try:
+            searched = await self._tools.call(
+                context=context,
+                graph="chat",
+                tool="search_records",
+                arguments={
+                    "query": question,
+                    "patient_id": str(patient_id),
+                    "top_k": top_k,
+                },
+                timeout_seconds=8.0,
+            )
+        except ToolUnavailable:
+            searched = {"results": [], "error": "mcp_unreachable"}
+        try:
+            listed = await self._tools.call(
+                context=context,
+                graph="chat",
+                tool="list_medications",
+                arguments={"patient_id": str(patient_id)},
+                timeout_seconds=8.0,
+            )
+        except ToolUnavailable:
+            listed = {"medications": []}
+        if searched.get("error"):
+            return None
+        hits = searched.get("results")
+        if not isinstance(hits, list):
+            return None
+        evidence: list[dict[str, Any]] = []
+        refs: list[SourceRef] = []
+        for hit in hits:
+            if not isinstance(hit, dict):
+                continue
+            chunk_id = str(hit.get("chunk_id") or hit.get("document_id") or "")
+            title = str(hit.get("document_title") or "Record")
+            snippet = str(hit.get("snippet") or "")
+            if not chunk_id or not title:
+                continue
+            page = hit.get("page")
+            evidence.append(
+                {
+                    "id": chunk_id,
+                    "title": title,
+                    "page": page,
+                    "content": snippet[:2000],
+                    "score": hit.get("score"),
+                }
+            )
+            refs.append(
+                SourceRef(
+                    id=chunk_id,
+                    type=SourceType.DOCUMENT,
+                    title=title[:300],
+                    locator=f"page:{page}" if page is not None else chunk_id,
+                    patient_id=patient_id,
+                    snippet=snippet[:240] or None,
+                )
+            )
+        medications = listed.get("medications") if isinstance(listed, dict) else None
+        if isinstance(medications, list):
+            for index, item in enumerate(medications[:8]):
+                if not isinstance(item, dict):
+                    continue
+                name = str(item.get("name") or item.get("drug_name") or "").strip()
+                if not name:
+                    continue
+                detail = ", ".join(
+                    part
+                    for part in (
+                        str(item.get("dose") or "").strip(),
+                        str(item.get("frequency") or "").strip(),
+                    )
+                    if part
+                )
+                snippet = f"{name} {detail}".strip()
+                evidence.append(
+                    {
+                        "id": f"medication:{index}",
+                        "title": name,
+                        "page": None,
+                        "content": snippet,
+                        "score": None,
+                    }
+                )
+                refs.append(
+                    SourceRef(
+                        id=f"medication:{index}",
+                        type=SourceType.DOCUMENT,
+                        title=name[:300],
+                        locator="medication",
+                        patient_id=patient_id,
+                        snippet=snippet[:240],
+                    )
+                )
+        if not evidence:
+            return None
+        return evidence, refs
+
+    async def _record_platform_consent(self, context: ExecutionContext) -> None:
+        try:
+            await self._tools.call(
+                context=context,
+                graph="chat",
+                tool="get_consent",
+                arguments={},
+                timeout_seconds=4.0,
+            )
+        except ToolUnavailable:
+            return
+
     async def handle_turn(
         self,
         *,
@@ -204,6 +326,9 @@ class ChatOrchestrator:
         traffic_class: str,
         trace_id: str | None,
         thread_id: str | None = None,
+        chat_session_id: str | None = None,
+        skip_language_clarify: bool = False,
+        fixed_doctor_name: str | None = None,
     ) -> AgentTurnResult:
         tool_context = self._tool_context(
             subject=subject,
@@ -214,6 +339,8 @@ class ChatOrchestrator:
             traffic_class=traffic_class,
             trace_id=trace_id,
         )
+        self._turn_context = tool_context
+        await self._record_platform_consent(tool_context)
         routed = await self.intent.run(text=text, locale=locale, tool_context=tool_context)
         intent: IntentLabel = routed.get("intent") or "other"  # type: ignore[assignment]
 
@@ -246,6 +373,8 @@ class ChatOrchestrator:
                 clinic_code=clinic,
                 tool_context=tool_context,
                 thread_id=thread_id,
+                skip_language_clarify=skip_language_clarify,
+                fixed_doctor_name=fixed_doctor_name,
             )
 
         if intent == "appointment_help":
@@ -285,45 +414,20 @@ class ChatOrchestrator:
             draft.metadata = {**draft.metadata, "x01": True}
             return draft
 
-        memory_note = ""
-        if self._services.features.enabled("memory_preferences"):
-            from sqlalchemy import select
+        from app.modules.memory.service import MemoryFacade
 
-            from app.integrations.mem0_client import Mem0Client, Mem0Unavailable
-            from app.repositories.models import MemoryPreference
-
-            rows = list(
-                await self._session.scalars(
-                    select(MemoryPreference).where(MemoryPreference.subject == subject).limit(12)
-                )
-            )
-            opted_out = any(
-                row.key == "opt_out" and row.value.lower() in {"1", "true", "yes"} for row in rows
-            )
-            prefs = [f"{row.key}={row.value}" for row in rows if row.key != "opt_out"]
-            if prefs and not opted_out:
-                memory_note = "User preferences (allowlisted): " + "; ".join(prefs)
-            if not opted_out:
-                client = Mem0Client(self._services.settings)
-                if client.configured:
-                    try:
-                        hits = await client.search(user_id=subject, query=text[:240], limit=3)
-                        snippets = [
-                            str(h.get("memory") or h.get("text") or "").strip()
-                            for h in hits
-                            if (h.get("memory") or h.get("text"))
-                        ]
-                        snippets = [s for s in snippets if s][:3]
-                        if snippets:
-                            extra = "Mem0 recalls: " + " | ".join(snippets)
-                            memory_note = f"{memory_note}; {extra}" if memory_note else extra
-                    except Mem0Unavailable:
-                        pass
-
+        recall = await MemoryFacade(self._services, self._session).recall(
+            subject=subject,
+            query=text,
+            session_id=chat_session_id,
+            history=history,
+        )
         return await self.conversation.run(
             text=text,
             locale=locale,
             history=history,
             intent=intent,
-            memory_note=memory_note or None,
+            memory_note=recall.memory_note,
+            memory_sources=recall.sources,
+            memory_attribution=recall.attribution,
         )

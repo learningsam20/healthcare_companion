@@ -2,338 +2,313 @@
 # or access tokens. Operational attachments (ICS / ticket briefs) are built
 # separately and must also stay free of PHI.
 # subject_detail is appended to subject as " — {detail}" when non-empty.
+# The plain body is composed from intro, facts, footer and action_url so
+# in-app, email text and Slack fallback stay aligned with the rich layout.
 version: 1
 templates:
   booking_confirmed:
     en:
       subject: "Appointment confirmed"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        Your appointment is confirmed.
-
-        Doctor: {doctor_name}
-        When: {starts_at}
-        Clinic: {clinic_code}
-        Duration: {duration_minutes} minutes
-
-        A calendar invite (.ics) is attached when email delivery is enabled.
-        Sign in to Sahyog → Appointments if you need to reschedule or cancel.
-        This message contains no clinical notes.
+      action_label: "Open appointment"
+      intro: "Your appointment is confirmed."
+      footer: "A calendar file is attached to this email. Open the appointment if you need to reschedule or cancel. This message has no clinical notes."
+      facts:
+        - { label: Doctor, key: doctor_name }
+        - { label: When, key: starts_at }
+        - { label: Clinic, key: clinic_code }
+        - { label: Duration, key: duration_minutes, suffix: " minutes" }
+        - { label: Reference, key: appointment_id_short }
     hi:
       subject: "अपॉइंटमेंट पक्का हुआ"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        आपका अपॉइंटमेंट पक्का हो गया है।
-
-        डॉक्टर: {doctor_name}
-        समय: {starts_at}
-        क्लिनिक: {clinic_code}
-        अवधि: {duration_minutes} मिनट
-
-        ईमेल पर कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
-        बदलने या रद्द करने के लिए Sahyog → अपॉइंटमेंट खोलें।
+      action_label: "अपॉइंटमेंट खोलें"
+      intro: "आपका अपॉइंटमेंट पक्का हो गया है।"
+      footer: "इस ईमेल के साथ कैलेंडर फ़ाइल (.ics) जुड़ी हो सकती है। समय बदलने या रद्द करने के लिए अपॉइंटमेंट खोलें। इस संदेश में कोई क्लिनिकल नोट नहीं है।"
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: समय, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: अवधि, key: duration_minutes, suffix: " मिनट" }
+        - { label: संदर्भ, key: appointment_id_short }
     mr:
       subject: "अपॉइंटमेंट निश्चित झाली"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        तुमची अपॉइंटमेंट निश्चित झाली आहे.
-
-        डॉक्टर: {doctor_name}
-        वेळ: {starts_at}
-        क्लिनिक: {clinic_code}
-        कालावधी: {duration_minutes} मिनिटे
-
-        ईमेलवर कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
-        बदल किंवा रद्द करण्यासाठी Sahyog → अपॉइंटमेंट उघडा.
+      action_label: "अपॉइंटमेंट उघडा"
+      intro: "तुमची अपॉइंटमेंट निश्चित झाली आहे."
+      footer: "या ईमेलसोबत कॅलेंडर फाइल (.ics) जोडली जाऊ शकते. वेळ बदलण्यासाठी किंवा रद्द करण्यासाठी अपॉइंटमेंट उघडा. या संदेशात क्लिनिकल नोट्स नाहीत."
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: वेळ, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: कालावधी, key: duration_minutes, suffix: " मिनिटे" }
+        - { label: संदर्भ, key: appointment_id_short }
   booking_confirm_reply:
     en:
       subject: "Please confirm your appointment"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        We need a confirmation for your upcoming appointment (higher no-show risk band).
-
-        Doctor: {doctor_name}
-        When: {starts_at}
-        Clinic: {clinic_code}
-
-        Reply YES in Sahyog → Appointments, or confirm in the app.
-        If you cannot attend, cancel so the waitlist can be offered the slot.
+      action_label: "Confirm appointment"
+      intro: "Please confirm this appointment. The slot stays held until you confirm."
+      footer: "Confirm in Sahyog, or cancel so someone on the waitlist can take the slot."
+      facts:
+        - { label: Doctor, key: doctor_name }
+        - { label: When, key: starts_at }
+        - { label: Clinic, key: clinic_code }
+        - { label: Reference, key: appointment_id_short }
     hi:
       subject: "कृपया अपॉइंटमेंट कन्फर्म करें"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        कृपया अपने अपॉइंटमेंट की पुष्टि करें।
-
-        डॉक्टर: {doctor_name}
-        समय: {starts_at}
-        क्लिनिक: {clinic_code}
-
-        Sahyog → अपॉइंटमेंट में पुष्टि करें, या रद्द करें ताकि waitlist को स्लॉट मिल सके।
+      action_label: "अपॉइंटमेंट कन्फर्म करें"
+      intro: "कृपया इस अपॉइंटमेंट की पुष्टि करें। स्लॉट तब तक रुका रहेगा जब तक आप कन्फर्म नहीं करते।"
+      footer: "Sahyog में कन्फर्म करें, या रद्द करें ताकि प्रतीक्षा सूची के किसी व्यक्ति को यह स्लॉट मिल सके।"
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: समय, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: संदर्भ, key: appointment_id_short }
     mr:
       subject: "कृपया अपॉइंटमेंटची खात्री करा"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        कृपया तुमच्या अपॉइंटमेंटची खात्री करा.
-
-        डॉक्टर: {doctor_name}
-        वेळ: {starts_at}
-        क्लिनिक: {clinic_code}
-
-        Sahyog → अपॉइंटमेंट मध्ये कन्फर्म करा, किंवा रद्द करा जेणेकरून waitlist ला स्लॉट मिळेल.
+      action_label: "अपॉइंटमेंट कन्फर्म करा"
+      intro: "कृपया या अपॉइंटमेंटची खात्री करा. तुम्ही कन्फर्म करेपर्यंत स्लॉट राखीव राहील."
+      footer: "Sahyog मध्ये कन्फर्म करा, किंवा रद्द करा जेणेकरून प्रतीक्षा यादीतील एखाद्याला हा स्लॉट मिळेल."
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: वेळ, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: संदर्भ, key: appointment_id_short }
   appointment_reminder:
     en:
       subject: "Appointment reminder"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        Reminder: you have an upcoming appointment.
-
-        Doctor: {doctor_name}
-        When: {starts_at}
-        Clinic: {clinic_code}
-        Duration: {duration_minutes} minutes
-
-        A calendar invite (.ics) is attached when email delivery is enabled.
-        Arrive a few minutes early. Sign in to Sahyog for directions or changes.
+      action_label: "Open appointment"
+      intro: "You have an appointment coming up."
+      footer: "Please arrive a few minutes early. A calendar file is attached to this email. Open the appointment if your plans have changed."
+      facts:
+        - { label: Doctor, key: doctor_name }
+        - { label: When, key: starts_at }
+        - { label: Clinic, key: clinic_code }
+        - { label: Duration, key: duration_minutes, suffix: " minutes" }
+        - { label: Reference, key: appointment_id_short }
     hi:
       subject: "अपॉइंटमेंट याद दिलाना"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        याद दिलाना: आपका अपॉइंटमेंट आने वाला है।
-
-        डॉक्टर: {doctor_name}
-        समय: {starts_at}
-        क्लिनिक: {clinic_code}
-        अवधि: {duration_minutes} मिनट
-
-        ईमेल पर कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
+      action_label: "अपॉइंटमेंट खोलें"
+      intro: "आपका अपॉइंटमेंट आने वाला है।"
+      footer: "कृपया कुछ मिनट पहले पहुँचें। इस ईमेल के साथ कैलेंडर फ़ाइल जुड़ी हो सकती है। योजना बदल गई हो तो अपॉइंटमेंट खोलें।"
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: समय, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: अवधि, key: duration_minutes, suffix: " मिनट" }
+        - { label: संदर्भ, key: appointment_id_short }
     mr:
       subject: "अपॉइंटमेंटची आठवण"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        आठवण: तुमची अपॉइंटमेंट लवकरच आहे.
-
-        डॉक्टर: {doctor_name}
-        वेळ: {starts_at}
-        क्लिनिक: {clinic_code}
-        कालावधी: {duration_minutes} मिनिटे
-
-        ईमेलवर कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
+      action_label: "अपॉइंटमेंट उघडा"
+      intro: "तुमची अपॉइंटमेंट लवकरच आहे."
+      footer: "कृपया काही मिनिटे आधी या. या ईमेलसोबत कॅलेंडर फाइल जोडली जाऊ शकते. योजना बदलली असल्यास अपॉइंटमेंट उघडा."
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: वेळ, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: कालावधी, key: duration_minutes, suffix: " मिनिटे" }
+        - { label: संदर्भ, key: appointment_id_short }
   appointment_cancelled:
     en:
       subject: "Appointment cancelled"
       subject_detail: "{doctor_name} · {starts_at}"
-      body: |
-        Your appointment has been cancelled.
-
-        Doctor: {doctor_name}
-        Was scheduled for: {starts_at}
-        Clinic: {clinic_code}
-
-        A cancellation calendar update (.ics) is attached when email delivery is enabled.
-        Book a new slot from Sahyog → Appointments if you still need care.
+      action_label: "Book another slot"
+      intro: "Your appointment has been cancelled."
+      footer: "A cancellation update is attached to this email. Book a new slot if you still need the visit."
+      facts:
+        - { label: Doctor, key: doctor_name }
+        - { label: Was scheduled, key: starts_at }
+        - { label: Clinic, key: clinic_code }
+        - { label: Reference, key: appointment_id_short }
     hi:
       subject: "अपॉइंटमेंट रद्द"
       subject_detail: "{doctor_name} · {starts_at}"
-      body: |
-        आपका अपॉइंटमेंट रद्द कर दिया गया है।
-
-        डॉक्टर: {doctor_name}
-        निर्धारित था: {starts_at}
-        क्लिनिक: {clinic_code}
-
-        ईमेल पर रद्दीकरण कैलेंडर अपडेट (.ics) संलग्न हो सकता है।
+      action_label: "नया स्लॉट बुक करें"
+      intro: "आपका अपॉइंटमेंट रद्द कर दिया गया है।"
+      footer: "इस ईमेल के साथ रद्दीकरण का कैलेंडर अपडेट जुड़ा हो सकता है। अभी भी मुलाकात चाहिए तो नया स्लॉट बुक करें।"
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: निर्धारित था, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: संदर्भ, key: appointment_id_short }
     mr:
       subject: "अपॉइंटमेंट रद्द"
       subject_detail: "{doctor_name} · {starts_at}"
-      body: |
-        तुमची अपॉइंटमेंट रद्द झाली आहे.
-
-        डॉक्टर: {doctor_name}
-        नियोजित होती: {starts_at}
-        क्लिनिक: {clinic_code}
-
-        ईमेलवर रद्द कॅलेंडर अपडेट (.ics) जोडले जाऊ शकते.
+      action_label: "नवा स्लॉट बुक करा"
+      intro: "तुमची अपॉइंटमेंट रद्द झाली आहे."
+      footer: "या ईमेलसोबत रद्दीकरणाचे कॅलेंडर अपडेट जोडले जाऊ शकते. भेट अजून हवी असल्यास नवा स्लॉट बुक करा."
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: नियोजित होती, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: संदर्भ, key: appointment_id_short }
   appointment_rescheduled:
     en:
       subject: "Appointment rescheduled"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        Your appointment has been moved.
-
-        Doctor: {doctor_name}
-        New time: {starts_at}
-        Clinic: {clinic_code}
-        Duration: {duration_minutes} minutes
-
-        An updated calendar invite (.ics) is attached when email delivery is enabled.
-        Sign in to Sahyog → Appointments to confirm the new slot.
+      action_label: "See the new time"
+      intro: "Your appointment has a new time."
+      footer: "An updated calendar file is attached to this email. Open the appointment to confirm the new slot."
+      facts:
+        - { label: Doctor, key: doctor_name }
+        - { label: New time, key: starts_at }
+        - { label: Clinic, key: clinic_code }
+        - { label: Duration, key: duration_minutes, suffix: " minutes" }
+        - { label: Reference, key: appointment_id_short }
     hi:
       subject: "अपॉइंटमेंट बदला गया"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        आपका अपॉइंटमेंट बदल दिया गया है।
-
-        डॉक्टर: {doctor_name}
-        नया समय: {starts_at}
-        क्लिनिक: {clinic_code}
-        अवधि: {duration_minutes} मिनट
-
-        ईमेल पर अद्यतन कैलेंडर आमंत्रण (.ics) संलग्न हो सकता है।
+      action_label: "नया समय देखें"
+      intro: "आपके अपॉइंटमेंट का समय बदल गया है।"
+      footer: "इस ईमेल के साथ अद्यतन कैलेंडर फ़ाइल जुड़ी हो सकती है। नया स्लॉट पक्का करने के लिए अपॉइंटमेंट खोलें।"
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: नया समय, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: अवधि, key: duration_minutes, suffix: " मिनट" }
+        - { label: संदर्भ, key: appointment_id_short }
     mr:
       subject: "अपॉइंटमेंट पुन्हा नियोजित"
       subject_detail: "{doctor_name} · {starts_at} · {clinic_code}"
-      body: |
-        तुमची अपॉइंटमेंट बदलली आहे.
-
-        डॉक्टर: {doctor_name}
-        नवीन वेळ: {starts_at}
-        क्लिनिक: {clinic_code}
-        कालावधी: {duration_minutes} मिनिटे
-
-        ईमेलवर अद्ययावत कॅलेंडर आमंत्रण (.ics) जोडले जाऊ शकते.
+      action_label: "नवीन वेळ पहा"
+      intro: "तुमच्या अपॉइंटमेंटची वेळ बदलली आहे."
+      footer: "या ईमेलसोबत अद्ययावत कॅलेंडर फाइल जोडली जाऊ शकते. नवा स्लॉट पक्का करण्यासाठी अपॉइंटमेंट उघडा."
+      facts:
+        - { label: डॉक्टर, key: doctor_name }
+        - { label: नवीन वेळ, key: starts_at }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: कालावधी, key: duration_minutes, suffix: " मिनिटे" }
+        - { label: संदर्भ, key: appointment_id_short }
   document_ready:
     en:
       subject: "A document is ready"
       subject_detail: "{document_kind}"
-      body: |
-        A document has been added to your Sahyog account.
-
-        Kind: {document_kind}
-
-        Sign in → Records to review it securely.
-        This email does not include the document contents or clinical text.
+      action_label: "Open records"
+      intro: "A document is ready in your Sahyog records."
+      footer: "Open Records to read it there. This message does not include the file or any clinical text."
+      facts:
+        - { label: Document, key: document_kind }
     hi:
       subject: "एक दस्तावेज़ तैयार है"
       subject_detail: "{document_kind}"
-      body: |
-        आपके Sahyog खाते में एक दस्तावेज़ जोड़ा गया है।
-
-        प्रकार: {document_kind}
-
-        सुरक्षित रूप से देखने के लिए साइन इन → रिकॉर्ड्स खोलें।
-        इस ईमेल में दस्तावेज़ की सामग्री नहीं है।
+      action_label: "रिकॉर्ड्स खोलें"
+      intro: "आपके Sahyog रिकॉर्ड्स में एक दस्तावेज़ तैयार है।"
+      footer: "इसे पढ़ने के लिए रिकॉर्ड्स खोलें। इस संदेश में फ़ाइल या कोई क्लिनिकल पाठ नहीं है।"
+      facts:
+        - { label: दस्तावेज़, key: document_kind }
     mr:
       subject: "एक दस्तऐवज तयार आहे"
       subject_detail: "{document_kind}"
-      body: |
-        तुमच्या Sahyog खात्यात एक दस्तऐवज जोडला आहे.
-
-        प्रकार: {document_kind}
-
-        सुरक्षितपणे पाहण्यासाठी साइन इन → रेकॉर्ड्स उघडा.
-        या ईमेलमध्ये दस्तऐवजाची सामग्री नाही.
+      action_label: "रेकॉर्ड्स उघडा"
+      intro: "तुमच्या Sahyog रेकॉर्ड्समध्ये एक दस्तऐवज तयार आहे."
+      footer: "ते वाचण्यासाठी रेकॉर्ड्स उघडा. या संदेशात फाइल किंवा क्लिनिकल मजकूर नाही."
+      facts:
+        - { label: दस्तऐवज, key: document_kind }
   staff_handoff:
     en:
       subject: "Staff handoff"
       subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
-      body: |
-        An emergency / staff handoff needs acknowledgement.
-
-        Priority: {priority}
-        Clinic: {clinic_code}
-        Ticket: {handoff_id}
-        SLA due: {sla_due_at}
-        Queue: {queue}
-        Rules: {rule_ids}
-        Resource: {resource_type} / {resource_id_short}
-
-        Action: Open Escalations → Assign to me within the SLA, then call the desk path.
-        A ticket brief is attached (no patient name or clinical free text).
-        Open: {action_url}
+      action_label: "Open escalations"
+      intro: "A staff handoff is waiting for acknowledgement."
+      footer: "Open Escalations and choose Assign to me before the SLA, then follow the desk path. The email attachment is a ticket brief with no patient name or clinical text."
+      facts:
+        - { label: Priority, key: priority }
+        - { label: Clinic, key: clinic_code }
+        - { label: Ticket, key: handoff_id }
+        - { label: SLA due, key: sla_due_at }
+        - { label: Queue, key: queue }
+        - { label: Rules, key: rule_ids }
+        - { label: Resource, key: resource_type }
+        - { label: Resource id, key: resource_id_short }
     hi:
       subject: "स्टाफ हैंडऑफ"
       subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
-      body: |
-        आपातकालीन / स्टाफ हैंडऑफ को स्वीकृति चाहिए।
-
-        प्राथमिकता: {priority}
-        क्लिनिक: {clinic_code}
-        टिकट: {handoff_id}
-        SLA समय: {sla_due_at}
-        कतार: {queue}
-        नियम: {rule_ids}
-        संसाधन: {resource_type} / {resource_id_short}
-
-        कार्रवाई: Escalations खोलें → SLA में Assign to me, फिर डेस्क पथ कॉल करें।
-        टिकट संक्षेप संलग्न है (बिना मरीज़ नाम / नैदानिक पाठ)।
-        लिंक: {action_url}
+      action_label: "एस्केलेशन खोलें"
+      intro: "एक स्टाफ हैंडऑफ स्वीकृति का इंतज़ार कर रहा है।"
+      footer: "SLA से पहले एस्केलेशन खोलकर Assign to me चुनें, फिर डेस्क पथ पर चलें। ईमेल संलग्नक में मरीज़ का नाम या क्लिनिकल पाठ नहीं है।"
+      facts:
+        - { label: प्राथमिकता, key: priority }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: टिकट, key: handoff_id }
+        - { label: SLA समय, key: sla_due_at }
+        - { label: कतार, key: queue }
+        - { label: नियम, key: rule_ids }
+        - { label: संसाधन, key: resource_type }
+        - { label: संसाधन पहचान, key: resource_id_short }
     mr:
       subject: "स्टाफ हँडऑफ"
       subject_detail: "{priority} · {clinic_code} · ticket {handoff_id_short}"
-      body: |
-        आपत्कालीन / स्टाफ हँडऑफला स्वीकृती हवी आहे.
-
-        प्राधान्य: {priority}
-        क्लिनिक: {clinic_code}
-        तिकीट: {handoff_id}
-        SLA वेळ: {sla_due_at}
-        रांग: {queue}
-        नियम: {rule_ids}
-        संसाधन: {resource_type} / {resource_id_short}
-
-        कृती: Escalations उघडा → SLA मध्ये Assign to me, नंतर डेस्क पथ कॉल करा.
-        तिकीट सारांश जोडले आहे (रुग्ण नाव / क्लिनिकल मजकूर नाही).
-        लिंक: {action_url}
+      action_label: "एस्केलेशन्स उघडा"
+      intro: "एक स्टाफ हँडऑफ स्वीकृतीची वाट पाहत आहे."
+      footer: "SLA आधी एस्केलेशन्स उघडून Assign to me निवडा, नंतर डेस्क पथ अनुसरा. ईमेल जोडपत्रामध्ये रुग्णाचे नाव किंवा क्लिनिकल मजकूर नाही."
+      facts:
+        - { label: प्राधान्य, key: priority }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: तिकीट, key: handoff_id }
+        - { label: SLA वेळ, key: sla_due_at }
+        - { label: रांग, key: queue }
+        - { label: नियम, key: rule_ids }
+        - { label: संसाधन, key: resource_type }
+        - { label: संसाधन ओळख, key: resource_id_short }
   delivery_failure:
     en:
       subject: "Notification delivery failed"
       subject_detail: "{channel}"
-      body: |
-        A outbound notification could not be delivered after the configured retries.
-
-        Channel: {channel}
-
-        Check adapter credentials, quiet-hours queue, and recipient verification.
-        Open Admin → Notification deliveries for the batch detail.
+      action_label: "Review deliveries"
+      intro: "An outbound notification could not be delivered after the configured retries."
+      footer: "Check the channel credentials, the quiet-hours queue, and whether the recipient contact is verified."
+      facts:
+        - { label: Channel, key: channel }
     hi:
       subject: "सूचना वितरण विफल"
       subject_detail: "{channel}"
-      body: |
-        कॉन्फ़िगर किए गए पुनः प्रयासों के बाद आउटबाउंड सूचना वितरित नहीं हो सकी।
-
-        चैनल: {channel}
-
-        एडाप्टर क्रेडेंशियल, शांत-घंटे कतार और प्राप्तकर्ता सत्यापन जाँचें।
+      action_label: "डिलीवरी देखें"
+      intro: "कॉन्फ़िगर किए गए पुनः प्रयासों के बाद एक आउटबाउंड सूचना वितरित नहीं हो सकी।"
+      footer: "चैनल क्रेडेंशियल, शांत-घंटे की कतार, और प्राप्तकर्ता का सत्यापन जाँचें।"
+      facts:
+        - { label: चैनल, key: channel }
     mr:
       subject: "सूचना वितरण अयशस्वी"
       subject_detail: "{channel}"
-      body: |
-        कॉन्फिगर केलेल्या पुनःप्रयत्नांनंतर आउटबाउंड सूचना वितरित होऊ शकली नाही.
-
-        चॅनेल: {channel}
-
-        अॅडॉप्टर क्रेडेन्शियल्स, शांत-तास रांग आणि प्राप्तकर्ता पडताळणी तपासा.
+      action_label: "डिलिव्हरी पहा"
+      intro: "कॉन्फिगर केलेल्या पुनःप्रयत्नांनंतर एक आउटबाउंड सूचना वितरित होऊ शकली नाही."
+      footer: "चॅनेल क्रेडेन्शियल्स, शांत-तास रांग, आणि प्राप्तकर्त्याची पडताळणी तपासा."
+      facts:
+        - { label: चॅनेल, key: channel }
   ops_alert:
     en:
       subject: "Operations alert"
       subject_detail: "{alert_summary}"
-      body: |
-        Sahyog operations alert
-
-        {alert}
-
-        Follow the linked runbook / Escalations console.
-        An alert brief is attached when email delivery is enabled.
-        Open: {action_url}
+      action_label: "Open in Sahyog"
+      intro: "{alert}"
+      footer: "Use the link to follow up. This alert does not include patient names or clinical text."
+      facts:
+        - { label: Priority, key: priority }
+        - { label: Clinic, key: clinic_code }
+        - { label: Ticket, key: handoff_id_short }
     hi:
       subject: "संचालन चेतावनी"
       subject_detail: "{alert_summary}"
-      body: |
-        Sahyog संचालन चेतावनी
-
-        {alert}
-
-        संबंधित रनबुक / Escalations कंसोल देखें।
-        ईमेल पर संक्षेप संलग्न हो सकता है।
-        लिंक: {action_url}
+      action_label: "Sahyog में खोलें"
+      intro: "{alert}"
+      footer: "आगे की कार्रवाई के लिए लिंक खोलें। इस चेतावनी में मरीज़ का नाम या क्लिनिकल पाठ नहीं है।"
+      facts:
+        - { label: प्राथमिकता, key: priority }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: टिकट, key: handoff_id_short }
     mr:
       subject: "संचालन सूचना"
       subject_detail: "{alert_summary}"
-      body: |
-        Sahyog संचालन सूचना
-
-        {alert}
-
-        संबंधित रनबुक / Escalations कन्सोल पाहा.
-        ईमेलवर सारांश जोडले जाऊ शकते.
-        लिंक: {action_url}
+      action_label: "Sahyog मध्ये उघडा"
+      intro: "{alert}"
+      footer: "पुढील कारवाईसाठी लिंक उघडा. या सूचनेत रुग्णाचे नाव किंवा क्लिनिकल मजकूर नाही."
+      facts:
+        - { label: प्राधान्य, key: priority }
+        - { label: क्लिनिक, key: clinic_code }
+        - { label: तिकीट, key: handoff_id_short }

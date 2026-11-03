@@ -37,8 +37,8 @@ ${lines.map((l, i) => (i === 0 ? `<h1>${l}</h1>` : `<p>${l}</p>`)).join("")}
 
 async function bookFirstAvailableSlot(page: Page): Promise<{ appointmentId: string } | null> {
   await page.getByTestId("appointments-book").click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
+  const panel = page.getByTestId("appointments-book-panel");
+  await expect(panel).toBeVisible();
 
   await page.getByTestId("patient-picker-trigger").click({ trial: true }).catch(() => undefined);
   await page.getByTestId("patient-picker-trigger").click();
@@ -58,19 +58,19 @@ async function bookFirstAvailableSlot(page: Page): Promise<{ appointmentId: stri
   await slotsResponse;
   await page.waitForTimeout(800);
 
-  const slots = page.getByTestId("appointments-slot");
+  const slots = panel.getByTestId("appointments-slot");
   if ((await slots.count()) === 0) {
-    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await panel.getByRole("button", { name: "Cancel" }).click();
     return null;
   }
 
   // When Rao maps to multiple specialities, force a catalogue code.
-  const specialtyBox = page.getByRole("dialog").getByRole("combobox", { name: /Specialty/i });
+  const specialtyBox = panel.getByRole("combobox", { name: /Specialty/i });
   if (await specialtyBox.isVisible().catch(() => false)) {
     await specialtyBox.selectOption("general_medicine");
   }
 
-  await page.locator(".slot-group").first().getByTestId("appointments-slot").first().click();
+  await panel.locator(".slot-group").first().getByTestId("appointments-slot").first().click();
 
   const createResponsePromise = page.waitForResponse(
     (response) =>

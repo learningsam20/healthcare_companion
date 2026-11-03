@@ -12,6 +12,7 @@ import {
 
 import { api, errorMessage, isApiError, setApiAccessToken } from "./api";
 import { useI18n } from "./i18n";
+import { queryClient } from "./queryClient";
 import type { Me, Role } from "./types";
 
 const authority = (import.meta.env.VITE_OIDC_AUTHORITY as string | undefined)?.trim();
@@ -20,6 +21,58 @@ const configuredRedirect = (import.meta.env.VITE_OIDC_REDIRECT_URI as string | u
 const configuredLogout = (
   import.meta.env.VITE_OIDC_POST_LOGOUT_REDIRECT_URI as string | undefined
 )?.trim();
+
+const RETURN_KEY = "sahyog.returnTo";
+const CHAT_STANDALONE_KEY = "sahyog.chatStandalone";
+
+/** Remember a direct /chat visit so Keycloak can send the user back there. */
+export function rememberAuthReturn(): void {
+  try {
+    const path = window.location.pathname;
+    if (path === "/chat" || path.startsWith("/chat/")) {
+      sessionStorage.setItem(RETURN_KEY, "/chat");
+      sessionStorage.setItem(CHAT_STANDALONE_KEY, "1");
+      return;
+    }
+    if (path === "/auth/callback") return;
+    sessionStorage.removeItem(RETURN_KEY);
+    sessionStorage.removeItem(CHAT_STANDALONE_KEY);
+  } catch {
+    /* sessionStorage can be unavailable in private modes */
+  }
+}
+
+let consumedReturn: string | null = null;
+
+export function consumeAuthReturn(): string {
+  if (consumedReturn) return consumedReturn;
+  let next = "/";
+  try {
+    const stored = sessionStorage.getItem(RETURN_KEY);
+    sessionStorage.removeItem(RETURN_KEY);
+    if (stored === "/chat") next = "/chat";
+  } catch {
+    /* ignore */
+  }
+  consumedReturn = next;
+  return next;
+}
+
+export function isChatStandalone(): boolean {
+  try {
+    return sessionStorage.getItem(CHAT_STANDALONE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function clearChatStandalone(): void {
+  try {
+    sessionStorage.removeItem(CHAT_STANDALONE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
 
 type Status = "initializing" | "ready" | "config-missing" | "error" | "unauthenticated";
 
@@ -54,6 +107,7 @@ function sameOrigin(uri: string | undefined): string | undefined {
 }
 
 function initialize(): Promise<Keycloak> {
+  rememberAuthReturn();
   if (initPromise) return initPromise;
   const config = realmConfig();
   if (!config) return Promise.reject(new Error("identity_config_missing"));
@@ -98,7 +152,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((kc) => {
         if (!active) return;
         if (window.location.pathname === "/auth/callback") {
-          window.history.replaceState({}, "", "/");
+          window.history.replaceState({}, "", consumeAuthReturn());
         }
         setApiAccessToken(kc.token ?? null);
         setKeycloak(kc);
@@ -149,6 +203,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const signIn = useCallback(() => {
+    rememberAuthReturn();
     if (!instance) {
       window.location.reload();
       return;
@@ -162,6 +217,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(() => {
     if (!keycloak) return;
     setApiAccessToken(null);
+    queryClient.clear();
     // Prefer the page origin so Vite (:5729) and Compose web (:5705) both work.
     // Configured POST_LOGOUT URI is only used when it matches this origin.
     const redirectUri =

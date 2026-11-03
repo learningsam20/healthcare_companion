@@ -312,7 +312,7 @@ class PharmacyService:
         self, *, drug_name: str, clinic_code: str
     ) -> dict[str, Any]:
         """Return stock status from stock_items (API/DB source of truth)."""
-        row = await self._repo.find(drug_name=drug_name, clinic_code=clinic_code)
+        row = await self._repo.find_best(drug_name=drug_name, clinic_code=clinic_code)
         now = dt.datetime.now(dt.UTC)
         if row is None:
             return {

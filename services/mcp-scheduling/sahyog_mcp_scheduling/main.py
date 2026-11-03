@@ -7,9 +7,9 @@ from typing import Any
 
 import httpx
 from sahyog_common.context import ExecutionContext
+from sahyog_common.http_fallback import request_first
 from sahyog_common.mcp_service import create_mcp_app
 
-API_BASE = os.environ.get("SAHYOG_API_URL", "http://api:8000").rstrip("/")
 API_KEY_ENV = os.environ.get("INTERNAL_API_KEY_ENV", "STOCK_API_KEY")
 
 
@@ -26,19 +26,17 @@ def _headers() -> dict[str, str]:
 
 
 async def _get(path: str, params: dict[str, Any] | None = None) -> Any:
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        response = await client.get(f"{API_BASE}{path}", params=params or {}, headers=_headers())
-        response.raise_for_status()
-        return response.json()
+    response = await request_first("GET", path, params=params or {}, headers=_headers(), timeout=15.0)
+    response.raise_for_status()
+    return response.json()
 
 
 async def _post(path: str, body: dict[str, Any]) -> Any:
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        response = await client.post(f"{API_BASE}{path}", json=body, headers=_headers())
-        if response.status_code >= 400:
-            detail = response.text[:500]
-            raise ValueError(f"scheduling API {response.status_code}: {detail}")
-        return response.json()
+    response = await request_first("POST", path, json_body=body, headers=_headers(), timeout=15.0)
+    if response.status_code >= 400:
+        detail = response.text[:500]
+        raise ValueError(f"scheduling API {response.status_code}: {detail}")
+    return response.json()
 
 
 async def search_doctors(args: dict[str, Any], context: ExecutionContext) -> dict[str, Any]:

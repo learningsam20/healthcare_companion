@@ -114,16 +114,36 @@ async def test_export_sends_events_with_top_level_timestamp(
         return real_client(*args, transport=transport, **kwargs)
 
     monkeypatch.setattr(tracing.httpx, "AsyncClient", fake_client)
-    collector = TraceCollector(trace_id="c" * 32, name="POST /chat")
-    with collector.span("llm.complete", {"model_alias": "local_small"}):
+    collector = TraceCollector(
+        trace_id="c" * 32,
+        name="POST /chat",
+        session_id="session-uuid",
+        user_id="subject-1",
+    )
+    with collector.span(
+        "llm.complete",
+        {
+            "model_alias": "local_small",
+            "prompt_tokens": 3,
+            "completion_tokens": 2,
+            "redacted_input": "user: hello",
+            "redacted_output": "assistant: hi",
+        },
+        kind="generation",
+    ):
         pass
     assert await export_trace(_settings(), collector) is True
     batch = seen["payload"]["batch"]
     assert batch[0]["type"] == "trace-create"
     assert batch[0]["timestamp"]
-    assert batch[1]["type"] == "span-create"
+    assert batch[0]["body"]["sessionId"] == "session-uuid"
+    assert batch[0]["body"]["userId"] == "subject-1"
+    assert batch[1]["type"] == "generation-create"
     assert batch[1]["timestamp"]
     assert batch[1]["body"]["traceId"] == "c" * 32
+    assert batch[1]["body"]["input"] == "user: hello"
+    assert batch[1]["body"]["output"] == "assistant: hi"
+    assert "redacted_input" not in batch[1]["body"]["metadata"]
 
 
 async def test_export_reports_partial_ingestion_errors(

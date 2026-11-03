@@ -61,6 +61,8 @@ class W1State(TypedDict, total=False):
     error: str | None
     language_detection: dict[str, Any]
     language_needs_clarify: bool
+    skip_language_clarify: bool
+    fixed_doctor_name: str | None
 
 
 class W1TriageGraph:
@@ -152,6 +154,19 @@ class W1TriageGraph:
             return {
                 **state,
                 "language_detection": {"enabled": False},
+                "language_needs_clarify": False,
+            }
+        # After the user already picked a language, never re-ask (resume path).
+        if state.get("skip_language_clarify"):
+            return {
+                **state,
+                "language_detection": {
+                    "enabled": True,
+                    "locale": state.get("locale") or "en-IN",
+                    "confidence": 1.0,
+                    "needs_clarify": False,
+                    "confirmed": True,
+                },
                 "language_needs_clarify": False,
             }
         with trace_span("w1.language_detect", {}):
@@ -340,6 +355,7 @@ class W1TriageGraph:
             specialty_label = state.get("specialty_label") or specialty
             preferred = parse_preferred_starts_at(state["text"])
             preferred_iso = preferred.isoformat() if preferred else None
+            fixed_doctor = (state.get("fixed_doctor_name") or "").strip() or None
             try:
                 result = await self._tools.call(
                     context=state["tool_context"],
@@ -356,8 +372,27 @@ class W1TriageGraph:
             except ToolUnavailable:
                 doctors = await self._shortlist(specialty, state.get("clinic_code"))
 
+            # Doctor booking for a patient: lock to the signed-in doctor (no doctor pick).
+            if fixed_doctor:
+                matched = [
+                    d
+                    for d in doctors
+                    if str(d.get("doctor_name") or d.get("name") or "").strip().lower()
+                    == fixed_doctor.lower()
+                ]
+                if matched:
+                    doctors = matched[:1]
+                else:
+                    doctors = [
+                        {
+                            "doctor_name": fixed_doctor,
+                            "clinic_code": state.get("clinic_code"),
+                            "specialty_code": specialty,
+                        }
+                    ]
+
             slot_pool: list[dict[str, Any]] = []
-            for doctor in doctors[:3]:
+            for doctor in doctors[: (1 if fixed_doctor else 3)]:
                 name = str(doctor.get("doctor_name") or doctor.get("name") or "").strip()
                 clinic = str(
                     doctor.get("clinic_code") or doctor.get("clinic") or state.get("clinic_code") or ""
@@ -440,6 +475,10 @@ class W1TriageGraph:
                 f"Suggested specialty: **{specialty_label}** "
                 f"(`{specialty}`). Cancel if that is wrong, then restate your concern.",
             ]
+            if fixed_doctor:
+                lines.append(
+                    f"Booking on **{fixed_doctor}**'s schedule (your account). Pick an open slot:"
+                )
             if preferred is not None:
                 pref_label = preferred.strftime("%a %d %b, %I:%M %p").lstrip("0")
                 exact = any(
@@ -461,8 +500,10 @@ class W1TriageGraph:
                         f"**{pref_label}** is not free (or outside clinic hours). "
                         "Nearest open slots from scheduling:"
                     )
-            else:
+            elif not fixed_doctor:
                 lines.append("Pick a specific open slot below (clinic hours are 09:00–17:00 IST).")
+            elif preferred is None:
+                lines.append("Clinic hours are 09:00–17:00 IST.")
 
             if not candidates:
                 lines.append(
@@ -660,6 +701,8 @@ class W1TriageGraph:
         clinic_code: str | None,
         tool_context: ExecutionContext,
         thread_id: str | None = None,
+        skip_language_clarify: bool = False,
+        fixed_doctor_name: str | None = None,
     ) -> AgentTurnResult:
         state: W1State = {
             "text": text,
@@ -668,6 +711,8 @@ class W1TriageGraph:
             "tool_context": tool_context,
             "prompt_tokens": 0,
             "completion_tokens": 0,
+            "skip_language_clarify": skip_language_clarify,
+            "fixed_doctor_name": fixed_doctor_name,
         }
         from app.agents.checkpointer import invoke_config
 

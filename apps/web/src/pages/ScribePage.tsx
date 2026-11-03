@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   CheckCircle2,
+  Download,
   FilePlus2,
   LoaderCircle,
   Mic,
@@ -15,6 +16,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Badge, StatusBadge } from "../components/Badge";
+import { ClinicalRecord } from "../components/ClinicalRecord";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { DataGrid, type DataGridColumn } from "../components/DataGrid";
 import { IconButton } from "../components/IconButton";
@@ -27,7 +29,7 @@ import {
   PageHeader,
   Spinner,
 } from "../components/primitives";
-import { api, errorMessage, isApiError, qs } from "../lib/api";
+import { api, apiDownload, errorMessage, isApiError, qs, saveBlob } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { formatDateTime, humanize } from "../lib/format";
 import { useGridState } from "../lib/grid";
@@ -36,6 +38,7 @@ import type {
   Appointment,
   Encounter,
   GridResponse,
+  NoteRow,
   Patient,
   PreconsultBrief,
   ScribeDraft,
@@ -92,6 +95,12 @@ const ENCOUNTER_STATUSES = ["active", "closed"];
 interface TurnDraft {
   speaker: (typeof SPEAKERS)[number];
   text: string;
+}
+
+function speakerAfter(speaker: string | undefined): TurnDraft["speaker"] {
+  if (speaker === "doctor") return "patient";
+  if (speaker === "patient") return "doctor";
+  return "doctor";
 }
 
 function joined(content: ScribeDraft["content"], key: SectionKey): string {
@@ -181,6 +190,13 @@ export function ScribePage() {
     enabled: Boolean(selectedId),
   });
 
+  const signedNoteId = encounterQuery.data?.note_id ?? null;
+  const noteQuery = useQuery({
+    queryKey: ["notes", "detail", signedNoteId],
+    queryFn: () => api<NoteRow>(`/api/v1/scribe/notes/${signedNoteId}`),
+    enabled: Boolean(signedNoteId),
+  });
+
   const transcriptQuery = useQuery({
     queryKey: ["scribe", "transcript", selectedId],
     queryFn: () => api<Transcript>(`/api/v1/scribe/encounters/${selectedId}/transcript`),
@@ -257,8 +273,9 @@ export function ScribePage() {
         method: "POST",
         body: { language: payload.language, turns: payload.turns },
       }),
-    onSuccess: () => {
-      setTurns([{ speaker: "doctor", text: "" }]);
+    onSuccess: (_data, payload) => {
+      const last = payload.turns[payload.turns.length - 1];
+      setTurns([{ speaker: speakerAfter(last?.speaker), text: "" }]);
       setTranscriptError(null);
       setNotice(t("scribe.transcriptSaved"));
       void queryClient.invalidateQueries({ queryKey: ["scribe", "transcript", selectedId] });
@@ -327,6 +344,12 @@ export function ScribePage() {
     onError: (error) => setRejectError(errorMessage(error)),
   });
 
+  const downloadNote = useMutation({
+    mutationFn: (noteId: string) => apiDownload(`/api/v1/scribe/notes/${noteId}/download`),
+    onSuccess: ({ blob, filename }) => saveBlob(blob, filename),
+    onError: (error) => setActionError(errorMessage(error)),
+  });
+
   const signRun = useMutation({
     mutationFn: (payload: { runId: string; comment: string }) =>
       api<SignatureResult>(`/api/v1/scribe/runs/${payload.runId}/sign`, {
@@ -360,6 +383,7 @@ export function ScribePage() {
     setListening(false);
     setInterimText("");
     recognitionRef.current?.stop();
+    if (selectedId) window.scrollTo({ top: 0 });
     recognitionRef.current = null;
   }, [selectedId]);
 
@@ -369,6 +393,17 @@ export function ScribePage() {
       recognitionRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const saved = transcriptQuery.data?.turns;
+    if (!saved?.length) return;
+    const speaker = speakerAfter(saved[saved.length - 1]?.speaker);
+    setTurns((current) => {
+      if (current.some((turn) => turn.text.trim()) || current.length !== 1) return current;
+      if (current[0]?.speaker === speaker) return current;
+      return [{ speaker, text: "" }];
+    });
+  }, [transcriptQuery.data]);
 
   const run = runQuery.data;
   const transcript = transcriptQuery.data;
@@ -381,21 +416,25 @@ export function ScribePage() {
     (!run || ["failed", "rejected"].includes(run.status));
 
   const appendSpokenText = (text: string) => {
-    const cleaned = text.trim();
+    const cleaned = text.trim().replace(/\s+/g, " ");
     if (!cleaned) return;
     setTurns((current) => {
       const next = [...current];
       const last = next[next.length - 1];
-      if (last && last.speaker === "doctor" && last.text.trim()) {
-        next.push({ speaker: "patient", text: cleaned });
-        return next;
-      }
       if (last && !last.text.trim()) {
         next[next.length - 1] = { ...last, text: cleaned };
         return next;
       }
       if (last) {
-        next[next.length - 1] = { ...last, text: `${last.text.trim()} ${cleaned}`.trim() };
+        const previous = last.text.trim();
+        const previousFold = previous.toLowerCase();
+        const cleanedFold = cleaned.toLowerCase();
+        if (cleanedFold === previousFold || cleanedFold.startsWith(previousFold)) {
+          if (cleanedFold === previousFold) return next;
+          next[next.length - 1] = { ...last, text: cleaned };
+          return next;
+        }
+        next.push({ speaker: speakerAfter(last.speaker), text: cleaned });
         return next;
       }
       return [{ speaker: "doctor", text: cleaned }];
@@ -600,39 +639,49 @@ export function ScribePage() {
         </Callout>
       ) : null}
 
-      <DataGrid
-        columns={encounterColumns}
-        items={encountersQuery.data?.items}
-        meta={encountersQuery.data?.meta}
-        loading={encountersQuery.isFetching}
-        error={encountersQuery.error}
-        grid={grid}
-        rowKey={(row) => row.id}
-        onRetry={() => void encountersQuery.refetch()}
-        onRowClick={(row) => setSelectedId(row.id)}
-        searchPlaceholder={t("common.searchPlaceholder")}
-        filters={
-          <select
-            value={statusFilter}
-            onChange={(event) => {
-              setStatusFilter(event.target.value);
-              grid.setPage(1);
-            }}
-            aria-label={t("common.status")}
-          >
-            <option value="">{t("common.all")}</option>
-            {ENCOUNTER_STATUSES.map((status) => (
-              <option key={status} value={status}>
-                {humanize(status)}
-              </option>
-            ))}
-          </select>
-        }
-        emptyTitle={t("scribe.noEncounters")}
-      />
+      {selectedId ? null : (
+        <DataGrid
+          columns={encounterColumns}
+          items={encountersQuery.data?.items}
+          meta={encountersQuery.data?.meta}
+          loading={encountersQuery.isFetching}
+          error={encountersQuery.error}
+          grid={grid}
+          rowKey={(row) => row.id}
+          onRetry={() => void encountersQuery.refetch()}
+          onRowClick={(row) => setSelectedId(row.id)}
+          searchPlaceholder={t("common.searchPlaceholder")}
+          filters={
+            <select
+              value={statusFilter}
+              onChange={(event) => {
+                setStatusFilter(event.target.value);
+                grid.setPage(1);
+              }}
+              aria-label={t("common.status")}
+            >
+              <option value="">{t("common.all")}</option>
+              {ENCOUNTER_STATUSES.map((status) => (
+                <option key={status} value={status}>
+                  {humanize(status)}
+                </option>
+              ))}
+            </select>
+          }
+          emptyTitle={t("scribe.noEncounters")}
+        />
+      )}
 
       {selectedId ? (
         <section className="scribe-workspace">
+          <button
+            type="button"
+            className="btn btn-sm scribe-back"
+            data-testid="scribe-back-encounters"
+            onClick={() => setSelectedId(null)}
+          >
+            {t("common.back")}
+          </button>
           {encounterQuery.isPending ? (
             <Spinner />
           ) : encounterQuery.isError ? (
@@ -662,12 +711,18 @@ export function ScribePage() {
                 </div>
               </header>
 
-              <Callout tone="info" title={t("scribe.speakTitle")}>
-                <p>{t("scribe.speakSteps")}</p>
-                <p className="muted small">
-                  {t("scribe.speakHint")} {t("scribe.consentMic")}
-                </p>
-              </Callout>
+              {encounter.note_id ? (
+                <Callout tone="success" title={t("scribe.sign")}>
+                  <p>{t("scribe.signedLocked")}</p>
+                </Callout>
+              ) : (
+                <Callout tone="info" title={t("scribe.speakTitle")}>
+                  <p>{t("scribe.speakSteps")}</p>
+                  <p className="muted small">
+                    {t("scribe.speakHint")} {t("scribe.consentMic")}
+                  </p>
+                </Callout>
+              )}
 
               <div className="scribe-grid">
                 <section className="panel">
@@ -675,7 +730,7 @@ export function ScribePage() {
                     <h3>
                       <Mic size={16} aria-hidden="true" /> {t("scribe.transcript")}
                     </h3>
-                    {encounter.status === "active" ? (
+                    {encounter.status === "active" && !encounter.note_id ? (
                       <div className="button-row">
                         {listening ? (
                           <button
@@ -758,9 +813,25 @@ export function ScribePage() {
                 <section className="panel">
                   <div className="panel-head">
                     <h3>
-                      <PencilLine size={16} aria-hidden="true" /> {t("scribe.draft")}
+                      <PencilLine size={16} aria-hidden="true" />{" "}
+                      {encounter.note_id ? t("scribe.sign") : t("scribe.draft")}
                     </h3>
-                    {canStartDraft && transcript ? (
+                    {encounter.note_id ? (
+                      <button
+                        type="button"
+                        className="btn btn-sm"
+                        data-testid="scribe-download-note"
+                        disabled={downloadNote.isPending}
+                        onClick={() => downloadNote.mutate(encounter.note_id!)}
+                      >
+                        {downloadNote.isPending ? (
+                          <Spinner />
+                        ) : (
+                          <Download size={14} aria-hidden="true" />
+                        )}
+                        {t("scribe.downloadNote")}
+                      </button>
+                    ) : canStartDraft && transcript ? (
                       <button
                         type="button"
                         className="btn btn-primary btn-sm"
@@ -776,7 +847,36 @@ export function ScribePage() {
                     ) : null}
                   </div>
 
-                  {!effectiveRunId ? (
+                  {encounter.note_id ? (
+                    noteQuery.isPending ? (
+                      <Spinner />
+                    ) : noteQuery.isError ? (
+                      <FormError message={errorMessage(noteQuery.error)} />
+                    ) : noteQuery.data?.content ? (
+                      <div className="signed-sheet" data-testid="signed-note">
+                        <ClinicalRecord
+                          content={{
+                            ...noteQuery.data.content,
+                            medicines: noteQuery.data.content.medicines ?? [],
+                          }}
+                        />
+                        <footer className="signature-block">
+                          <h4>{t("scribe.digitalSignature")}</h4>
+                          <p>
+                            {t("scribe.signedBy")} {noteQuery.data.signed_by}
+                          </p>
+                          <p>{formatDateTime(noteQuery.data.signed_at, locale)}</p>
+                          <p>
+                            {t("scribe.signatureHash")}{" "}
+                            <code className="mono">{noteQuery.data.signed_hash}</code>
+                          </p>
+                          <p className="muted small">v{noteQuery.data.current_version}</p>
+                        </footer>
+                      </div>
+                    ) : (
+                      <p className="muted">{t("scribe.signedLocked")}</p>
+                    )
+                  ) : !effectiveRunId ? (
                     <p className="muted">
                       {canStartDraft ? t("scribe.startDraft") : t("scribe.draftNeedsTranscript")}
                     </p>
@@ -916,88 +1016,12 @@ export function ScribePage() {
                               </div>
                             </div>
                           ) : (
-                            <div className="draft-view">
-                              {SECTIONS.map((key) => {
-                                const lines = draft.content[key] ?? [];
-                                if (!lines.length) return null;
-                                return (
-                                  <section key={key}>
-                                    <h4 className="section-title">{humanize(key)}</h4>
-                                    <ul className="draft-lines">
-                                      {lines.map((line, index) => (
-                                        <li
-                                          key={`${key}-${index}`}
-                                          className={line.unsourced ? "is-unsourced" : undefined}
-                                        >
-                                          <span>{line.text}</span>
-                                          {line.unsourced ? (
-                                            <Badge tone="warning">{t("common.unsourced")}</Badge>
-                                          ) : (
-                                            <span className="citation-chips">
-                                              {line.source_turn_ids.map((turn) => (
-                                                <Badge key={turn} tone="neutral">
-                                                  {t("scribe.citation", { turn })}
-                                                </Badge>
-                                              ))}
-                                            </span>
-                                          )}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </section>
-                                );
-                              })}
-                              {draft.content.follow_up ? (
-                                <section>
-                                  <h4 className="section-title">{t("scribe.followUp")}</h4>
-                                  <p>{draft.content.follow_up.text}</p>
-                                </section>
-                              ) : null}
-                              {draft.content.medicines.length ? (
-                                <section>
-                                  <h4 className="section-title">{t("records.medications")}</h4>
-                                  <div className="table-wrap">
-                                    <table className="data-table compact">
-                                      <thead>
-                                        <tr>
-                                          <th>{t("scribe.medicine")}</th>
-                                          <th>{t("scribe.dose")}</th>
-                                          <th>{t("scribe.frequency")}</th>
-                                          <th>{t("scribe.duration")}</th>
-                                          <th>{t("scribe.stock")}</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {draft.content.medicines.map((medicine, index) => (
-                                          <tr key={`${medicine.name}-${index}`}>
-                                            <td>{medicine.name}</td>
-                                            <td>{medicine.dose ?? "—"}</td>
-                                            <td>{medicine.frequency ?? "—"}</td>
-                                            <td>{medicine.duration ?? "—"}</td>
-                                            <td>
-                                              {medicine.stock?.status ? (
-                                                <StatusBadge
-                                                  status={medicine.stock.stale ? "stale" : medicine.stock.status}
-                                                  label={
-                                                    medicine.stock.status === "unknown"
-                                                      ? t("scribe.stockUnknown")
-                                                      : medicine.stock.stale
-                                                        ? t("scribe.stockStale")
-                                                        : humanize(medicine.stock.status)
-                                                  }
-                                                />
-                                              ) : (
-                                                <span className="muted">—</span>
-                                              )}
-                                            </td>
-                                          </tr>
-                                        ))}
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </section>
-                              ) : null}
-                            </div>
+                            <ClinicalRecord
+                              content={{
+                                ...draft.content,
+                                medicines: draft.content.medicines ?? [],
+                              }}
+                            />
                           )}
 
                           {readOnly ? (
@@ -1025,7 +1049,7 @@ export function ScribePage() {
                 </section>
               </div>
 
-              {encounter.status === "active" && transcriptOpen ? (
+              {encounter.status === "active" && !encounter.note_id && transcriptOpen ? (
                 <section className="panel transcript-form" data-testid="scribe-transcript-editor">
                   <div className="panel-head">
                     <h3>{t("scribe.addTranscript")}</h3>
@@ -1093,7 +1117,10 @@ export function ScribePage() {
                       type="button"
                       className="btn"
                       onClick={() =>
-                        setTurns((current) => [...current, { speaker: "patient", text: "" }])
+                        setTurns((current) => [
+                          ...current,
+                          { speaker: speakerAfter(current[current.length - 1]?.speaker), text: "" },
+                        ])
                       }
                     >
                       <Plus size={15} aria-hidden="true" /> {t("scribe.addTurn")}

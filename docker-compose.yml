@@ -37,6 +37,7 @@ x-api-env: &api-env
   MEM0_URL: ${MEM0_URL:-http://mem0:8000}
   MEM0_API_KEY: ${MEM0_API_KEY:-}
   MEM0_TIMEOUT_SECONDS: ${MEM0_TIMEOUT_SECONDS:-15}
+  MEMORY_BACKEND: ${MEMORY_BACKEND:-mem0}
   CLAMAV_HOST: ${CLAMAV_HOST:-}
   CLAMAV_PORT: ${CLAMAV_PORT:-3310}
   MALWARE_SCAN_MODE: ${MALWARE_SCAN_MODE:-advisory}
@@ -48,6 +49,7 @@ x-api-env: &api-env
   LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
   LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
   LANGFUSE_CAPTURE_CONTENT: ${LANGFUSE_CAPTURE_CONTENT:-false}
+  LANGFUSE_REDACTED_IO: ${LANGFUSE_REDACTED_IO:-false}
   TRACE_EXPORT_SAMPLE_RATIO: ${TRACE_EXPORT_SAMPLE_RATIO:-0.1}
   HA_MODE: ${HA_MODE:-false}
   CHECKPOINTER_REQUIRED: ${CHECKPOINTER_REQUIRED:-false}
@@ -67,6 +69,7 @@ x-mcp-env: &mcp-env
   STOCK_API_KEY: ${STOCK_API_KEY:-}
   INTERNAL_API_KEY: ${INTERNAL_API_KEY:-}
   SAHYOG_API_URL: ${SAHYOG_API_URL:-http://api:8000}
+  SAHYOG_API_URL_FALLBACK: ${SAHYOG_API_URL_FALLBACK:-http://host.docker.internal:5706}
   WHISPER_MODEL_DIR: ${WHISPER_MODEL_DIR:-/models/whisper/faster-whisper-small}
   STT_ADAPTER: ${STT_ADAPTER:-local}
   STT_COMPUTE_TYPE: ${STT_COMPUTE_TYPE:-int8}
@@ -97,6 +100,8 @@ x-mcp-service: &mcp-service
     <<: *mcp-env
   restart: unless-stopped
   networks: [app]
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
   read_only: true
   tmpfs:
     - /tmp
@@ -446,6 +451,8 @@ services:
     <<: *mcp-service
     profiles: [minimal]
     command: ["uvicorn", "sahyog_mcp_broker.main:app", "--host", "0.0.0.0", "--port", "8100"]
+    volumes:
+      - ./config/mcp.yaml:/app/config/mcp.yaml:ro
     ports:
       - "127.0.0.1:${MCP_BROKER_PORT:-5709}:8100"
     healthcheck:
@@ -458,6 +465,9 @@ services:
     <<: *mcp-service
     profiles: [minimal]
     command: ["uvicorn", "sahyog_mcp_scheduling.main:app", "--host", "0.0.0.0", "--port", "8101"]
+    volumes:
+      - ./services/mcp-scheduling/sahyog_mcp_scheduling/main.py:/app/services/mcp-scheduling/sahyog_mcp_scheduling/main.py:ro
+      - ./packages/py-common/sahyog_common/http_fallback.py:/app/packages/py-common/sahyog_common/http_fallback.py:ro
     ports:
       - "127.0.0.1:${MCP_SCHEDULING_PORT:-5710}:8101"
     healthcheck:
@@ -470,6 +480,9 @@ services:
     <<: *mcp-service
     profiles: [minimal]
     command: ["uvicorn", "sahyog_mcp_records.main:app", "--host", "0.0.0.0", "--port", "8102"]
+    volumes:
+      - ./services/mcp-records/sahyog_mcp_records/main.py:/app/services/mcp-records/sahyog_mcp_records/main.py:ro
+      - ./packages/py-common/sahyog_common/http_fallback.py:/app/packages/py-common/sahyog_common/http_fallback.py:ro
     ports:
       - "127.0.0.1:${MCP_RECORDS_PORT:-5711}:8102"
     healthcheck:
@@ -482,6 +495,9 @@ services:
     <<: *mcp-service
     profiles: [minimal]
     command: ["uvicorn", "sahyog_mcp_clinical.main:app", "--host", "0.0.0.0", "--port", "8103"]
+    volumes:
+      - ./services/mcp-clinical/sahyog_mcp_clinical/main.py:/app/services/mcp-clinical/sahyog_mcp_clinical/main.py:ro
+      - ./packages/py-common/sahyog_common/http_fallback.py:/app/packages/py-common/sahyog_common/http_fallback.py:ro
     ports:
       - "127.0.0.1:${MCP_CLINICAL_PORT:-5712}:8103"
     healthcheck:

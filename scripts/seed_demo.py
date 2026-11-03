@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import datetime as dt
+import hashlib
 import json
 import sys
 import uuid
@@ -30,6 +31,7 @@ from app.repositories.models import (  # noqa: E402
     ClinicalNote,
     Consent,
     ContactChannel,
+    Document,
     Encounter,
     FhirPatientLink,
     Handoff,
@@ -107,6 +109,7 @@ async def seed(load_test: int) -> dict[str, int]:
         "fhir_links": 0,
         "contact_channels": 0,
         "stock_items": 0,
+        "documents": 0,
     }
     try:
         async with sessionmaker() as session:
@@ -358,6 +361,20 @@ async def seed(load_test: int) -> dict[str, int]:
                     payload={},
                     traffic_class="real",
                 ),
+                Notification(
+                    id=uid("70000000", 4),
+                    patient_id=PATIENT_PRIYA,
+                    recipient_subject=USER_FRONTDESK_IMRAN,
+                    recipient_role="front_desk",
+                    template_id="staff_handoff",
+                    template_version=1,
+                    channel="in_app",
+                    status="sent",
+                    title="Front-desk hand-off waiting",
+                    body="A routine intake needs a booking confirmation at Baner.",
+                    payload={},
+                    traffic_class="real",
+                ),
             ]
             for notification in notifications:
                 await session.merge(notification)
@@ -587,6 +604,69 @@ async def seed(load_test: int) -> dict[str, int]:
             pharmacy = PharmacyService(build_app_services(settings), session)
             imported = await pharmacy.import_configured_csv()
             counts["stock_items"] = imported.row_count
+
+            # One text PDF for Priya so the patient records view has a file to open.
+            # pypdf reads embedded text; this sample is not a scan and does not use OCR.
+            sys.path.insert(0, str(SCRIPT_DIR))
+            from generate_synthetic import build_pdf
+
+            sample_id = uid("70000000", 1)
+            sample = await session.get(Document, sample_id)
+            if sample is None or sample.status != "indexed":
+                pdf_bytes = build_pdf(
+                    [
+                        "SYNTHETIC SAMPLE — NOT A SIGNED CLINICAL NOTE",
+                        "Patient label: Priya Sharma",
+                        "Department: General Medicine",
+                        "Clinic: BANER",
+                        "",
+                        "Visit summary",
+                        "Seasonal allergic rhinitis. The patient takes cetirizine at night.",
+                        "No fever, chest pain, or breathlessness was recorded in this sample.",
+                        "",
+                        "Assessment",
+                        "Symptoms are stable on the current antihistamine.",
+                        "This file is synthetic demo data and must not be used for care.",
+                        "",
+                        "Plan",
+                        "Continue cetirizine as already used. Review if symptoms worsen.",
+                        "Text in this PDF is embedded so it can be read without OCR.",
+                    ]
+                )
+                object_key = f"documents/{PATIENT_PRIYA}/{sample_id}"
+                record_services = build_app_services(settings)
+                try:
+                    await record_services.storage.put(
+                        key=object_key,
+                        data=pdf_bytes,
+                        content_type="application/pdf",
+                    )
+                    await session.merge(
+                        Document(
+                            id=sample_id,
+                            patient_id=PATIENT_PRIYA,
+                            uploaded_by_subject="system:seed",
+                            kind="other",
+                            title="Priya Sharma visit summary (sample)",
+                            object_key=object_key,
+                            content_type="application/pdf",
+                            size_bytes=len(pdf_bytes),
+                            checksum_sha256=hashlib.sha256(pdf_bytes).hexdigest(),
+                            language="en-IN",
+                            status="queued",
+                            error_code=None,
+                            page_count=1,
+                            scan_status="clean",
+                            traffic_class="synthetic",
+                        )
+                    )
+                    await session.commit()
+                    from app.modules.records.ingest import ingest_document
+
+                    await ingest_document(record_services, sample_id)
+                finally:
+                    await record_services.db.dispose()
+            counts["documents"] = 1
 
             AuditRepository(session).append(
                 actor_subject="system:seed",

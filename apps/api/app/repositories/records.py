@@ -248,7 +248,15 @@ class DocumentRepository:
     ) -> tuple[list[Medication], int]:
         conditions = [Medication.patient_id == patient_id]
         if query:
-            conditions.append(Medication.name.ilike(f"%{query.strip()}%"))
+            needle = f"%{query.strip()}%"
+            conditions.append(
+                or_(
+                    Medication.name.ilike(needle),
+                    Medication.dose.ilike(needle),
+                    Medication.frequency.ilike(needle),
+                    Medication.instructions.ilike(needle),
+                )
+            )
         if status:
             conditions.append(Medication.status == status)
         total = await self._session.scalar(

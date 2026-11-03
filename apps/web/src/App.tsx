@@ -2,8 +2,9 @@ import { Suspense, lazy, type ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { AppShell } from "./components/AppShell";
+import { ChatShell } from "./components/ChatShell";
 import { LoadingBlock } from "./components/primitives";
-import { useAuth } from "./lib/auth";
+import { consumeAuthReturn, isChatStandalone, useAuth } from "./lib/auth";
 import type { Role } from "./lib/types";
 import { ForbiddenPage, NotFoundPage } from "./pages/StatusPages";
 
@@ -71,6 +72,22 @@ function Guarded({ roles, children }: { roles: Role[]; children: ReactNode }) {
   return <>{children}</>;
 }
 
+const CHAT_ROLES: Role[] = ["patient", "caregiver", "doctor", "front_desk", "admin"];
+
+function AuthCallback() {
+  return <Navigate to={consumeAuthReturn()} replace />;
+}
+
+function ChatEntry() {
+  const page = (
+    <Guarded roles={CHAT_ROLES}>
+      <ChatPage />
+    </Guarded>
+  );
+  if (isChatStandalone()) return <ChatShell>{page}</ChatShell>;
+  return <AppShell>{page}</AppShell>;
+}
+
 export function App() {
   return (
     <Suspense fallback={<LoadingBlock />}>
@@ -79,17 +96,10 @@ export function App() {
           Skip to main content
         </a>
         <Routes>
-          <Route path="/auth/callback" element={<Navigate to="/" replace />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/chat" element={<ChatEntry />} />
           <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
-          <Route
-            path="chat"
-            element={
-              <Guarded roles={["patient", "caregiver", "doctor", "front_desk", "admin"]}>
-                <ChatPage />
-              </Guarded>
-            }
-          />
           <Route
             path="appointments"
             element={

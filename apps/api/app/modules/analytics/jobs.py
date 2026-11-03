@@ -651,6 +651,7 @@ async def _send_alert(
             actor_role="service",
             requested_channels=["in_app", "email"],
             emergency=True,
+            action_path="/analytics",
         )
     except Exception:  # noqa: BLE001 - alerting must not fail the job
         logger.warning(

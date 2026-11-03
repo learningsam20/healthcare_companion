@@ -50,7 +50,7 @@ export function SourceList({
               <TypeBadge type={source.type} />
               <StatusBadge status={source.status} />
             </div>
-            {!compact && source.snippet ? (
+            {source.snippet && (!compact || source.type === "memory" || source.type === "conversation") ? (
               <p className="source-snippet">{source.snippet}</p>
             ) : null}
             <div className="source-meta muted">

@@ -981,6 +981,37 @@ class MemoryPreference(Base):
     )
 
 
+class AgentMemory(Base):
+    """First-party durable non-clinical memory when MEMORY_BACKEND=pgvector."""
+
+    __tablename__ = "agent_memories"
+    __table_args__ = (
+        CheckConstraint("kind IN ('preference','episodic')", name="agent_memory_kind"),
+        Index("ix_agent_memories_subject_kind", "subject", "kind"),
+        Index("ix_agent_memories_session", "session_id"),
+        Index(
+            "ix_agent_memories_embedding_hnsw",
+            "embedding",
+            postgresql_using="hnsw",
+            postgresql_with={"m": 16, "ef_construction": 64},
+            postgresql_ops={"embedding": "vector_cosine_ops"},
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    subject: Mapped[str] = mapped_column(String(200), nullable=False)
+    session_id: Mapped[uuid.UUID | None] = mapped_column(Uuid, nullable=True)
+    kind: Mapped[str] = mapped_column(String(20), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    embedding: Mapped[list[float]] = mapped_column(Vector(1024), nullable=False)
+    metadata_json: Mapped[dict[str, Any]] = mapped_column(
+        "metadata", JSONB, nullable=False, default=dict
+    )
+    created_at: Mapped[dt.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
 class ContactChannel(Base):
     __tablename__ = "contact_channels"
     __table_args__ = (

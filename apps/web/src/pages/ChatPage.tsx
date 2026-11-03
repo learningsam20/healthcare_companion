@@ -429,9 +429,15 @@ export function ChatPage() {
       if (result.run_id) setLastRunId(result.run_id);
       queryClient.setQueryData<ChatMessage[]>(
         ["chat-messages", selected?.id],
-        (current) => [...(current ?? []), result.assistant_message],
+        (current) => {
+          const next = [...(current ?? [])];
+          if (result.user_message) next.push(result.user_message);
+          if (result.assistant_message) next.push(result.assistant_message);
+          return next;
+        },
       );
       void queryClient.invalidateQueries({ queryKey: ["chat-sessions"] });
+      void queryClient.invalidateQueries({ queryKey: ["chat-messages", selected?.id] });
     },
     onError: (error) => setSendError(errorMessage(error)),
   });

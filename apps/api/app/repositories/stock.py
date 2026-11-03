@@ -33,6 +33,8 @@ class StockRepository:
                 or_(
                     func.lower(StockItemRecord.drug_name).like(needle),
                     func.lower(StockItemRecord.sku).like(needle),
+                    func.lower(StockItemRecord.form).like(needle),
+                    func.lower(StockItemRecord.strength).like(needle),
                 )
             )
         total = await self._session.scalar(
@@ -59,6 +61,67 @@ class StockRepository:
                 func.lower(StockItemRecord.drug_name) == drug_name.strip().casefold(),
             )
         )
+
+    async def match_terms(
+        self, terms: list[str], *, clinic_code: str | None, limit: int = 80
+    ) -> list[StockItemRecord]:
+        needles: list[str] = []
+        seen: set[str] = set()
+        for term in terms:
+            needle = term.strip().casefold().replace("%", "").replace("_", "")
+            if len(needle) < 3 or needle in seen:
+                continue
+            seen.add(needle)
+            needles.append(needle)
+            if len(needles) >= 24:
+                break
+        if not needles:
+            return []
+        likes = [
+            func.lower(StockItemRecord.drug_name).like(f"%{needle}%") for needle in needles
+        ]
+        matched = select(StockItemRecord).where(or_(*likes))
+        if clinic_code:
+            at_clinic = await self._session.scalars(
+                matched.where(StockItemRecord.clinic_code == clinic_code)
+                .order_by(func.length(StockItemRecord.drug_name))
+                .limit(limit)
+            )
+            rows = list(at_clinic)
+            if rows:
+                return rows
+        anywhere = await self._session.scalars(
+            matched.order_by(func.length(StockItemRecord.drug_name)).limit(limit)
+        )
+        return list(anywhere)
+
+    async def find_best(
+        self, *, drug_name: str, clinic_code: str
+    ) -> StockItemRecord | None:
+        exact = await self.find(drug_name=drug_name, clinic_code=clinic_code)
+        if exact is not None:
+            return exact
+        needle = drug_name.strip().casefold()
+        if len(needle) < 4:
+            return None
+        rows = await self.match_terms([needle], clinic_code=clinic_code, limit=20)
+        best: StockItemRecord | None = None
+        best_score = -1
+        for row in rows:
+            words = row.drug_name.casefold().split()
+            if not words:
+                continue
+            if words[0] == needle or words[0].startswith(needle):
+                score = 80
+            elif any(word.startswith(needle) for word in words):
+                score = 45
+            else:
+                continue
+            score -= len(row.drug_name) // 20
+            if score > best_score:
+                best_score = score
+                best = row
+        return best if best_score >= 45 else None
 
     async def upsert(self, item: StockItemRecord) -> StockItemRecord:
         existing = await self._session.scalar(

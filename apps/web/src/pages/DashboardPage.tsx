@@ -25,6 +25,7 @@ import type {
 } from "../lib/types";
 import { Badge, StatusBadge } from "../components/Badge";
 import { MetricTiles } from "../components/MetricTiles";
+import { RoleActivityChart } from "../components/RoleActivityChart";
 import { Callout, EmptyState, PageHeader } from "../components/primitives";
 import type { GridMeta } from "../lib/types";
 
@@ -91,7 +92,7 @@ export function DashboardPage() {
   });
 
   const notificationsQuery = useQuery({
-    queryKey: ["dashboard", "notifications"],
+    queryKey: ["dashboard", "notifications", me.subject],
     queryFn: () =>
       api<UnreadPeek>(`/api/v1/notifications${qs({ page_size: 5, sort: "created_at", order: "desc" })}`),
     staleTime: 30_000,
@@ -125,7 +126,6 @@ export function DashboardPage() {
   ].filter((item): item is { to: string; icon: typeof MessageCircle; label: string } => item !== null);
 
   const roles = overviewQuery.data?.active_users_by_role ?? [];
-  const roleMax = Math.max(1, ...roles.map((row) => row.count ?? 0));
 
   return (
     <div className="page">
@@ -171,21 +171,7 @@ export function DashboardPage() {
           <MetricTiles tiles={overviewQuery.data.tiles} />
           {roles.length ? (
             <div className="panel role-activity">
-              <h3>{t("analytics.activeByRole")}</h3>
-              <div className="bar-list">
-                {roles.map((row) => (
-                  <div className="bar-row" key={row.role ?? "unknown"}>
-                    <span className="bar-label">{humanize(row.role)}</span>
-                    <span className="bar-track">
-                      <span
-                        className="bar-fill"
-                        style={{ width: `${((row.count ?? 0) / roleMax) * 100}%` }}
-                      />
-                    </span>
-                    <span className="bar-value">{row.count ?? 0}</span>
-                  </div>
-                ))}
-              </div>
+              <RoleActivityChart rows={roles} title={t("analytics.activeByRole")} />
               <p className="muted small">
                 {t("analytics.suppressed")} · {t("dashboard.syntheticNote")}
               </p>

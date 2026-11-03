@@ -57,8 +57,9 @@ class IntentGraph:
         self._checkpointer = checkpointer
         self._graph = self._build()
 
-    def _emergency_scan(self, state: IntentState) -> IntentState:
+    async def _emergency_scan(self, state: IntentState) -> IntentState:
         with trace_span("intent.emergency_scan", {"locale": state.get("locale")}):
+            await self._clinical_red_flags(state)
             try:
                 matches = detect_red_flags(
                     state["text"], self._red_flags, state.get("locale") or "en-IN"
@@ -99,6 +100,22 @@ class IntentGraph:
                 "red_flags": payload,
                 "error": None,
             }
+
+    async def _clinical_red_flags(self, state: IntentState) -> None:
+        """Record the clinical MCP check. Local rules remain the routing decision."""
+        try:
+            await self._tools.call(
+                context=state["tool_context"],
+                graph="intent",
+                tool="check_red_flags",
+                arguments={
+                    "text": state["text"],
+                    "locale": state.get("locale") or "en-IN",
+                },
+                timeout_seconds=4.0,
+            )
+        except ToolUnavailable:
+            return
 
     async def _classify(self, state: IntentState) -> IntentState:
         if state.get("emergency"):

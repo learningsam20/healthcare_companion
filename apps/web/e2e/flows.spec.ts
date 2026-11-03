@@ -19,10 +19,10 @@ interface BookingResult {
  */
 async function bookFirstAvailableSlot(page: Page): Promise<BookingResult | null> {
   await page.getByTestId("appointments-book").click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
+  const panel = page.getByTestId("appointments-book-panel");
+  await expect(panel).toBeVisible();
 
-  await dialog.getByTestId("patient-picker-trigger").click();
+  await panel.getByTestId("patient-picker-trigger").click();
   const patientOption = page
     .getByTestId("patient-picker-option")
     .filter({ hasText: "Priya Sharma" })
@@ -35,23 +35,23 @@ async function bookFirstAvailableSlot(page: Page): Promise<BookingResult | null>
       /\/api\/v1\/doctors\/.+\/slots/.test(response.url()) && response.status() === 200,
     { timeout: 30_000 },
   );
-  await dialog.getByTestId("appointments-doctor-input").fill("Dr. Ananya Rao");
+  await panel.getByTestId("appointments-doctor-input").fill("Dr. Ananya Rao");
   await slotsResponse;
   await page.waitForTimeout(500);
 
-  const slots = page.getByTestId("appointments-slot");
+  const slots = panel.getByTestId("appointments-slot");
   if ((await slots.count()) === 0) {
-    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await panel.getByRole("button", { name: "Cancel" }).click();
     return null;
   }
 
   // Catalogue code (not British "paediatrics"); set when the specialty picker is shown.
-  const specialtyBox = dialog.getByRole("combobox", { name: /Specialty/i });
+  const specialtyBox = panel.getByRole("combobox", { name: /Specialty/i });
   if (await specialtyBox.isVisible().catch(() => false)) {
     await specialtyBox.selectOption("general_medicine");
   }
 
-  const firstGroup = page.locator(".slot-group").first();
+  const firstGroup = panel.locator(".slot-group").first();
   await firstGroup.getByTestId("appointments-slot").first().click();
 
   const createResponse = page.waitForResponse(
@@ -82,7 +82,7 @@ test.describe("sign-in and shell navigation", () => {
     await expect(page.getByTestId("chat-composer")).toBeVisible();
 
     await navigateTo(page, "Appointments");
-    await expect(page.locator("table tbody tr").first()).toBeVisible();
+    await expect(page.getByTestId("appointment-timeline-item").first()).toBeVisible();
 
     await navigateTo(page, "Dashboard", "Welcome, Priya");
     await expect(page.getByTestId("app-shell")).toBeVisible();
@@ -170,7 +170,7 @@ test.describe("appointments", () => {
     await openApp(page);
     await navigateTo(page, "Appointments");
 
-    const rows = page.locator("table tbody tr");
+    const rows = page.getByTestId("appointment-timeline-item");
     expect(await rows.count(), "seeded appointments should be visible to the front desk").toBeGreaterThan(0);
 
     const booking = await bookFirstAvailableSlot(page);

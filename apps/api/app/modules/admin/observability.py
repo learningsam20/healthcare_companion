@@ -409,7 +409,8 @@ async def get_ops_session(
         "include_content": include_content,
         "privacy_note": (
             "Admin inspection is audited. Prefer Langfuse for span-level debug; "
-            "message content is omitted from Langfuse when capture_content is false."
+            "raw PHI is never exported. When LANGFUSE_REDACTED_IO is on, generations "
+            "may include PII-redacted input/output; Sessions require sessionId on traces."
         ),
     }
 

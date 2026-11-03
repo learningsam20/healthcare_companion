@@ -12,6 +12,7 @@ LANGUAGE_NAMES = {"en-IN": "English", "hi-IN": "Hindi", "mr-IN": "Marathi"}
 from app.agents.llm_gateway import ExternalEgressBlocked, LlmGateway, LlmGatewayError
 from app.agents.types import AgentTurnResult, IntentLabel
 from app.core.tracing import trace_span
+from app.modules.memory.service import append_attribution
 
 
 class ConversationState(TypedDict, total=False):
@@ -20,6 +21,8 @@ class ConversationState(TypedDict, total=False):
     history: list[dict[str, str]]
     intent: IntentLabel
     memory_note: str | None
+    memory_sources: list[dict[str, Any]]
+    memory_attribution: str | None
     reply: str
     sources: list[dict[str, Any]]
     model_alias: str | None
@@ -47,14 +50,17 @@ class ConversationGraph:
 
     async def _reply(self, state: ConversationState) -> ConversationState:
         with trace_span("conversation.reply", {"intent": state.get("intent")}):
+            memory_sources = list(state.get("memory_sources") or [])
+            attribution = state.get("memory_attribution")
             if state.get("intent") == "clarify":
+                reply = (
+                    "I can help with booking a doctor, questions about your uploaded records, "
+                    "or general clinic guidance. Which of those do you need?"
+                )
                 return {
                     **state,
-                    "reply": (
-                        "I can help with booking a doctor, questions about your uploaded records, "
-                        "or general clinic guidance. Which of those do you need?"
-                    ),
-                    "sources": [],
+                    "reply": append_attribution(reply, attribution),
+                    "sources": memory_sources,
                     "model_alias": None,
                     "prompt_tokens": 0,
                     "completion_tokens": 0,
@@ -68,7 +74,9 @@ class ConversationGraph:
                     "content": (
                         f"Reply in {LANGUAGE_NAMES.get(language, 'English')}. "
                         "Do not diagnose, prescribe, or invent clinic data. "
-                        "If the user needs booking or records, say so briefly."
+                        "If the user needs booking or records, say so briefly. "
+                        "When using remembered preferences or earlier chat context, "
+                        "mention the marker like [M1] or [C1] inline."
                     ),
                 },
             ]
@@ -78,7 +86,8 @@ class ConversationGraph:
                         "role": "system",
                         "content": (
                             f"{state['memory_note']}. Use only for tone/routing; "
-                            "never invent clinical facts from preferences."
+                            "never invent clinical facts from preferences. "
+                            "Cite markers [M#]/[C#] when you rely on them."
                         ),
                     }
                 )
@@ -103,7 +112,7 @@ class ConversationGraph:
                     "error": "gateway_unavailable",
                     "reply": "The assistant is temporarily unavailable. Your message was saved.",
                 }
-            sources = [
+            general = [
                 s.model_dump(mode="json")
                 for s in resolve_sources(
                     [
@@ -117,9 +126,10 @@ class ConversationGraph:
                     current_patient_id=None,
                 )
             ]
+            sources = [*memory_sources, *general]
             return {
                 **state,
-                "reply": result.content,
+                "reply": append_attribution(result.content, attribution),
                 "sources": sources,
                 "model_alias": result.model_alias,
                 "prompt_tokens": result.prompt_tokens,
@@ -145,6 +155,8 @@ class ConversationGraph:
         history: list[dict[str, str]],
         intent: IntentLabel,
         memory_note: str | None = None,
+        memory_sources: list[dict[str, Any]] | None = None,
+        memory_attribution: str | None = None,
     ) -> AgentTurnResult:
         from app.agents.checkpointer import invoke_config
 
@@ -155,6 +167,8 @@ class ConversationGraph:
                 "history": history,
                 "intent": intent,
                 "memory_note": memory_note,
+                "memory_sources": memory_sources or [],
+                "memory_attribution": memory_attribution,
                 "prompt_tokens": 0,
                 "completion_tokens": 0,
             },

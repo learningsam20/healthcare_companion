@@ -22,10 +22,23 @@ async def run_audit_chain_verify(services: Services) -> dict[str, Any]:
         result = await AuditRepository(session).verify_chain()
         run.detail = result
         if result["status"] == "broken":
-            # Mark failed so SahyogJobFailures / ops UI surface the break.
+            # Mark failed so SahyogJobFailures / ops UI surface a real digest break.
             raise RuntimeError(
                 f"audit_chain_broken: broken_count={result['broken_count']} checked={result['checked']}"
             )
+        if result["status"] == "gapped":
+            logger.warning(
+                "audit chain has prev_hash gaps with valid digests",
+                extra={
+                    "event": "audit.verify_chain",
+                    "extra_fields": {
+                        "status": result["status"],
+                        "checked": result["checked"],
+                        "gap_count": result["gap_count"],
+                    },
+                },
+            )
+            return result
         logger.info(
             "audit chain verify",
             extra={

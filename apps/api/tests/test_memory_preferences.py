@@ -123,10 +123,14 @@ async def test_purge_writes_not_clinical_evidence_audit(monkeypatch: pytest.Monk
 
     monkeypatch.setattr(memory, "AuditRepository", _Audit)
 
-    async def _noop_sync(*_a: Any, **_k: Any) -> None:
-        return None
+    class _Facade:
+        def __init__(self, *_a: Any, **_k: Any) -> None:
+            pass
 
-    monkeypatch.setattr(memory, "_sync_mem0_delete", _noop_sync)
+        async def purge_subject(self, **_k: Any) -> int:
+            return 0
+
+    monkeypatch.setattr(memory, "MemoryFacade", _Facade)
 
     await purge_memory(
         context=_context(),
@@ -171,7 +175,7 @@ async def test_upsert_rejects_clinical_value(monkeypatch: pytest.MonkeyPatch) ->
 async def test_opt_out_upsert_skips_mem0_sync(monkeypatch: pytest.MonkeyPatch) -> None:
     session = _FakeSession()
     audits: list[dict[str, Any]] = []
-    add_calls: list[Any] = []
+    sync_calls: list[Any] = []
 
     class _Audit:
         def __init__(self, _session: Any) -> None:
@@ -182,18 +186,17 @@ async def test_opt_out_upsert_skips_mem0_sync(monkeypatch: pytest.MonkeyPatch) -
 
     import app.modules.memory.router as memory
     from app.core.config import Settings
-    from app.modules.memory.router import _sync_mem0_add
 
     monkeypatch.setattr(memory, "AuditRepository", _Audit)
 
-    class _Mem0:
-        configured = True
+    class _Facade:
+        def __init__(self, *_a: Any, **_k: Any) -> None:
+            pass
 
-        async def add(self, **kwargs: Any) -> dict[str, Any]:
-            add_calls.append(kwargs)
-            return {}
+        async def sync_preference(self, **kwargs: Any) -> None:
+            sync_calls.append(kwargs)
 
-    monkeypatch.setattr(memory, "Mem0Client", lambda _settings: _Mem0())
+    monkeypatch.setattr(memory, "MemoryFacade", _Facade)
 
     out = await upsert_memory(
         body=MemoryUpsert(key="opt_out", value="true"),
@@ -209,14 +212,19 @@ async def test_opt_out_upsert_skips_mem0_sync(monkeypatch: pytest.MonkeyPatch) -
     assert out.value == "true"
     assert session.committed is True
     assert audits[0]["action"] == "memory.upserted"
-    # Even when Mem0 is configured, opt_out must not sync clinical-adjacent vectors.
-    await _sync_mem0_add(
-        SimpleNamespace(settings=Settings(_env_file=None, app_env="test", mem0_url="http://mem0:8000")),
-        subject="patient-memory-test",
-        key="opt_out",
-        value="true",
+    # Router still calls facade; facade itself no-ops opt_out.
+    assert sync_calls and sync_calls[0]["key"] == "opt_out"
+    from app.modules.memory.service import MemoryFacade as RealFacade
+
+    real = RealFacade(
+        SimpleNamespace(
+            features=_Features(),
+            settings=Settings(_env_file=None, app_env="test", mem0_url="http://mem0:8000"),
+        ),
+        session,  # type: ignore[arg-type]
+        backend=SimpleNamespace(add=lambda **k: (_ for _ in ()).throw(AssertionError("no add"))),
     )
-    assert add_calls == []
+    await real.sync_preference(subject="patient-memory-test", key="opt_out", value="true")
 
 
 @pytest.mark.asyncio
@@ -237,10 +245,14 @@ async def test_forget_delete_audits_key(monkeypatch: pytest.MonkeyPatch) -> None
 
     monkeypatch.setattr(memory, "AuditRepository", _Audit)
 
-    async def _noop(*_a: Any, **_k: Any) -> None:
-        return None
+    class _Facade:
+        def __init__(self, *_a: Any, **_k: Any) -> None:
+            pass
 
-    monkeypatch.setattr(memory, "_sync_mem0_delete", _noop)
+        async def delete_preference(self, **_k: Any) -> None:
+            return None
+
+    monkeypatch.setattr(memory, "MemoryFacade", _Facade)
 
     await delete_memory(
         key="ui_density",

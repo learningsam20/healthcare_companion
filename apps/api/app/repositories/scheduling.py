@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import datetime as dt
+import re
 import uuid
+from zoneinfo import ZoneInfo
 
-from sqlalchemy import ColumnElement, func, or_, select
+from sqlalchemy import ColumnElement, and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.repositories.models import Appointment, BookingIdempotency, Patient
+
+CLINIC_TZ = ZoneInfo("Asia/Kolkata")
 
 SORT_COLUMNS = {
     "starts_at": Appointment.starts_at,
@@ -15,6 +19,35 @@ SORT_COLUMNS = {
     "status": Appointment.status,
     "created_at": Appointment.created_at,
 }
+
+_DATE_FORMATS = ("%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y")
+
+
+def parse_schedule_query_date(raw: str) -> dt.date | None:
+    """Parse a full-date search token (ISO or common Indian day-first forms)."""
+    text = (raw or "").strip()
+    if not text or len(text) < 8:
+        return None
+    for fmt in _DATE_FORMATS:
+        try:
+            return dt.datetime.strptime(text, fmt).date()
+        except ValueError:
+            continue
+    # Allow "4 Nov 2026" / "04 November 2026" style without locale deps.
+    match = re.fullmatch(
+        r"(\d{1,2})\s+([A-Za-z]{3,9})\s+(\d{4})",
+        text,
+    )
+    if match:
+        day_s, month_s, year_s = match.groups()
+        for fmt in ("%d %b %Y", "%d %B %Y"):
+            try:
+                return dt.datetime.strptime(
+                    f"{int(day_s):02d} {month_s.title()} {year_s}", fmt
+                ).date()
+            except ValueError:
+                continue
+    return None
 
 
 class AppointmentRepository:
@@ -59,25 +92,44 @@ class AppointmentRepository:
         if starts_before:
             conditions.append(Appointment.starts_at <= starts_before)
         if query:
-            pattern = f"%{query.strip()}%"
-            conditions.append(
-                or_(
-                    Appointment.doctor_name.ilike(pattern),
-                    Appointment.clinic_code.ilike(pattern),
-                    Appointment.specialty_code.ilike(pattern),
-                )
+            needle = query.strip()
+            pattern = f"%{needle}%"
+            text_match = or_(
+                Appointment.doctor_name.ilike(pattern),
+                Appointment.clinic_code.ilike(pattern),
+                Appointment.specialty_code.ilike(pattern),
+                Patient.display_name.ilike(pattern),
             )
+            day = parse_schedule_query_date(needle)
+            if day is not None:
+                day_start = dt.datetime.combine(day, dt.time.min, tzinfo=CLINIC_TZ)
+                day_end = dt.datetime.combine(day, dt.time.max, tzinfo=CLINIC_TZ)
+                conditions.append(
+                    or_(
+                        text_match,
+                        and_(
+                            Appointment.starts_at >= day_start,
+                            Appointment.starts_at <= day_end,
+                        ),
+                    )
+                )
+            else:
+                conditions.append(text_match)
         column = SORT_COLUMNS.get(sort, Appointment.starts_at)
         order = column.desc() if descending else column.asc()
+        base = (
+            select(Appointment)
+            .outerjoin(Patient, Patient.id == Appointment.patient_id)
+            .where(*conditions)
+        )
         total = await self._session.scalar(
-            select(func.count()).select_from(Appointment).where(*conditions)
+            select(func.count(func.distinct(Appointment.id)))
+            .select_from(Appointment)
+            .outerjoin(Patient, Patient.id == Appointment.patient_id)
+            .where(*conditions)
         )
         rows = await self._session.scalars(
-            select(Appointment)
-            .where(*conditions)
-            .order_by(order, Appointment.id.asc())
-            .limit(limit)
-            .offset(offset)
+            base.order_by(order, Appointment.id.asc()).limit(limit).offset(offset)
         )
         return list(rows), int(total or 0)
 

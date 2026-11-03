@@ -178,7 +178,10 @@ class AuditRepository:
         """Walk audit_events in order and verify per-row hash digests + tip continuity."""
         checked = 0
         unhashed = 0
+        digest_count = 0
+        gap_count = 0
         broken: list[dict[str, Any]] = []
+        gaps: list[dict[str, Any]] = []
         tip: str | None = None
         offset = 0
         while True:
@@ -210,34 +213,48 @@ class AuditRepository:
                 elif event.prev_hash:
                     # First hashed event should have empty/null prev unless seeded.
                     pass
-                if issues and len(broken) < 20:
-                    broken.append(
-                        {
-                            "id": str(event.id),
-                            "created_at": event.created_at.isoformat() if event.created_at else None,
-                            "action": event.action,
-                            "issues": issues,
-                            "stored_hash": event.event_hash,
-                            "expected_hash": expected,
-                            "stored_prev": event.prev_hash,
-                            "expected_prev": tip,
-                        }
-                    )
+                if issues:
+                    sample = {
+                        "id": str(event.id),
+                        "created_at": event.created_at.isoformat() if event.created_at else None,
+                        "action": event.action,
+                        "issues": issues,
+                        "stored_hash": event.event_hash,
+                        "expected_hash": expected,
+                        "stored_prev": event.prev_hash,
+                        "expected_prev": tip,
+                    }
+                    if "digest_mismatch" in issues:
+                        digest_count += 1
+                        if len(broken) < 20:
+                            broken.append(sample)
+                    elif "prev_hash_gap" in issues:
+                        # A valid digest with a missing link is a gap, not tampering.
+                        gap_count += 1
+                        if len(gaps) < 20:
+                            gaps.append(sample)
                 tip = event.event_hash
             offset += len(rows)
             if len(rows) < batch_size:
                 break
-        status = "ok" if not broken else "broken"
         if checked == 0:
             status = "empty"
+        elif digest_count:
+            status = "broken"
+        elif gap_count:
+            status = "gapped"
         elif unhashed == checked:
             status = "unhashed"
+        else:
+            status = "ok"
         return {
             "status": status,
             "checked": checked,
             "unhashed": unhashed,
-            "broken_count": len(broken),
+            "broken_count": digest_count,
             "broken": broken,
+            "gap_count": gap_count,
+            "gaps": gaps,
             "tip_hash": tip,
             "verified_at": dt.datetime.now(dt.UTC).isoformat(),
         }

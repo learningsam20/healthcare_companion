@@ -8,7 +8,6 @@ correction appends a new version with a parent link and content hash.
 from __future__ import annotations
 
 import datetime as dt
-import html
 import logging
 import uuid
 from typing import Any
@@ -25,6 +24,7 @@ from app.modules.scribe.grounding import (
     load_schema,
     validate_structure,
 )
+from app.modules.scribe.medicine_match import align_draft_medicines
 from app.modules.scribe.schemas import (
     AudioUploadOut,
     AudioUploadRequest,
@@ -47,6 +47,7 @@ from app.modules.scribe.schemas import (
     TranscriptTurnOut,
 )
 from app.modules.scribe.stock_enrichment import enrich_medicines, stock_status
+from app.modules.scribe.transcript_continue import continued_turns
 from app.repositories.audit import AuditRepository
 from app.repositories.models import (
     ClinicalNote,
@@ -121,7 +122,17 @@ class ScribeService:
             tool_client=self._tools,
             stock_source=str(services.stock_config.get("source_label", "stock")),
             checkpointer=getattr(services, "checkpointer", None),
+            medicine_search=self._search_catalog,
         )
+
+    async def _search_catalog(self, terms: list[str], clinic_code: str) -> list[dict[str, str]]:
+        from app.repositories.stock import StockRepository
+
+        rows = await StockRepository(self._session).match_terms(terms, clinic_code=clinic_code)
+        return [
+            {"name": row.drug_name, "form": row.form or "", "strength": row.strength or ""}
+            for row in rows
+        ]
 
     def _tool_context(
         self, context: AuthContext, encounter: Encounter, trace_id: str | None
@@ -334,17 +345,17 @@ class ScribeService:
         latest = await self._scribe.latest_run(encounter.id)
         if latest is not None and latest.status in {"running", "draft", "blocked"}:
             raise _problem(409, "scribe_run_active", "Finish or reject the current draft first.")
-        # Reuse the empty shell created at encounter start when present.
+        # Keep the encounter transcript. A later save, including one after the
+        # doctor rejects a draft, appends turns instead of replacing them.
         existing = await self._transcripts.latest_for_encounter(encounter.id)
-        if (
-            existing is not None
-            and existing.source == "manual"
-            and existing.status == "ready"
-            and not await self._transcripts.turns(existing.id)
-        ):
+        prior: list[Any] = []
+        if existing is not None and existing.status == "ready":
             transcript = existing
-            transcript.language = body.language
-            transcript.duration_ms = body.duration_ms
+            prior = await self._transcripts.turns(existing.id)
+            if prior and transcript.language != body.language:
+                transcript.language = "mixed"
+            else:
+                transcript.language = body.language
         else:
             transcript = Transcript(
                 encounter_id=encounter.id,
@@ -354,18 +365,26 @@ class ScribeService:
                 duration_ms=body.duration_ms,
             )
             await self._transcripts.create(transcript)
+        incoming = [(turn.speaker, turn.text.strip()) for turn in body.turns]
+        saved = [(turn.speaker, turn.text.strip()) for turn in prior]
+        if continued_turns(saved, incoming) is None:
+            return await self._transcript_out(transcript)
+        offset = prior[-1].end_ms if prior else 0
+        base = prior[-1].turn_index + 1 if prior else 0
         turns = [
             TranscriptTurn(
                 transcript_id=transcript.id,
-                turn_index=index,
+                turn_index=base + index,
                 speaker=turn.speaker,
-                start_ms=turn.start_ms,
-                end_ms=turn.end_ms,
+                start_ms=offset + turn.start_ms,
+                end_ms=offset + max(turn.end_ms, turn.start_ms),
                 text=turn.text,
                 language=turn.language or body.language,
             )
             for index, turn in enumerate(body.turns)
         ]
+        if turns:
+            transcript.duration_ms = turns[-1].end_ms or transcript.duration_ms
         await self._transcripts.add_turns(transcript.id, turns)
         self._audit.append(
             actor_subject=context.subject,
@@ -673,6 +692,25 @@ class ScribeService:
             }
             for turn in turns
         ]
+        from app.core.tracing import current_trace
+        from app.modules.memory.service import MemoryFacade
+
+        collector = current_trace()
+        if collector is not None:
+            collector.session_id = str(encounter.id)
+            collector.user_id = context.subject
+
+        memory_note = None
+        try:
+            recall = await MemoryFacade(self._services, self._session).recall(
+                subject=context.subject,
+                query="doctor preferences",
+                history=[],
+            )
+            memory_note = recall.memory_note
+        except Exception:  # noqa: BLE001 - prefs must not block draft
+            memory_note = None
+
         outcome = await self._graph.run(
             turns=turn_payload,
             locale=context.locale,
@@ -681,6 +719,8 @@ class ScribeService:
             tool_context=self._tool_context(context, encounter, trace_id),
             clinic_code=encounter.clinic_code,
             trace_id=trace_id,
+            patient_id=str(encounter.patient_id),
+            memory_note=memory_note,
         )
         return await self._persist_outcome(run, encounter, context, trace_id, outcome)
 
@@ -844,6 +884,13 @@ class ScribeService:
         ]
         try:
             content, sources = ground_draft(payload, turns=turn_payload, schema=self._schema)
+            content, sources = await align_draft_medicines(
+                content,
+                sources,
+                turn_payload,
+                encounter.clinic_code,
+                self._search_catalog,
+            )
         except DraftRejected as exc:
             raise _problem(422, exc.code, exc.detail) from exc
         content = await enrich_medicines(
@@ -1073,7 +1120,7 @@ class ScribeService:
                 recipient_role="patient",
                 patient_id=patient.id,
                 locale=patient.locale,
-                data={"document_kind": "signed clinical note"},
+                data={"document_kind": "Visit note"},
                 actor_subject=context.subject,
                 actor_role="service",
                 trace_id=trace_id,
@@ -1380,38 +1427,29 @@ class ScribeService:
         rows = await self._notes.sources(note.id, selected)
         return [SourceOut.model_validate(row) for row in rows]
 
-    async def note_download(self, context: AuthContext, note_id: uuid.UUID) -> str:
+    async def note_download(self, context: AuthContext, note_id: uuid.UUID) -> bytes:
+        from app.modules.scribe.note_pdf import render_clinical_note_pdf
+
         note, content, metadata_only = await self.note_visible(context, note_id)
         if metadata_only or content is None:
             raise _problem(403, "forbidden", "Download is not available for this role.")
         patient_name = await self._patient_name(note.patient_id) or "Patient"
-        sections = []
-        for field in ("subjective", "objective", "assessment", "plan"):
-            lines = content.get(field, [])
-            body = "".join(f"<li>{html.escape(str(line['text']))}</li>" for line in lines)
-            sections.append(f"<h2>{field.title()}</h2><ul>{body}</ul>")
-        medicines = content.get("medicines", [])
-        med_rows = "".join(
-            "<tr>"
-            f"<td>{html.escape(str(item.get('name', '')))}</td>"
-            f"<td>{html.escape(str(item.get('dose') or ''))}</td>"
-            f"<td>{html.escape(str(item.get('frequency') or ''))}</td>"
-            f"<td>{html.escape(str(item.get('duration') or ''))}</td>"
-            "</tr>"
-            for item in medicines
-        )
-        return (
-            "<!doctype html><html><head><meta charset='utf-8'>"
-            f"<title>{html.escape(note.title)}</title></head><body>"
-            f"<h1>{html.escape(note.title)}</h1>"
-            f"<p>Patient: {html.escape(patient_name)} — signed "
-            f"{note.signed_at.astimezone(dt.UTC):%d %b %Y %H:%M} UTC by "
-            f"{html.escape(note.signed_by)}. Version {note.current_version}.</p>"
-            f"{''.join(sections)}"
-            "<h2>Medicines</h2><table><thead><tr><th>Name</th><th>Dose</th>"
-            f"<th>Frequency</th><th>Duration</th></tr></thead><tbody>{med_rows}</tbody></table>"
-            "<p>This document is a signed clinical note. Do not alter it. "
-            "A correction creates a new version.</p></body></html>"
+        encounter = await self._encounters.get(note.encounter_id)
+        return render_clinical_note_pdf(
+            note_id=note.id,
+            title=note.title,
+            patient_name=patient_name,
+            patient_id=note.patient_id,
+            version=note.current_version,
+            language=note.language,
+            status=note.status,
+            signed_by=note.signed_by,
+            signed_at=note.signed_at,
+            signed_hash=note.signed_hash,
+            content=content,
+            doctor_name=encounter.doctor_name if encounter else None,
+            clinic_code=encounter.clinic_code if encounter else None,
+            org_name=self._services.settings.app_name,
         )
 
     async def reserve_stock(
@@ -1426,13 +1464,8 @@ class ScribeService:
         note, content, _ = await self.note_visible(context, note_id)
         if content is None:
             raise _problem(403, "forbidden", "This note is not visible to you.")
-        names = {
-            str(item.get("name", "")).casefold()
-            for item in content.get("medicines", [])
-            if item.get("name")
-        }
-        if names and body.medicine_name.casefold() not in names:
-            raise _problem(422, "medicine_not_in_note", "Reserve only a medicine from the note.")
+        # Prefer medicines listed on the note, but allow any clinic stock SKU so
+        # pharmacists can reserve substitutes / additional lines against this note.
         from app.modules.pharmacy.service import PharmacyService
 
         stock = await PharmacyService(self._services, self._session).lookup_guard(

@@ -99,7 +99,8 @@ async def list_notifications(
 
 
 @router.get("/templates")
-async def list_templates(services: ServicesDep) -> dict[str, Any]:
+async def list_templates(_context: ContextDep, services: ServicesDep) -> dict[str, Any]:
+    """Catalog is readable by any signed-in role; sending remains admin-only."""
     return {
         "version": services.notifications_config.get("version"),
         "templates": [

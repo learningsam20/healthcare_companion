@@ -462,6 +462,18 @@ svg {
   transform: translate(-50%, 0);
 }
 
+/* Header controls sit at the top edge — open tooltips downward. */
+.icon-btn.tooltip-below[data-tooltip]::after {
+  top: calc(100% + 7px);
+  bottom: auto;
+  transform: translate(-50%, -3px);
+}
+
+.icon-btn.tooltip-below[data-tooltip]:hover::after,
+.icon-btn.tooltip-below[data-tooltip]:focus-visible::after {
+  transform: translate(-50%, 0);
+}
+
 .link {
   color: var(--primary);
   font-size: 0.8rem;
@@ -643,6 +655,82 @@ select {
   flex: 1;
 }
 
+.reserve-form {
+  align-items: stretch;
+}
+
+.reserve-note-picks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  flex-basis: 100%;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 5px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.chip.is-selected,
+.chip:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.reserve-combobox {
+  position: relative;
+}
+
+.reserve-combobox .combo-list {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  max-height: 240px;
+  overflow: auto;
+}
+
+.reserve-combobox .combo-option {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.reserve-combobox .combo-option:hover,
+.reserve-combobox .combo-option:focus-visible {
+  background: var(--surface-2);
+}
+
+.reserve-combobox .combo-option .muted {
+  display: block;
+}
+
 .inline-field {
   display: inline-flex;
   align-items: center;
@@ -661,6 +749,22 @@ select {
 }
 
 /* ----------------------------------------------------------------- shell */
+
+.chat-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.chat-shell-user {
+  max-width: 160px;
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .app-shell {
   display: grid;
@@ -1119,9 +1223,11 @@ select {
 
 .content {
   width: 100%;
+  min-width: 0;
   max-width: 1460px;
   padding: 26px 28px 64px;
   margin: 0 auto;
+  overflow-x: clip;
 }
 
 .sidebar-scrim {
@@ -1132,8 +1238,48 @@ select {
 
 .page {
   display: flex;
+  min-width: 0;
+  max-width: 100%;
   flex-direction: column;
   gap: 18px;
+}
+
+.records-page .data-table {
+  table-layout: fixed;
+}
+
+.records-page .table-wrap {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.records-page .data-table th,
+.records-page .data-table td,
+.records-page .cell-stack {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.records-page .sort-button {
+  white-space: normal;
+  text-align: left;
+}
+
+.doc-preview {
+  width: 100%;
+  height: min(62vh, 640px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.doc-preview-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .page-header {
@@ -1984,6 +2130,95 @@ select {
   margin-top: 12px;
 }
 
+.role-activity-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.role-activity-body {
+  display: grid;
+  align-items: center;
+  gap: 18px 24px;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.role-donut-wrap {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  flex-shrink: 0;
+}
+
+.role-donut {
+  display: block;
+  width: 168px;
+  height: 168px;
+}
+
+.role-donut-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.role-donut-center strong {
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.role-donut-center span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: lowercase;
+}
+
+.role-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.role-legend li {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  grid-template-columns: 10px minmax(0, 1fr) 44px 40px;
+  font-size: 0.8rem;
+}
+
+.role-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.role-legend-label {
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-legend-share,
+.role-legend-count {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.role-legend-count {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .bar-list {
   display: flex;
   flex-direction: column;
@@ -2402,6 +2637,250 @@ select {
   color: var(--primary-contrast);
 }
 
+.appt-tabs {
+  margin-bottom: -6px;
+}
+
+.appt-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.appt-filters .filter-field {
+  display: flex;
+  min-width: 140px;
+  flex: 1 1 160px;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.appt-filters .filter-field select,
+.appt-filters .filter-field input {
+  min-height: 34px;
+  font-size: 0.8rem;
+}
+
+.appt-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.appt-day {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 8px 18px;
+  align-items: start;
+}
+
+.appt-day.is-today .appt-day-label h3 {
+  color: var(--primary-strong);
+}
+
+.appt-day-label h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.appt-day-kicker {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.appt-day-count {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.appt-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.appt-rail::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 85px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--border-strong);
+  transform: translateX(-50%);
+}
+
+.appt-rail:has(> .appt-item:only-child)::before {
+  display: none;
+}
+
+.appt-item {
+  --appt-tone: var(--primary);
+  display: grid;
+  grid-template-columns: 68px 14px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: start;
+}
+
+.appt-item[data-status="confirmed"] {
+  --appt-tone: var(--success);
+}
+
+.appt-item[data-status="held"] {
+  --appt-tone: var(--info);
+}
+
+.appt-item[data-status="completed"] {
+  --appt-tone: var(--text-muted);
+}
+
+.appt-item[data-status="cancelled"],
+.appt-item[data-status="no_show"] {
+  --appt-tone: var(--danger);
+}
+
+.appt-item[data-status="cancelled"] .appt-card,
+.appt-item[data-status="no_show"] .appt-card {
+  opacity: 0.78;
+}
+
+.appt-item[data-status="cancelled"] .appt-card-title strong {
+  text-decoration: line-through;
+}
+
+.appt-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.appt-time strong {
+  font-size: 0.82rem;
+}
+
+.appt-time span {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.appt-dot {
+  width: 12px;
+  height: 12px;
+  margin-top: 16px;
+  justify-self: center;
+  position: relative;
+  z-index: 1;
+  border: 3px solid var(--appt-tone);
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--surface);
+}
+
+.appt-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--appt-tone);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.appt-card:hover {
+  background: var(--surface-2);
+}
+
+.appt-card-open {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.appt-card-open:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.appt-card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.appt-card-title strong {
+  font-size: 0.92rem;
+}
+
+.appt-card-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.appt-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.appt-skeleton-bar {
+  width: 100%;
+  height: 72px;
+}
+
+.book-panel .form-grid {
+  margin-top: 12px;
+}
+
+.book-actions {
+  margin-top: 16px;
+}
+
+@media (max-width: 720px) {
+  .appt-day {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .appt-rail::before {
+    left: 85px;
+  }
+}
+
 /* --------------------------------------------------------------- records */
 
 .scope-bar {
@@ -2545,6 +3024,10 @@ select {
 }
 
 /* ---------------------------------------------------------- scribe / notes */
+
+.scribe-back {
+  align-self: flex-start;
+}
 
 .scribe-workspace {
   display: flex;
@@ -2694,6 +3177,85 @@ select {
   flex-shrink: 0;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+.signed-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.signature-block {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 2px solid var(--text);
+}
+
+.signature-block h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.signature-block p {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+}
+
+.signature-block code {
+  display: block;
+  margin-top: 2px;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.clinical-record {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.clinical-record-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.clinical-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.clinical-section-head .section-title {
+  margin: 0;
+}
+
+.soap-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--primary-contrast);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.clinical-empty,
+.clinical-prose {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .note-content {
@@ -3677,6 +4239,15 @@ select {
 
   .bar-row {
     grid-template-columns: 84px minmax(0, 1fr) 32px;
+  }
+
+  .role-activity-body {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .role-legend {
+    width: 100%;
   }
 }
 

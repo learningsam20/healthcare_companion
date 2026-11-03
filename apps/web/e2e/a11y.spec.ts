@@ -41,7 +41,7 @@ test.describe("accessibility - patient pages", () => {
   test("appointments", async ({ page }) => {
     await openApp(page);
     await navigateTo(page, "Appointments");
-    await expect(page.locator("table tbody tr, .empty-state").first()).toBeVisible();
+    await expect(page.locator("[data-testid=appointment-timeline-item], .empty-state").first()).toBeVisible();
     await expectNoSeriousAxeViolations(page, "appointments");
   });
 

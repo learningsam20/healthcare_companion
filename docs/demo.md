@@ -362,11 +362,11 @@ Short summary for the demo narrative. Full machine-readable detail is linked; do
 
 Human-readable rollup: [evidence/load_test_report.md](./evidence/load_test_report.md).
 
-| Run | Profile | Result (headline) | Detail |
-|---|---|---|---|
-| R1 matched (P host) | 500 req/h, 10 m | **passed** — 509.6 req/h, p95 **57.9 ms**, errors **0%**, `capacity_accepted=false` | [load_test_r1_matched_20261102T004206Z.json](./evidence/load_test_r1_matched_20261102T004206Z.json) |
+| Run                 | Profile                   | Result (headline)                                                                    | Detail                                                                                              |
+| ------------------- | ------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| R1 matched (P host) | 500 req/h, 10 m           | **passed** — 509.6 req/h, p95 **57.9 ms**, errors **0%**, `capacity_accepted=false`  | [load_test_r1_matched_20261102T004206Z.json](./evidence/load_test_r1_matched_20261102T004206Z.json) |
 | R3 matched (P host) | 1400 req/h × burst 4, 5 m | **passed** — 1833.5 req/h, p95 **50.9 ms**, errors **0%**, `capacity_accepted=false` | [load_test_r3_matched_20261102T004206Z.json](./evidence/load_test_r3_matched_20261102T004206Z.json) |
-| Kill drill (G-22) | injected budget abort | **`kill_drill_passed`** | [load_test_kill_drill_20261031T170411Z.json](./evidence/load_test_kill_drill_20261031T170411Z.json) |
+| Kill drill (G-22)   | injected budget abort     | `kill_drill_passed`                                                                  | [load_test_kill_drill_20261031T170411Z.json](./evidence/load_test_kill_drill_20261031T170411Z.json) |
 
 **Demo line:** “Public-API Keycloak load on the pilot host clears latency/error gates; we do **not** claim M/L capacity until an M/L host run sets `capacity_accepted=true` (G-17).”
 

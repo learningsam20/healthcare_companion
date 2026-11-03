@@ -45,8 +45,27 @@ interface SendResult {
   suppressed_channels: number;
 }
 
+const LINK = /(https?:\/\/[^\s]+)/g;
+
+function NotificationBody({ text }: { text: string }) {
+  const parts = text.split(LINK);
+  return (
+    <p className="notification-body">
+      {parts.map((part, index) =>
+        part.startsWith("http://") || part.startsWith("https://") ? (
+          <a key={index} href={part} target="_blank" rel="noreferrer">
+            {part}
+          </a>
+        ) : (
+          <span key={index}>{part}</span>
+        ),
+      )}
+    </p>
+  );
+}
+
 const STATUSES = ["unread", "read"];
-const CHANNELS = ["email", "sms", "slack_staff", "slack_patient"];
+const CHANNELS = ["in_app", "email", "sms", "slack_staff", "slack_patient"];
 const ROLES = ["patient", "caregiver", "doctor", "front_desk", "pharmacist", "compliance", "admin"];
 const CONTACT_CHANNELS = ["email", "sms", "slack_staff", "slack_patient"];
 
@@ -86,7 +105,15 @@ export function NotificationsPage() {
   const [notice, setNotice] = useState<string | null>(null);
 
   const inboxQuery = useQuery({
-    queryKey: ["notifications", "inbox", inboxGrid.params, statusFilter, channelFilter, allUsers],
+    queryKey: [
+      "notifications",
+      "inbox",
+      me.subject,
+      inboxGrid.params,
+      statusFilter,
+      channelFilter,
+      allUsers,
+    ],
     queryFn: () =>
       api<NotificationList>(
         `/api/v1/notifications${qs({
@@ -115,7 +142,7 @@ export function NotificationsPage() {
   const templatesQuery = useQuery({
     queryKey: ["notifications", "templates"],
     queryFn: () => api<TemplatesResponse>("/api/v1/notifications/templates"),
-    enabled: isAdmin && (tab === "send" || tab === "templates"),
+    enabled: tab === "send" || tab === "templates",
     staleTime: 60_000,
   });
 
@@ -609,7 +636,7 @@ export function NotificationsPage() {
               <span className="muted">{formatDateTime(detail.created_at, locale)}</span>
               <Badge tone="neutral">{humanize(detail.recipient_role)}</Badge>
             </div>
-            <p className="notification-body">{detail.body}</p>
+            <NotificationBody text={detail.body} />
             <div className="detail-row muted">
               <span>
                 {t("notifications.recipient")}: <code className="mono">{detail.recipient_subject}</code>

@@ -322,6 +322,7 @@ async def _alert_variance(
             actor_role="service",
             requested_channels=["in_app", "email"],
             emergency=True,
+            action_path="/analytics",
         )
         await session.flush()
     except Exception:  # noqa: BLE001 - alerting must not fail the reconciliation

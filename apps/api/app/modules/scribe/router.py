@@ -31,7 +31,7 @@ from app.modules.scribe.schemas import (
 from app.modules.scribe.service import ScribeService
 from app.repositories.audit import AuditRepository
 from fastapi import APIRouter, Depends, Query, Request, status
-from fastapi.responses import HTMLResponse
+from fastapi.responses import Response
 from sahyog_common.errors import ProblemError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -474,7 +474,7 @@ async def download_note(
     context: ContextDep,
     services: ServicesDep,
     session: SessionDep,
-) -> HTMLResponse:
+) -> Response:
     _require_feature(services)
     service = _scribe(services, session)
     note, _, _ = await service.note_visible(context, note_id)
@@ -490,11 +490,11 @@ async def download_note(
         trace_id=_trace(request),
     )
     await session.commit()
-    return HTMLResponse(
+    return Response(
         content=document,
+        media_type="application/pdf",
         headers={
-            "Content-Disposition": f'attachment; filename="note-{note_id}.html"',
-            "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'",
+            "Content-Disposition": f'attachment; filename="clinical-note-{note_id}.pdf"',
             "Cache-Control": "no-store",
         },
     )

@@ -24,7 +24,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { api, qs } from "../lib/api";
@@ -177,7 +177,7 @@ interface NotificationPeek {
   unread: number;
 }
 
-export function AppShell() {
+export function AppShell({ children }: { children?: ReactNode }) {
   const { me, name, email, signOut, hasRole } = useAuth();
   const care = useCareContext();
   const { t, locale, setLocale, locales } = useI18n();
@@ -195,7 +195,7 @@ export function AppShell() {
   });
 
   const unreadQuery = useQuery({
-    queryKey: ["notifications", "unread-count"],
+    queryKey: ["notifications", "unread-count", me.subject],
     queryFn: () =>
       api<NotificationPeek>(`/api/v1/notifications${qs({ status: "unread", page_size: 1 })}`),
     refetchInterval: 60_000,
@@ -327,7 +327,7 @@ export function AppShell() {
             <div className="notification-wrap">
               <Link
                 to="/notifications"
-                className="icon-btn notification-btn"
+                className="icon-btn notification-btn tooltip-below"
                 aria-label={
                   unread > 0
                     ? `${t("shell.notifications")} (${unread > 9 ? "9+" : unread})`
@@ -413,7 +413,7 @@ export function AppShell() {
         </header>
 
         <main className="content" id="main-content" tabIndex={-1}>
-          <Outlet />
+          {children ?? <Outlet />}
         </main>
       </div>
     </div>

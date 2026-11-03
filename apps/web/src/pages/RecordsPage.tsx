@@ -10,7 +10,7 @@ import {
   Sparkles,
   Upload,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Badge, StatusBadge } from "../components/Badge";
@@ -28,7 +28,7 @@ import {
   Spinner,
   Tabs,
 } from "../components/primitives";
-import { api, errorMessage, qs } from "../lib/api";
+import { api, apiDownload, errorMessage, isApiError, qs, saveBlob } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { formatBytes, formatDateTime, humanize } from "../lib/format";
 import { useGridState } from "../lib/grid";
@@ -45,7 +45,7 @@ import type {
 } from "../lib/types";
 
 const KINDS = ["lab_report", "discharge_summary", "prescription", "imaging", "other"];
-const DOC_STATUSES = ["queued", "processing", "ready", "failed"];
+const DOC_STATUSES = ["queued", "processing", "indexed", "failed", "quarantined"];
 const LANGUAGES = ["en-IN", "hi-IN", "mr-IN"];
 
 interface UploadResult {
@@ -84,6 +84,12 @@ export function RecordsPage() {
   const medicationsGrid = useGridState("name", "asc");
 
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewType, setPreviewType] = useState<string>("");
+  const [previewName, setPreviewName] = useState("document");
+  const [previewError, setPreviewError] = useState<string | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const previewBlob = useRef<Blob | null>(null);
   const [chunkPage, setChunkPage] = useState(1);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -183,17 +189,62 @@ export function RecordsPage() {
     onError: (error) => setActionError(errorMessage(error)),
   });
 
-  const downloadMutation = useMutation({
-    mutationFn: (documentId: string) =>
-      api<{ url: string; expires_in: number }>(
-        `/api/v1/records/documents/${documentId}/download`,
-      ),
-    onSuccess: (data) => {
-      setActionError(null);
-      window.open(data.url, "_blank", "noopener,noreferrer");
-    },
-    onError: (error) => setActionError(errorMessage(error)),
-  });
+  useEffect(() => {
+    if (!detailId) {
+      setPreviewUrl(null);
+      setPreviewError(null);
+      setPreviewLoading(false);
+      return;
+    }
+    let objectUrl: string | null = null;
+    let cancelled = false;
+    setPreviewLoading(true);
+    setPreviewError(null);
+    setPreviewUrl(null);
+    previewBlob.current = null;
+    const load = async () => {
+      try {
+        const { blob, filename } = await apiDownload(
+          `/api/v1/records/documents/${detailId}/content`,
+        );
+        if (cancelled) return;
+        previewBlob.current = blob;
+        objectUrl = URL.createObjectURL(blob);
+        setPreviewUrl(objectUrl);
+        setPreviewType(blob.type || "application/pdf");
+        setPreviewName(filename || "document");
+      } catch (error) {
+        if (cancelled) return;
+        if (isApiError(error) && error.status === 404) {
+          const signed = await api<{ url: string }>(
+            `/api/v1/records/documents/${detailId}/download`,
+          );
+          if (cancelled) return;
+          setPreviewUrl(signed.url);
+          setPreviewType("application/pdf");
+          setPreviewName("document.pdf");
+          return;
+        }
+        setPreviewError(errorMessage(error));
+      } finally {
+        if (!cancelled) setPreviewLoading(false);
+      }
+    };
+    void load();
+    return () => {
+      cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [detailId]);
+
+  const downloadOriginal = () => {
+    setActionError(null);
+    if (previewBlob.current) {
+      saveBlob(previewBlob.current, previewName);
+      return;
+    }
+    if (previewUrl) window.open(previewUrl, "_blank", "noopener,noreferrer");
+  };
 
   const askMutation = useMutation({
     mutationFn: async (payload: { mode: "search" | "ask"; text: string; topK: number }) => {
@@ -265,12 +316,14 @@ export function RecordsPage() {
     {
       key: "language",
       header: t("common.language"),
+      width: "12%",
       hideOnMobile: true,
       render: (row) => <span>{humanize(row.language)}</span>,
     },
     {
       key: "status",
       header: t("records.documentStatus"),
+      width: "16%",
       sortKey: "status",
       render: (row) => (
         <div className="cell-stack">
@@ -282,6 +335,7 @@ export function RecordsPage() {
     {
       key: "created_at",
       header: t("patients.created"),
+      width: "18%",
       sortKey: "created_at",
       hideOnMobile: true,
       render: (row) => <span className="muted">{formatDateTime(row.created_at, locale)}</span>,
@@ -315,6 +369,7 @@ export function RecordsPage() {
     {
       key: "name",
       header: t("records.medName"),
+      sortKey: "name",
       render: (row) => <strong>{row.name}</strong>,
     },
     {
@@ -348,8 +403,12 @@ export function RecordsPage() {
 
   const phaseLabel = mode === "ask" ? t("records.ask") : t("records.search");
 
+  const unread =
+    detailQuery.data?.error_code === "ocr_not_configured" ||
+    detailQuery.data?.error_code === "no_extractable_text";
+
   return (
-    <>
+    <div className="page records-page">
       <PageHeader
         title={t("records.title")}
         subtitle={t("records.subtitle")}
@@ -686,14 +745,14 @@ export function RecordsPage() {
             : undefined
         }
         onClose={() => setDetailId(null)}
-        size="lg"
+        size="xl"
         footer={
           <>
             <button
               type="button"
               className="btn"
-              disabled={!detailId || downloadMutation.isPending}
-              onClick={() => detailId && downloadMutation.mutate(detailId)}
+              disabled={!previewBlob.current && !previewUrl}
+              onClick={downloadOriginal}
             >
               <Download size={15} aria-hidden="true" /> {t("records.download")}
             </button>
@@ -727,6 +786,32 @@ export function RecordsPage() {
               <Badge tone="neutral">{humanize(detailQuery.data.language)}</Badge>
             </div>
             {actionError ? <FormError message={actionError} /> : null}
+            <h3 className="section-title">{t("records.filePreview")}</h3>
+            {previewLoading ? <Spinner /> : null}
+            {previewError ? <FormError message={previewError || t("records.previewFailed")} /> : null}
+            {previewUrl && previewType.startsWith("image/") ? (
+              <img
+                className="doc-preview-image"
+                src={previewUrl}
+                alt={detailQuery.data.title}
+                data-testid="records-document-preview"
+              />
+            ) : null}
+            {previewUrl && !previewType.startsWith("image/") ? (
+              <iframe
+                className="doc-preview"
+                title={detailQuery.data.title}
+                src={previewUrl}
+                data-testid="records-document-preview"
+              />
+            ) : null}
+            {unread ? (
+              <Callout tone="warning" title={t("records.noText")}>
+                {t("records.textExtract")}
+              </Callout>
+            ) : (
+              <p className="muted">{t("records.textExtract")}</p>
+            )}
             <h3 className="section-title">{t("records.chunks")}</h3>
             {chunksQuery.isError ? (
               <FormError message={errorMessage(chunksQuery.error)} />
@@ -839,6 +924,6 @@ export function RecordsPage() {
           <FormError message={uploadError} />
         </div>
       </Modal>
-    </>
+    </div>
   );
 }

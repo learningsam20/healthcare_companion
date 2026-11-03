@@ -379,6 +379,9 @@ export function PharmacyPage() {
         grid={grid}
         rowKey={(row) => row.id}
         onRetry={() => void listQuery.refetch()}
+        hideSearch
+        emptyTitle={t("pharmacy.noMatches")}
+        emptyHint={t("pharmacy.typeaheadHint")}
       />
     </>
   );

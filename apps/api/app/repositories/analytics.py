@@ -94,7 +94,10 @@ class AnalyticsRepository:
             .group_by(AuditEvent.actor_role)
             .order_by(func.count(func.distinct(AuditEvent.actor_subject)).desc())
         )
-        return [{"role": row[0], "active_users": int(row[1])} for row in rows]
+        return [
+            {"role": row[0], "count": int(row[1]), "active_users": int(row[1])}
+            for row in rows
+        ]
 
     async def recent_audit(self, limit: int = 20) -> list[AuditEvent]:
         rows = await self._session.scalars(

@@ -7,7 +7,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import type { GridMeta } from "../lib/types";
 import { errorMessage } from "../lib/api";
@@ -67,24 +67,22 @@ export function DataGrid<T>({
 }: DataGridProps<T>) {
   const { t } = useI18n();
   const [search, setSearch] = useState(grid.query);
-  const [debounced, setDebounced] = useState(grid.query);
+  const editingSearch = useRef(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setDebounced(search), 350);
+    const timer = window.setTimeout(() => {
+      if (search !== grid.query) grid.setQuery(search);
+      editingSearch.current = false;
+    }, 300);
     return () => window.clearTimeout(timer);
+    // Intentionally omit grid from deps — we only push local typing into grid state.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
-    if (debounced !== grid.query) grid.setQuery(debounced);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounced]);
-
-  useEffect(() => {
-    if (grid.query !== search) {
-      setSearch(grid.query);
-      setDebounced(grid.query);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Ignore parent echoes while the user is mid-keystroke; otherwise a late
+    // setQuery for an earlier prefix can wipe the next characters.
+    if (!editingSearch.current) setSearch(grid.query);
   }, [grid.query]);
 
   const total = meta?.total ?? 0;
@@ -105,7 +103,10 @@ export function DataGrid<T>({
               <input
                 type="search"
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) => {
+                  editingSearch.current = true;
+                  setSearch(event.target.value);
+                }}
                 placeholder={searchPlaceholder ?? t("common.searchPlaceholder")}
                 aria-label={searchPlaceholder ?? t("common.search")}
                 maxLength={120}
@@ -116,8 +117,8 @@ export function DataGrid<T>({
                   className="search-clear"
                   aria-label={t("common.clear")}
                   onClick={() => {
+                    editingSearch.current = false;
                     setSearch("");
-                    setDebounced("");
                     grid.setQuery("");
                   }}
                 >

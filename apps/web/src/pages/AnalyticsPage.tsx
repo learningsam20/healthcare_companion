@@ -10,6 +10,7 @@ import { useState } from "react";
 
 import { Badge, StatusBadge } from "../components/Badge";
 import { MetricTiles } from "../components/MetricTiles";
+import { RoleActivityChart } from "../components/RoleActivityChart";
 import {
   Callout,
   Field,
@@ -218,28 +219,11 @@ export function AnalyticsPage() {
             <div className="stack">
               <MetricTiles tiles={overviewQuery.data.tiles} />
               <div className="split-grid">
-                <div>
-                  <h3 className="section-title">{t("analytics.activeByRole")}</h3>
-                  <ul className="bar-list">
-                    {overviewQuery.data.active_users_by_role.map((row) => {
-                      const max = Math.max(
-                        ...overviewQuery.data.active_users_by_role.map((item) => item.count ?? 0),
-                        1,
-                      );
-                      return (
-                        <li key={row.role ?? "unknown"}>
-                          <span className="bar-label">{humanize(row.role)}</span>
-                          <span className="bar-track">
-                            <span
-                              className="bar-fill"
-                              style={{ width: `${((row.count ?? 0) / max) * 100}%` }}
-                            />
-                          </span>
-                          <span className="bar-value">{formatNumber(row.count ?? 0, locale)}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                <div className="panel role-activity">
+                  <RoleActivityChart
+                    rows={overviewQuery.data.active_users_by_role}
+                    title={t("analytics.activeByRole")}
+                  />
                 </div>
                 <div className="callout-stack">
                   <Callout tone="info" title={t("dashboard.dataScope")}>

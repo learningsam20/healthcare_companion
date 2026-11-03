@@ -14,6 +14,7 @@ from typing import Any
 import httpx
 from sahyog_common.context import ExecutionContext
 from sahyog_common.files import config_dir, load_yaml
+from sahyog_common.http_fallback import candidate_urls, request_first
 from sahyog_common.mcp_service import create_mcp_app
 from sahyog_common.red_flags import detect_red_flags
 
@@ -72,7 +73,8 @@ async def get_stock_status(args: dict[str, Any], context: ExecutionContext) -> d
     url = str(STOCK.get("api_url", "")).strip()
     key_env = str(STOCK.get("api_key_env", "STOCK_API_KEY"))
     api_key = os.environ.get(key_env, "").strip()
-    if not url or not api_key:
+    urls = candidate_urls(url)
+    if not urls or not api_key:
         return {
             "status": "unknown",
             "drug_name": drug_name,
@@ -83,22 +85,31 @@ async def get_stock_status(args: dict[str, Any], context: ExecutionContext) -> d
             "stale": True,
         }
 
-    try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.get(
-                url,
-                params={"drug_name": drug_name.strip(), "clinic_code": clinic_code.strip()},
-                headers={"X-Stock-Api-Key": api_key, "Accept": "application/json"},
-            )
-            response.raise_for_status()
-            payload = response.json()
-    except (httpx.HTTPError, ValueError) as exc:
+    payload: Any = None
+    last_error: Exception | None = None
+    for index, candidate in enumerate(urls):
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    candidate,
+                    params={"drug_name": drug_name.strip(), "clinic_code": clinic_code.strip()},
+                    headers={"X-Stock-Api-Key": api_key, "Accept": "application/json"},
+                )
+                response.raise_for_status()
+                payload = response.json()
+            last_error = None
+            break
+        except (httpx.HTTPError, ValueError) as exc:
+            last_error = exc
+            if index < len(urls) - 1:
+                continue
+    if last_error is not None or payload is None:
         return {
             "status": "unknown",
             "drug_name": drug_name,
             "clinic_code": clinic_code,
             "source": source,
-            "reason": f"stock API unavailable: {exc}",
+            "reason": f"stock API unavailable: {last_error}",
             "as_of": None,
             "stale": True,
         }
@@ -118,7 +129,6 @@ async def get_stock_status(args: dict[str, Any], context: ExecutionContext) -> d
 
 async def get_preconsult_brief(args: dict[str, Any], context: ExecutionContext) -> dict[str, Any]:
     """Doctor pre-consult brief from appointments, meds, documents, and signed notes."""
-    api_base = os.environ.get("SAHYOG_API_URL", "http://api:8000").rstrip("/")
     key_env = os.environ.get("INTERNAL_API_KEY_ENV", "STOCK_API_KEY")
     api_key = os.environ.get(key_env, os.environ.get("INTERNAL_API_KEY", "")).strip()
     if not api_key:
@@ -135,14 +145,15 @@ async def get_preconsult_brief(args: dict[str, Any], context: ExecutionContext) 
         params["doctor_name"] = str(context.doctor_display_name)
 
     try:
-        async with httpx.AsyncClient(timeout=15.0) as client:
-            response = await client.get(
-                f"{api_base}/api/v1/internal/clinical/preconsult",
-                params=params,
-                headers={"X-Internal-Api-Key": api_key, "Accept": "application/json"},
-            )
-            response.raise_for_status()
-            payload = response.json()
+        response = await request_first(
+            "GET",
+            "/api/v1/internal/clinical/preconsult",
+            params=params,
+            headers={"X-Internal-Api-Key": api_key, "Accept": "application/json"},
+            timeout=15.0,
+        )
+        response.raise_for_status()
+        payload = response.json()
     except (httpx.HTTPError, ValueError) as exc:
         return {"status": "unavailable", "reason": f"preconsult API unavailable: {exc}"}
     if not isinstance(payload, dict):

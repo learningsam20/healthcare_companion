@@ -158,6 +158,9 @@ def _appointment_ics(
         f"When (local): {data.get('starts_at') or ''}\n"
         "Open Sahyog → Appointments for details. No clinical content in this invite."
     )
+    link = str(data.get("action_url") or "").strip()
+    if link.startswith(("http://", "https://")):
+        description = f"{description}\nOpen: {link}"
     safe_uid = re.sub(r"[^a-zA-Z0-9._-]", "", appointment_id) or "appointment"
     content = build_ics(
         uid=f"{safe_uid}@sahyog.local",

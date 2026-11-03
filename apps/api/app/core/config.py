@@ -58,6 +58,8 @@ class Settings(BaseSettings):
     embedding_dim: int = 1024
 
     mcp_broker_url: str = "http://mcp-broker:8100"
+    # Host-side API processes cannot resolve the compose DNS name.
+    mcp_broker_public_url: str = "http://127.0.0.1:5709"
     mcp_context_secret: str = ""
     mcp_context_ttl_seconds: int = 120
     pii_service_url: str = "http://mcp-pii:8106"
@@ -74,6 +76,8 @@ class Settings(BaseSettings):
     langfuse_public_key: str = ""
     langfuse_secret_key: str = ""
     langfuse_capture_content: bool = False
+    # Attach PII-redacted generation input/output to Langfuse (raw PHI still forbidden).
+    langfuse_redacted_io: bool = False
     trace_export_sample_ratio: float = 0.1
     grafana_public_url: str = "http://localhost:5723"
     prometheus_public_url: str = "http://localhost:5722"
@@ -141,6 +145,8 @@ class Settings(BaseSettings):
     mem0_url: str = ""
     mem0_api_key: str = ""
     mem0_timeout_seconds: float = 15.0
+    # Durable non-clinical agent memory: mem0 | pgvector (clinical RAG always app pgvector).
+    memory_backend: str = "mem0"
 
     # OpenDecider / llama.cpp server (optional)
     decider_llama_url: str = ""
@@ -289,6 +295,10 @@ class Settings(BaseSettings):
             raise ValueError("EXTERNAL_EGRESS_ENABLED needs PII_SERVICE_URL")
         if self.langfuse_capture_content:
             raise ValueError("LANGFUSE_CAPTURE_CONTENT must stay false for PHI safety")
+        backend = (self.memory_backend or "mem0").strip().lower()
+        if backend not in {"mem0", "pgvector"}:
+            raise ValueError("MEMORY_BACKEND must be mem0 or pgvector")
+        self.memory_backend = backend
         adapter = (self.stt_adapter or "local").strip().lower()
         if adapter not in {"local", "cloud"}:
             raise ValueError("STT_ADAPTER must be local or cloud")

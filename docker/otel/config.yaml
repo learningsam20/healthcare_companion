@@ -1,7 +1,6 @@
-# OTLP collector for the core profile. It accepts traces and metrics from the API,
-# worker, LiteLLM and MCP services, batches them and exposes a Prometheus endpoint
-# for the full profile. No content attributes are added; services must never put
-# names, contacts or clinical text in spans.
+# OTLP collector for core/full. Accepts traces and metrics from the API,
+# worker, LiteLLM and MCP services. Trace backends: Tempo + Jaeger (full);
+# metrics: Prometheus scrape endpoint. Never attach PHI content attributes.
 receivers:
   otlp:
     protocols:
@@ -37,6 +36,21 @@ exporters:
     endpoint: 0.0.0.0:8889
     resource_to_telemetry_conversion:
       enabled: true
+  # Tempo + Jaeger run on the full profile; retries absorb brief startup gaps.
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+    retry_on_failure:
+      enabled: true
+      max_elapsed_time: 300s
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+    retry_on_failure:
+      enabled: true
+      max_elapsed_time: 300s
 
 extensions:
   health_check:
@@ -48,7 +62,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, attributes/redact, batch]
-      exporters: [debug]
+      exporters: [debug, otlp/tempo, otlp/jaeger]
     metrics:
       receivers: [otlp]
       processors: [memory_limiter, batch]

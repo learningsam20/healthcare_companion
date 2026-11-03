@@ -421,6 +421,74 @@ async def download_document(
     return {"url": url, "expires_in": 300}
 
 
+def _content_filename(title: str, content_type: str) -> str:
+    allowed = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-")
+    stem = "".join(char if char in allowed else "_" for char in title).strip("._") or "document"
+    stem = stem[:80]
+    lowered = stem.lower()
+    if content_type == "application/pdf" and not lowered.endswith(".pdf"):
+        return f"{stem}.pdf"
+    if content_type == "image/png" and not lowered.endswith(".png"):
+        return f"{stem}.png"
+    if content_type in {"image/jpeg", "image/jpg"} and not lowered.endswith((".jpg", ".jpeg")):
+        return f"{stem}.jpg"
+    return stem
+
+
+@router.get("/documents/{document_id}/content")
+async def document_content(
+    document_id: uuid.UUID,
+    request: Request,
+    context: ContextDep,
+    services: ServicesDep,
+    session: SessionDep,
+) -> Response:
+    """Stream the original file through the API so the browser can show it inline.
+
+    A presigned object-store URL often points at a host the browser cannot reach.
+    """
+    document = await _check_document_scope(
+        document_id=document_id, context=context, session=session, services=services
+    )
+    if not services.settings.s3_configured:
+        raise ProblemError(
+            503,
+            "storage_unavailable",
+            "Storage unavailable",
+            "Document storage is not configured, so the original file cannot be opened.",
+        )
+    try:
+        data = await services.storage.get(key=document.object_key)
+    except StorageError as exc:
+        logger.warning(
+            "document content read failed",
+            extra={"event": "records.document_content.storage_failed"},
+        )
+        raise ProblemError(
+            503,
+            "storage_unavailable",
+            "Storage unavailable",
+            "The document store is unavailable. Try again shortly.",
+        ) from exc
+    AuditRepository(session).append(
+        actor_subject=context.subject,
+        actor_role=context.primary_role.value,
+        action="records.document_downloaded",
+        resource_type="document",
+        resource_id=str(document.id),
+        patient_id=document.patient_id,
+        consent_id=context.consent_id,
+        trace_id=_trace(request),
+    )
+    await session.commit()
+    filename = _content_filename(document.title, document.content_type)
+    return Response(
+        content=data,
+        media_type=document.content_type or "application/octet-stream",
+        headers={"Content-Disposition": f'inline; filename="{filename}"'},
+    )
+
+
 @router.delete("/documents/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_document(
     document_id: uuid.UUID,

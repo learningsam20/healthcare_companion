@@ -234,8 +234,8 @@ async function captureSlide(
 
 async function bookFirstAvailableSlot(page: Page): Promise<{ appointmentId: string } | null> {
   await page.getByTestId("appointments-book").click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
+  const panel = page.getByTestId("appointments-book-panel");
+  await expect(panel).toBeVisible();
   await page.getByTestId("patient-picker-trigger").click({ trial: true }).catch(() => undefined);
   await page.getByTestId("patient-picker-trigger").click();
   const patientOption = page
@@ -256,14 +256,14 @@ async function bookFirstAvailableSlot(page: Page): Promise<{ appointmentId: stri
   await page.waitForTimeout(800);
 
   if ((await page.getByTestId("appointments-slot").count()) === 0) {
-    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await panel.getByRole("button", { name: "Cancel" }).click();
     return null;
   }
-  const specialtyBox = page.getByRole("dialog").getByRole("combobox", { name: /Specialty/i });
+  const specialtyBox = panel.getByRole("combobox", { name: /Specialty/i });
   if (await specialtyBox.isVisible().catch(() => false)) {
     await specialtyBox.selectOption("general_medicine");
   }
-  await page.locator(".slot-group").first().getByTestId("appointments-slot").first().click();
+  await panel.locator(".slot-group").first().getByTestId("appointments-slot").first().click();
   await page.waitForTimeout(500);
 
   const createResponsePromise = page.waitForResponse(

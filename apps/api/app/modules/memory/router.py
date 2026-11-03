@@ -1,17 +1,18 @@
-"""Preference memory API — Postgres allowlist + optional self-hosted Mem0 sync."""
+"""Preference memory API — Postgres allowlist + durable backend sync."""
 
 from __future__ import annotations
 
 import datetime as dt
 import logging
-import re
 import uuid
 from typing import Annotated, Any, Literal
 
 from app.core.db import get_session
 from app.core.security import AuthContext, get_auth_context
 from app.core.services import Services, get_services
-from app.integrations.mem0_client import Mem0Client, Mem0Unavailable
+from app.modules.memory.policy import ALLOWED_KEYS as ALLOWED_KEYS
+from app.modules.memory.policy import reject_if_sensitive
+from app.modules.memory.service import MemoryFacade
 from app.repositories.audit import AuditRepository
 from app.repositories.models import MemoryPreference
 from fastapi import APIRouter, Depends, status
@@ -27,37 +28,8 @@ SessionDep = Annotated[AsyncSession, Depends(get_session)]
 ContextDep = Annotated[AuthContext, Depends(get_auth_context)]
 ServicesDep = Annotated[Services, Depends(get_services)]
 
-ALLOWED_KEYS = frozenset(
-    {
-        "preferred_locale",
-        "preferred_clinic",
-        "preferred_channel",
-        "appointment_reminder",
-        "ui_density",
-        "opt_out",
-    }
-)
-
-# Preference values must stay non-clinical and free of identifiers before Mem0 sync.
-_PII_OR_CLINICAL = re.compile(
-    r"("
-    r"[\w.+-]+@[\w-]+\.[\w.-]+|"  # email
-    r"\b\d{10,12}\b|"  # phone / aadhaar-ish
-    r"\b[A-Z]{5}\d{4}[A-Z]\b|"  # PAN
-    r"\b(diagnos|prescri|insulin|hiv|cancer|dose|mg\b|tablet|symptom)\b"
-    r")",
-    re.IGNORECASE,
-)
-
-
-def _reject_if_sensitive(value: str) -> None:
-    if _PII_OR_CLINICAL.search(value):
-        raise ProblemError(
-            422,
-            "memory_value_rejected",
-            "Value rejected",
-            "Preference values cannot contain identifiers or clinical detail.",
-        )
+# Re-export for tests that import from router.
+_reject_if_sensitive = reject_if_sensitive
 
 
 class MemoryItem(BaseModel):
@@ -98,43 +70,6 @@ def _ensure_enabled(services: Services) -> None:
         )
 
 
-async def _sync_mem0_add(services: Services, *, subject: str, key: str, value: str) -> None:
-    client = Mem0Client(services.settings)
-    if not client.configured or key == "opt_out":
-        return
-    try:
-        await client.add(
-            user_id=subject,
-            text=f"Preference {key}: {value}",
-            metadata={"key": key, "allowlisted": True, "source": "sahyog"},
-        )
-    except Mem0Unavailable as exc:
-        logger.warning(
-            "mem0 sync skipped",
-            extra={"event": "memory.mem0_sync_failed", "extra_fields": {"reason": str(exc)}},
-        )
-
-
-async def _sync_mem0_delete(services: Services, *, subject: str, key: str) -> None:
-    client = Mem0Client(services.settings)
-    if not client.configured:
-        return
-    try:
-        rows = await client.list_for_user(user_id=subject)
-        for row in rows:
-            meta = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
-            memory_id = str(row.get("id") or row.get("memory_id") or "")
-            text = str(row.get("memory") or row.get("text") or "")
-            matches_key = meta.get("key") == key or f"Preference {key}:" in text
-            if memory_id and matches_key:
-                await client.delete(memory_id=memory_id)
-    except Mem0Unavailable as exc:
-        logger.warning(
-            "mem0 delete skipped",
-            extra={"event": "memory.mem0_delete_failed", "extra_fields": {"reason": str(exc)}},
-        )
-
-
 @router.get("", response_model=list[MemoryItem])
 async def list_memory(
     context: ContextDep,
@@ -156,26 +91,17 @@ async def list_memory(
 async def list_semantic_memory(
     context: ContextDep,
     services: ServicesDep,
+    session: SessionDep,
     q: str = "preferences",
 ) -> list[Mem0MemoryOut]:
-    """Search self-hosted Mem0 for this subject (empty if Mem0 is down/unconfigured)."""
+    """Search durable memory for this subject (empty if backend down/unconfigured)."""
     _ensure_enabled(services)
-    client = Mem0Client(services.settings)
-    if not client.configured:
-        return []
-    try:
-        rows = await client.search(user_id=context.subject, query=q, limit=20)
-    except Mem0Unavailable:
-        return []
-    out: list[Mem0MemoryOut] = []
-    for row in rows:
-        mid = str(row.get("id") or row.get("memory_id") or "")
-        text = str(row.get("memory") or row.get("text") or row.get("data") or "")
-        if not text:
-            continue
-        meta = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
-        out.append(Mem0MemoryOut(id=mid or text[:32], memory=text, metadata=meta))
-    return out
+    hits = await MemoryFacade(services, session).search_semantic(
+        subject=context.subject, query=q, limit=20
+    )
+    return [
+        Mem0MemoryOut(id=hit.id, memory=hit.text, metadata=hit.metadata) for hit in hits if hit.text
+    ]
 
 
 @router.put("", response_model=MemoryItem)
@@ -190,7 +116,7 @@ async def upsert_memory(
         raise ProblemError(
             422, "key_not_allowed", "Key not allowed", "That preference key is not permitted."
         )
-    _reject_if_sensitive(body.value.strip())
+    reject_if_sensitive(body.value.strip())
     existing = await session.scalar(
         select(MemoryPreference).where(
             MemoryPreference.subject == context.subject,
@@ -214,9 +140,10 @@ async def upsert_memory(
     )
     await session.commit()
     await session.refresh(existing)
-    await _sync_mem0_add(
-        services, subject=context.subject, key=body.key, value=existing.value
+    await MemoryFacade(services, session).sync_preference(
+        subject=context.subject, key=body.key, value=existing.value
     )
+    await session.commit()
     return MemoryItem.model_validate(existing).model_copy(update={"source": "postgres"})
 
 
@@ -245,8 +172,8 @@ async def delete_memory(
         resource_id=key,
         metadata={"key": key},
     )
+    await MemoryFacade(services, session).delete_preference(subject=context.subject, key=key)
     await session.commit()
-    await _sync_mem0_delete(services, subject=context.subject, key=key)
 
 
 @router.post("/purge", status_code=status.HTTP_204_NO_CONTENT)
@@ -263,15 +190,18 @@ async def purge_memory(
         )
     )
     for row in rows:
-        key = row.key
         await session.delete(row)
-        await _sync_mem0_delete(services, subject=context.subject, key=key)
+    purged = await MemoryFacade(services, session).purge_subject(subject=context.subject)
     AuditRepository(session).append(
         actor_subject=context.subject,
         actor_role=context.primary_role.value,
         action="memory.purged",
         resource_type="memory_preference",
         resource_id=context.subject,
-        metadata={"count": len(rows), "provenance": "not_clinical_evidence"},
+        metadata={
+            "count": len(rows),
+            "durable_purged": purged,
+            "provenance": "not_clinical_evidence",
+        },
     )
     await session.commit()
